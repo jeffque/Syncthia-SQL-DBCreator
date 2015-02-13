@@ -7,6 +7,7 @@ import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.View;
 
 public abstract class SchemaCreator {
+	public abstract String getSchemaName();
 	protected abstract void schemaDefinition();
 	
 	protected List<Table> schemaTables = new ArrayList<Table>();
@@ -59,4 +60,18 @@ public abstract class SchemaCreator {
 			schema.migrateSchema();
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "SchemaCreator [schemaName()=" + getSchemaName() + "]";
+	}
+	
+	public static List<SchemaCreator> getRegisteredSchemas() {
+		return registeredSchemas;
+	}
+	public List<Table> getTables() {
+		return schemaTables;
+	}
+	
+	
 }

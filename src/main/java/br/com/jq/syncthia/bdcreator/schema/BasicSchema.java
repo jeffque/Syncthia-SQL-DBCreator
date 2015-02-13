@@ -47,4 +47,9 @@ public class BasicSchema extends SchemaCreator {
 		addTable(table);
 	}
 
+	@Override
+	public String getSchemaName() {
+		return "Basic Structural Scheme";
+	}
+
 }
