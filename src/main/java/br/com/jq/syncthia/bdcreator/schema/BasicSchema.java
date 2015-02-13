@@ -10,7 +10,7 @@ public class BasicSchema extends SchemaCreator {
 	protected void schemaDefinition() {
 		Table table = new Table();
 		
-		table.setTableName("CAROLINA");
+		table.setName("CAROLINA");
 		
 		Column nome = new Column();
 		nome.setName("NAME");

@@ -1,34 +1,30 @@
 package br.com.jq.syncthia.bdcreator.table;
 
 import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
-import br.com.jq.syncthia.bdcreator.table.migration.ViewMigrationBasicStrategy;
+import br.com.jq.syncthia.bdcreator.table.migration.BasicMigrationStrategy;
 
-public class View extends Table {
+public class View extends MigratableSelectable {
 	private MigrationStrategy viewMigration;
 	
 	public View() {
 		super();
 		
-		viewMigration = new ViewMigrationBasicStrategy(this);
+		viewMigration = new BasicMigrationStrategy(this);
 	}
 
 	@Override
 	public void doMigrations() {
-		if (migrations.size() == 0) {
-			viewMigration.migrateTable();
-		} else {
-			super.doMigrations();
-		}
+		viewMigration.migrateTable();
 	}
 
 	@Override
-	public void dropTable() {
-		System.out.println("DROP VIEW " + tableName);
+	public void dropUnit() {
+		System.out.println("DROP VIEW " + name);
 	}
 
 	@Override
 	public void createUnit() {
-		StringBuilder sql = new StringBuilder("CREATE VIEW " + tableName + " (\n");
+		StringBuilder sql = new StringBuilder("CREATE VIEW " + name + " (\n");
 		listColumnsSql(sql);
 		sql.append(")");
 		System.out.println(sql.toString());

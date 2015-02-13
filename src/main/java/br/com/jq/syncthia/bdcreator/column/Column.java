@@ -1,9 +1,9 @@
 package br.com.jq.syncthia.bdcreator.column;
 
-import br.com.jq.syncthia.bdcreator.table.Table;
+import br.com.jq.syncthia.bdcreator.table.Selectable;
 
 public class Column {
-	private Table table;
+	private Selectable origin;
 	private String name, type;
 	private Integer precision1, precision2;
 	
@@ -31,13 +31,12 @@ public class Column {
 	public void setPrecision2(Integer precision2) {
 		this.precision2 = precision2;
 	}
-	public Table getTable() {
-		return table;
+	public Selectable getOrigin() {
+		return origin;
 	}
-	public void setTable(Table table) {
-		this.table = table;
+	public void setOrigin(Selectable origin) {
+		this.origin = origin;
 	}
-	
 	public String colDescription() {
 		return name + " " + type + (precision1 != null? "(" + precision1 + (precision2 != null? "," + precision2: "") + ")": "");
 	}
