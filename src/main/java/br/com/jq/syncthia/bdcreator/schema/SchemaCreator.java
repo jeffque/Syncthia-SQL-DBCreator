@@ -1,6 +1,7 @@
 package br.com.jq.syncthia.bdcreator.schema;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.View;
@@ -8,10 +9,10 @@ import br.com.jq.syncthia.bdcreator.table.View;
 public abstract class SchemaCreator {
 	protected abstract void schemaDefinition();
 	
-	protected ArrayList<Table> schemaTables = new ArrayList<Table>();
-	protected ArrayList<View> schemaViewes = new ArrayList<View>();
+	protected List<Table> schemaTables = new ArrayList<Table>();
+	protected List<View> schemaViewes = new ArrayList<View>();
 	
-	private static ArrayList<SchemaCreator> registeredSchemas;
+	private static List<SchemaCreator> registeredSchemas;
 	
 	static {
 		registeredSchemas = new ArrayList<SchemaCreator>();
