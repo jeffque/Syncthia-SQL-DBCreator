@@ -1,6 +1,5 @@
 package br.com.jq.syncthia;
 
-import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -30,7 +29,6 @@ public class AppTest extends TestCase {
 	 * Rigourous Test :-)
 	 */
 	public void testApp() {
-		SchemaCreator.createOrMigrateSchema();
 		assertTrue(true);
 	}
 }

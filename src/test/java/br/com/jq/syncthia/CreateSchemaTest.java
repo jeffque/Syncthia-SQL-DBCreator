@@ -2,6 +2,7 @@ package br.com.jq.syncthia;
 
 import java.util.List;
 
+import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
 import br.com.jq.syncthia.sample.SampleSchema;
 import junit.framework.Test;
@@ -12,6 +13,8 @@ import junit.framework.TestSuite;
  * Unit test for simple App.
  */
 public class CreateSchemaTest extends TestCase {
+	SchemaCollection collection;
+	
 	/**
 	 * Create the test case
 	 *
@@ -21,8 +24,10 @@ public class CreateSchemaTest extends TestCase {
 	public CreateSchemaTest(String testName) {
 		super(testName);
 		
-		SchemaCreator.registerSchema(new SampleSchema());
-		SchemaCreator.createOrMigrateSchema();
+		collection = new SchemaCollection();
+		
+		collection.registerSchema(new SampleSchema());
+		collection.createOrMigrateSchema();
 	}
 
 	/**
@@ -33,14 +38,14 @@ public class CreateSchemaTest extends TestCase {
 	}
 
 	public void testCreateSchema() {
-		List<SchemaCreator> schemaList = SchemaCreator.getRegisteredSchemas();
+		List<SchemaCreator> schemaList = collection.getRegisteredSchemas();
 		assertEquals(2, schemaList.size());
 		assertEquals("Basic Structural Scheme", schemaList.get(0).getSchemaName());
 		assertEquals("Sample schema", schemaList.get(1).getSchemaName());
 	}
 	
 	public void testTableNames() {
-		List<SchemaCreator> schemaList = SchemaCreator.getRegisteredSchemas();
+		List<SchemaCreator> schemaList = collection.getRegisteredSchemas();
 		assertEquals("SAMPLE_TABLE", schemaList.get(1).getTables().get(0).getName());
 	}
 }

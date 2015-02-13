@@ -13,13 +13,6 @@ public abstract class SchemaCreator {
 	protected List<Table> schemaTables = new ArrayList<Table>();
 	protected List<View> schemaViewes = new ArrayList<View>();
 	
-	private static List<SchemaCreator> registeredSchemas;
-	
-	static {
-		registeredSchemas = new ArrayList<SchemaCreator>();
-		registerSchema(new BasicSchema());
-	}
-	
 	protected void addTable(Table t) {
 		schemaTables.add(t);
 	}
@@ -46,29 +39,11 @@ public abstract class SchemaCreator {
 		}
 	}
 	
-	public static void registerSchema(SchemaCreator schema) {
-		registeredSchemas.add(schema);
-		schema.schemaDefinition();
-	}
-	
-	public static final void createOrMigrateSchema() {
-		for (SchemaCreator schema: registeredSchemas) {
-			schema.createSchema();
-		}
-		
-		for (SchemaCreator schema: registeredSchemas) {
-			schema.migrateSchema();
-		}
-	}
-	
 	@Override
 	public String toString() {
 		return "SchemaCreator [schemaName()=" + getSchemaName() + "]";
 	}
 	
-	public static List<SchemaCreator> getRegisteredSchemas() {
-		return registeredSchemas;
-	}
 	public List<Table> getTables() {
 		return schemaTables;
 	}
