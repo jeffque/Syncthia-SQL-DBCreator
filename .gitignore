@@ -12,6 +12,9 @@
 hs_err_pid*
 
 # eclipse stuff
-.settings/*
+.settings/
 .project
 .classpath
+
+# target should not be commited
+target/
