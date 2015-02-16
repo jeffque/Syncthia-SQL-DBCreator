@@ -39,7 +39,7 @@ public class CreateSchemaTest extends TestCase {
 
 	public void testCreateSchema() {
 		List<SchemaCreator> schemaList = collection.getRegisteredSchemas();
-		assertEquals(2, schemaList.size());
+		assertEquals(2, schemaList.size()); // Basic Schema AND Sample Schema
 		assertEquals("Basic Structural Scheme", schemaList.get(0).getSchemaName());
 		assertEquals("Sample schema", schemaList.get(1).getSchemaName());
 	}
