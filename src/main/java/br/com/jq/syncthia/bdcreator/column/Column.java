@@ -6,7 +6,8 @@ public class Column {
 	private Selectable origin;
 	private String name, type;
 	private Integer precision1, precision2;
-	
+	private Boolean nullable;
+
 	public String getName() {
 		return name;
 	}
@@ -38,10 +39,22 @@ public class Column {
 		this.origin = origin;
 	}
 	public String colDescription() {
-		return name + " " + type + (precision1 != null? "(" + precision1 + (precision2 != null? "," + precision2: "") + ")": "");
+		return name
+				+ " "
+				+ type
+				+ (precision1 != null ? "(" + precision1
+						+ (precision2 != null ? "," + precision2 : "") + ")"
+						: "")
+				+ (nullable != null ? (nullable ? "NULL" : "NOT NULL") : "");
 	}
 	public void setSize(Integer size) {
 		precision1 = size;
 		precision2 = null;
+	}
+	public void setNullable(Boolean nullable) {
+		this.nullable = nullable;
+	}
+	public Boolean getNullable() {
+		return nullable;
 	}
 }
