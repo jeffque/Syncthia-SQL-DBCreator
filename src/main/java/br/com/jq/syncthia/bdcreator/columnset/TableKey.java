@@ -4,8 +4,11 @@ public class TableKey extends ColumnSet {
 	private KeyType keyType;
 	
 	public TableKey() {
-		super();
-		setKeyType(KeyType.NOT_KEY);
+		this(KeyType.NOT_KEY);
+	}
+	
+	public TableKey(KeyType type) {
+		setKeyType(type);
 	}
 
 	public KeyType getKeyType() {
