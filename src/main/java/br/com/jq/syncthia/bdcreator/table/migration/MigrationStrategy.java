@@ -30,5 +30,5 @@ public abstract class MigrationStrategy {
 		this.table = table;
 	}
 	
-	public abstract void migrateTable();
+	public abstract void migrateUnit();
 }

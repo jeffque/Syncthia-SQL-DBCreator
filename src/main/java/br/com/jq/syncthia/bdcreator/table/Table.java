@@ -37,7 +37,7 @@ public class Table extends MigratableSelectable {
 	@Override
 	public void doMigrations() {
 		for (MigrationStrategy migration: getDesiredMigrations()) {
-			migration.migrateTable();
+			migration.migrateUnit();
 		}
 	}
 

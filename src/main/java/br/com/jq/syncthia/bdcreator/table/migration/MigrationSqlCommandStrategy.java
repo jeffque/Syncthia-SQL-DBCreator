@@ -4,7 +4,7 @@ public class MigrationSqlCommandStrategy extends MigrationStrategy {
 	private String sqlMigration;
 	
 	@Override
-	public void migrateTable() {
+	public void migrateUnit() {
 		System.out.println(sqlMigration);
 	}
 

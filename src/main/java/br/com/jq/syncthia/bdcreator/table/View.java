@@ -24,7 +24,7 @@ public class View extends MigratableSelectable {
 
 	@Override
 	public void doMigrations() {
-		viewMigration.migrateTable();
+		viewMigration.migrateUnit();
 	}
 
 	@Override

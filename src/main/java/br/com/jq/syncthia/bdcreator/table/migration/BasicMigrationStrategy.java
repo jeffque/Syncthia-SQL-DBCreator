@@ -10,7 +10,7 @@ public class BasicMigrationStrategy extends MigrationStrategy {
 	}
 
 	@Override
-	public void migrateTable() {
+	public void migrateUnit() {
 		migratable.dropUnit();
 		migratable.createUnit();
 	}
