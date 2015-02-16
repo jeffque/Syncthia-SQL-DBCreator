@@ -13,7 +13,7 @@ public class TableVersion extends Table {
 		Column tableName = new Column();
 		Column tableSchemaVersion = new Column();
 		
-		pkCol.setName("PK");
+		pkCol.setName("PK_TABLE_VERSION");
 		pkCol.setType("INT");
 		pkCol.setNullable(false);
 		
