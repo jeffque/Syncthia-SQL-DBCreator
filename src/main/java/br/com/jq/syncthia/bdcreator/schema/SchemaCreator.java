@@ -11,21 +11,21 @@ public abstract class SchemaCreator {
 	protected abstract void schemaDefinition();
 	
 	protected List<Table> schemaTables = new ArrayList<Table>();
-	protected List<View> schemaViewes = new ArrayList<View>();
+	protected List<View> schemaViews = new ArrayList<View>();
 	
 	protected void addTable(Table t) {
 		schemaTables.add(t);
 	}
 	
 	protected void addView(View t) {
-		schemaViewes.add(t);
+		schemaViews.add(t);
 	}
 	
 	protected void createSchema() {
 		for (Table t: schemaTables) {
 			t.createUnit();
 		}
-		for (View v: schemaViewes) {
+		for (View v: schemaViews) {
 			v.createUnit();
 		}
 	}
@@ -34,7 +34,7 @@ public abstract class SchemaCreator {
 		for (Table t: schemaTables) {
 			t.doMigrations();
 		}
-		for (View v: schemaViewes) {
+		for (View v: schemaViews) {
 			v.doMigrations();
 		}
 	}
