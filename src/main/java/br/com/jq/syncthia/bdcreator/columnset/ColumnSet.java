@@ -26,6 +26,24 @@ public abstract class ColumnSet {
 	public void setTable(Table table) {
 		this.table = table;
 	}
+	
+	public void addColumn(Column col) {
+		columnList.add(col);
+	}
+	
+	public List<Column> getColumns() {
+		return columnList;
+	}
+	
+	public Column getColumn(String colName) {
+		for (Column col: columnList) {
+			if (colName.equals(col.getName())) {
+				return col;
+			}
+		}
+		
+		return null;
+	}
 
 	public ColumnSet() {
 		columnList = new ArrayList<Column>();
