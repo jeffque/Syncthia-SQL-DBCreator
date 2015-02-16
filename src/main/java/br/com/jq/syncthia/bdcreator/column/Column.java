@@ -11,33 +11,43 @@ public class Column {
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getType() {
 		return type;
 	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
+
 	public Integer getPrecision1() {
 		return precision1;
 	}
+
 	public void setPrecision1(Integer precision1) {
 		this.precision1 = precision1;
 	}
+
 	public Integer getPrecision2() {
 		return precision2;
 	}
+
 	public void setPrecision2(Integer precision2) {
 		this.precision2 = precision2;
 	}
+
 	public Selectable getOrigin() {
 		return origin;
 	}
+
 	public void setOrigin(Selectable origin) {
 		this.origin = origin;
 	}
+
 	public String colDescription() {
 		return name
 				+ " "
@@ -47,13 +57,16 @@ public class Column {
 						: "")
 				+ (nullable != null ? (nullable ? "NULL" : "NOT NULL") : "");
 	}
+
 	public void setSize(Integer size) {
 		precision1 = size;
 		precision2 = null;
 	}
+
 	public void setNullable(Boolean nullable) {
 		this.nullable = nullable;
 	}
+
 	public Boolean getNullable() {
 		return nullable;
 	}
