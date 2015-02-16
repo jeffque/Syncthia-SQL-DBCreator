@@ -3,7 +3,7 @@ package br.com.jq.syncthia.bdcreator.table.migration;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public abstract class MigrationStrategy {
-	private String oldVersion, newVersion;
+	protected String oldVersion, newVersion;
 	protected MigratableSelectable migratable;
 
 	public String getOldVersion() {
