@@ -17,8 +17,8 @@ public class Table extends MigratableSelectable {
 		keys = new ArrayList<TableKey>();
 	}
 	
-	public void addKey(TableKey key) throws DuplicatedPrimaryKeyException {
-		if (key.getKeyType() == KeyType.PRIMARY_KEY) {
+	public void addKey(TableKey newKey) throws DuplicatedPrimaryKeyException {
+		if (newKey.getKeyType() == KeyType.PRIMARY_KEY) {
 			for (TableKey k: keys) {
 				if (k.getKeyType() == KeyType.PRIMARY_KEY) {
 					throw new DuplicatedPrimaryKeyException();
@@ -26,8 +26,8 @@ public class Table extends MigratableSelectable {
 			}
 		}
 		
-		keys.add(key);
-		key.setTable(this);
+		keys.add(newKey);
+		newKey.setTable(this);
 	}
 	
 	public void addMigrationStrategy(MigrationStrategy migration) {
