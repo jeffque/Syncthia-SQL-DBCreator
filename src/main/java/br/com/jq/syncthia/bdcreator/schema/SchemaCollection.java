@@ -29,4 +29,14 @@ public class SchemaCollection {
 	public List<SchemaCreator> getRegisteredSchemas() {
 		return registeredSchemas;
 	}
+	
+	public SchemaCreator getSchema(String schemaName) {
+		for (SchemaCreator s: registeredSchemas) {
+			if (schemaName.equals(s.getSchemaName())) {
+				return s;
+			}
+		}
+		
+		return null;
+	}
 }
