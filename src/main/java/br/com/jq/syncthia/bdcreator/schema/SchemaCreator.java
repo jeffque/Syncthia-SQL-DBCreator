@@ -48,10 +48,24 @@ public abstract class SchemaCreator {
 		return schemaTables;
 	}
 	
+	public List<View> getViews() {
+		return schemaViews;
+	}
+	
 	public Table getTable(String tableName) {
 		for (Table t: schemaTables) {
 			if (tableName.equals(t.getName())) {
 				return t;
+			}
+		}
+		
+		return null;
+	}
+	
+	public View getView(String viewName) {
+		for (View v: schemaViews) {
+			if (viewName.equals(v.getName())) {
+				return v;
 			}
 		}
 		
