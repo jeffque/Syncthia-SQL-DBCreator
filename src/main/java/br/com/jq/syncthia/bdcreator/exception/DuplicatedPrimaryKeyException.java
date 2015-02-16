@@ -1,6 +1,6 @@
 package br.com.jq.syncthia.bdcreator.exception;
 
-public class DuplicatedPrimaryKeyException extends Exception {
+public class DuplicatedPrimaryKeyException extends RuntimeException {
 
 	/**
 	 * 
