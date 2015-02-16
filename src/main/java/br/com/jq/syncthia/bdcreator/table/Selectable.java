@@ -6,20 +6,33 @@ import java.util.List;
 import br.com.jq.syncthia.bdcreator.column.Column;
 
 public class Selectable {
-	protected List<Column> columnsList;
+	protected List<Column> columnList;
 	
 	public Selectable() {
-		columnsList = new ArrayList<Column>();
+		columnList = new ArrayList<Column>();
 	}
 	
 	public void addColumn(Column col) {
 		col.setOrigin(this);
-		columnsList.add(col);
+		columnList.add(col);
+	}
+	
+	public Column getColumn(String columnName) {
+		for (Column col: columnList) {
+			if (columnName.equals(col.getName())) {
+				return col;
+			}
+		}
+		return null;
+	}
+	
+	public List<Column> getColumnList() {
+		return columnList;
 	}
 	
 	protected StringBuilder listColumnsSql(StringBuilder sql) {
 		boolean firstTime = true;
-		for (Column col: columnsList) {
+		for (Column col: columnList) {
 			if (!firstTime) {
 				sql.append(",\n");
 			} else {

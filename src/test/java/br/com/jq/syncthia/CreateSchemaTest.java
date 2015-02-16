@@ -2,8 +2,10 @@ package br.com.jq.syncthia;
 
 import java.util.List;
 
+import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
+import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.sample.SampleSchema;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -55,5 +57,18 @@ public class CreateSchemaTest extends TestCase {
 		
 		assertEquals("SAMPLE_TABLE", sampleSchema.getTable("SAMPLE_TABLE").getName());
 		assertEquals(sampleSchema.getTable("SAMPLE_TABLE"), sampleSchema.getTables().get(0));
+	}
+	
+	public void testColumnNames() {
+		Table sampleTable = collection.getRegisteredSchemas().get(1).getTables().get(0);
+		List<Column> columnsSampleTable = sampleTable.getColumnList();
+		
+		assertEquals(1, columnsSampleTable.size());
+		
+		assertNotNull(sampleTable.getColumn("AGE"));
+		assertNull(sampleTable.getColumn("NOT_AGE"));
+		
+		assertEquals("AGE", sampleTable.getColumn("AGE").getName());
+		assertEquals(sampleTable.getColumn("AGE"), columnsSampleTable.get(0));
 	}
 }
