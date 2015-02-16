@@ -88,8 +88,21 @@ public class Table extends MigratableSelectable {
 	}
 
 	protected StringBuilder listKeyMetadata(StringBuilder sql) {
-		// TODO Auto-generated method stub
-		return sql;
+		if (keys.size() > 0) {
+			sql.append("\t,\n");
+		}
+		
+		boolean firstTime = true;
+		for (TableKey k: keys) {
+			if (!firstTime) {
+				sql.append(",\n");
+			} else {
+				firstTime = false;
+			}
+			sql.append("\t" + k.keyDescription());
+		}
+		
+		return sql.append("\n");
 	}
 
 	@Override
