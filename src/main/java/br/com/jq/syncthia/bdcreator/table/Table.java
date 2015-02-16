@@ -36,18 +36,25 @@ public class Table extends MigratableSelectable {
 	
 	@Override
 	public void doMigrations() {
-		doMigrations(desiredVersion, schemaVersion);
+		for (MigrationStrategy migration: getDesiredMigrations()) {
+			migration.migrateTable();
+		}
 	}
 
-	private void doMigrations(String leafVersion, String rootVersion) {
+	public List<MigrationStrategy> getDesiredMigrations() {
+		return getDesiredMigrations(new ArrayList<MigrationStrategy>(), desiredVersion, schemaVersion);
+	}
+	
+	private List<MigrationStrategy> getDesiredMigrations(List<MigrationStrategy> list, String leafVersion, String rootVersion) {
 		for (MigrationStrategy migration: migrations) {
 			if (leafVersion.equals(migration.getNewVersion())) {
 				if (!leafVersion.equals(rootVersion)) {
-					doMigrations(migration.getOldVersion(), rootVersion);
-					migration.migrateTable();
+					getDesiredMigrations(list, migration.getOldVersion(), rootVersion);
+					list.add(migration);
 				}
 			}
 		}
+		return list;
 	}
 
 	@Override

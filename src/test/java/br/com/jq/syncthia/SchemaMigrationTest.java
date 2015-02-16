@@ -8,6 +8,7 @@ import junit.framework.TestSuite;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
 import br.com.jq.syncthia.bdcreator.table.Table;
+import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 import br.com.jq.syncthia.sample.Sample1MigrationSchema;
 import br.com.jq.syncthia.sample.Sample2MigrationsSchema;
 
@@ -69,6 +70,34 @@ public class SchemaMigrationTest extends TestCase {
 		
 		for (Table t: schema2Migrations.getTables()) {
 			assertEquals("v3", t.getDesiredVersion());
+		}
+	}
+	
+	public void testTableMigrations() {
+		SchemaCreator schema1Migration = collection.getSchema("Sample 1 migration schema");
+		SchemaCreator schema2Migrations = collection.getSchema("Sample 2 migrations schema");
+		
+		for (Table t: schema1Migration.getTables()) {
+			List<MigrationStrategy> migrations = t.getDesiredMigrations();
+			
+			assertEquals(1, migrations.size());
+			
+			assertEquals("v1", migrations.get(0).getOldVersion());
+			assertEquals("v2", migrations.get(0).getNewVersion());
+		}
+		
+		for (Table t: schema2Migrations.getTables()) {
+			List<MigrationStrategy> migrations = t.getDesiredMigrations();
+			
+			assertEquals(2, migrations.size());
+			
+			assertEquals("v1", migrations.get(0).getOldVersion());
+			assertEquals("v2", migrations.get(0).getNewVersion());
+			
+			assertEquals(migrations.get(0).getNewVersion(), migrations.get(1).getOldVersion());
+			
+			assertEquals("v2", migrations.get(1).getOldVersion());
+			assertEquals("v3", migrations.get(1).getNewVersion());
 		}
 	}
 }
