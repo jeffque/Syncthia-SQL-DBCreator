@@ -55,7 +55,7 @@ public class Column {
 				+ (precision1 != null ? "(" + precision1
 						+ (precision2 != null ? "," + precision2 : "") + ")"
 						: "")
-				+ (nullable != null ? (nullable ? "NULL" : "NOT NULL") : "");
+				+ (nullable != null ? (nullable ? " NULL" : " NOT NULL") : "");
 	}
 
 	public void setSize(Integer size) {
