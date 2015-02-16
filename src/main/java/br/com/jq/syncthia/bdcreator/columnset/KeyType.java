@@ -1,7 +1,7 @@
 package br.com.jq.syncthia.bdcreator.columnset;
 
 public enum KeyType {
-	PRIMARY_KEY, UNIQUE_KEY;
+	PRIMARY_KEY, UNIQUE_KEY; //TODO FOREING_KEY
 
 	public String keySql() {
 		switch (this) {
