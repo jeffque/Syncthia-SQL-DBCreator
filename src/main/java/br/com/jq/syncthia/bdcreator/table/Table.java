@@ -30,6 +30,20 @@ public class Table extends MigratableSelectable {
 		newKey.setTable(this);
 	}
 	
+	public List<TableKey> getKeys() {
+		return keys;
+	}
+	
+	public TableKey getPrimaryKey() {
+		for (TableKey k: keys) {
+			if (k.getKeyType() == KeyType.PRIMARY_KEY) {
+				return k;
+			}
+		}
+		
+		return null;
+	}
+	
 	public void addMigrationStrategy(MigrationStrategy migration) {
 		migrations.add(migration);
 	}
