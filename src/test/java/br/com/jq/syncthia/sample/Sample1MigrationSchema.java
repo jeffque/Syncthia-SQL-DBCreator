@@ -1,0 +1,17 @@
+package br.com.jq.syncthia.sample;
+
+import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
+
+public class Sample1MigrationSchema extends SchemaCreator {
+
+	@Override
+	protected void schemaDefinition() {
+		addTable(new Sample1MigrationTable());
+	}
+
+	@Override
+	public String getSchemaName() {
+		return "Sample 1 migration schema";
+	}
+
+}
