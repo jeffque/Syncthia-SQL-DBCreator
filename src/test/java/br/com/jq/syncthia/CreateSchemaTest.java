@@ -46,6 +46,14 @@ public class CreateSchemaTest extends TestCase {
 	
 	public void testTableNames() {
 		List<SchemaCreator> schemaList = collection.getRegisteredSchemas();
-		assertEquals("SAMPLE_TABLE", schemaList.get(1).getTables().get(0).getName());
+		SchemaCreator sampleSchema = schemaList.get(1);
+		
+		assertEquals(1, sampleSchema.getTables().size());
+		
+		assertNotNull(sampleSchema.getTable("SAMPLE_TABLE"));
+		assertNull(sampleSchema.getTable("NOT_SAMPLE_TABLE"));
+		
+		assertEquals("SAMPLE_TABLE", sampleSchema.getTable("SAMPLE_TABLE").getName());
+		assertEquals(sampleSchema.getTable("SAMPLE_TABLE"), sampleSchema.getTables().get(0));
 	}
 }

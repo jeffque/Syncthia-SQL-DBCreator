@@ -48,5 +48,14 @@ public abstract class SchemaCreator {
 		return schemaTables;
 	}
 	
+	public Table getTable(String tableName) {
+		for (Table t: schemaTables) {
+			if (tableName.equals(t.getName())) {
+				return t;
+			}
+		}
+		
+		return null;
+	}
 	
 }
