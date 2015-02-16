@@ -8,7 +8,16 @@ import br.com.jq.syncthia.bdcreator.table.migration.BasicMigrationStrategy;
 
 public class View extends MigratableSelectable {
 	private MigrationStrategy viewMigration;
+	protected String viewQuery;
 	
+	public String getViewQuery() {
+		return viewQuery;
+	}
+
+	public void setViewQuery(String viewQuery) {
+		this.viewQuery = viewQuery;
+	}
+
 	public View() {
 		super();
 		
@@ -34,9 +43,9 @@ public class View extends MigratableSelectable {
 
 	@Override
 	public void createUnit() {
-		StringBuilder sql = new StringBuilder("CREATE VIEW " + name + " (\n");
-		listColumnsSql(sql);
-		sql.append(")");
+		StringBuilder sql = new StringBuilder("CREATE VIEW " + name + " AS\n");
+		sql.append(viewQuery);
+		sql.append("\n");
 		System.out.println(sql.toString());
 	}
 	
