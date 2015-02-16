@@ -1,10 +1,10 @@
 package br.com.jq.syncthia.bdcreator.table.migration;
 
-import br.com.jq.syncthia.bdcreator.table.Table;
+import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public abstract class MigrationStrategy {
 	private String oldVersion, newVersion;
-	private Table table;
+	protected MigratableSelectable migratable;
 
 	public String getOldVersion() {
 		return oldVersion;
@@ -22,12 +22,12 @@ public abstract class MigrationStrategy {
 		this.newVersion = newVersion;
 	}
 
-	public Table getTable() {
-		return table;
+	public MigratableSelectable getMigratable() {
+		return migratable;
 	}
 
-	public void setTable(Table table) {
-		this.table = table;
+	public void setMigratable(MigratableSelectable migratable) {
+		this.migratable = migratable;
 	}
 	
 	public abstract void migrateUnit();
