@@ -41,6 +41,7 @@ public class Table extends MigratableSelectable {
 		}
 	}
 
+	@Override
 	public List<MigrationStrategy> getDesiredMigrations() {
 		return getDesiredMigrations(new ArrayList<MigrationStrategy>(), desiredVersion, schemaVersion);
 	}
