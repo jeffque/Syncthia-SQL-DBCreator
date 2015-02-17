@@ -26,6 +26,11 @@ public class SchemaCollection {
 		for (SchemaCreator schema: registeredSchemas) {
 			schema.migrateSchema();
 		}
+		
+		// Save all schemas
+		for (SchemaCreator schema: registeredSchemas) {
+			schema.saveSchema();
+		}
 	}
 	
 	public List<SchemaCreator> getRegisteredSchemas() {

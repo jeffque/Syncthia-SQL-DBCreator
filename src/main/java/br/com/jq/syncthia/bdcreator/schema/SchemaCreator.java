@@ -72,4 +72,14 @@ public abstract class SchemaCreator {
 		return null;
 	}
 	
+	public void saveSchema() {
+		for (Table t: schemaTables) {
+			t.saveMigratable();
+		}
+		
+		for (View v: schemaViews) {
+			v.saveMigratable();
+		}
+	}
+	
 }

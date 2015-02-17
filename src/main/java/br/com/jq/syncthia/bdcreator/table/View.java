@@ -49,6 +49,10 @@ public class View extends MigratableSelectable {
 		System.out.println(sql.toString());
 	}
 	
-	
+	@Override
+	public void saveMigratable() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

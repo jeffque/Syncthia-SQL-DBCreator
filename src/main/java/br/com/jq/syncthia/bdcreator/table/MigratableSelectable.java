@@ -9,6 +9,7 @@ public abstract class MigratableSelectable extends Selectable {
 	public abstract void createUnit();
 	public abstract void doMigrations();
 	public abstract List<MigrationStrategy> getDesiredMigrations();
+	public abstract void saveMigratable();
 	
 	protected String desiredVersion, schemaVersion;
 	protected String name;

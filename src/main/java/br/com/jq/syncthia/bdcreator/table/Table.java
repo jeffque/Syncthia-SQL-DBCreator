@@ -109,6 +109,12 @@ public class Table extends MigratableSelectable {
 	public String toString() {
 		return "Table [tableName=" + name + "]";
 	}
+
+	@Override
+	public void saveMigratable() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
