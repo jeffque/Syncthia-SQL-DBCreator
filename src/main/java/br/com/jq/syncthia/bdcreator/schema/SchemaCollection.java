@@ -17,10 +17,12 @@ public class SchemaCollection {
 	}
 	
 	public final void createOrMigrateSchema() {
+		// Create all schemas, if not created
 		for (SchemaCreator schema: registeredSchemas) {
 			schema.createSchema();
 		}
 		
+		// Migrate all schemas, if needed
 		for (SchemaCreator schema: registeredSchemas) {
 			schema.migrateSchema();
 		}
