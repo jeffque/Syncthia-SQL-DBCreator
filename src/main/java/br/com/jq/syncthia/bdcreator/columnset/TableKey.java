@@ -22,11 +22,10 @@ public class TableKey extends ColumnSet {
 	}
 
 	public String keyDescription() {
-		StringBuilder builder = new StringBuilder(getName());
+		StringBuilder builder = new StringBuilder(" CONSTRAINT ");
 		
-		builder.append(" ");
-		builder.append(keyType.keySql());
-		builder.append(" (");
+		builder.append(getName()).append(" ");
+		builder.append(keyType.keySql()).append(" (");
 		
 		boolean firstTime = true;
 		for (Column col: columnList) {

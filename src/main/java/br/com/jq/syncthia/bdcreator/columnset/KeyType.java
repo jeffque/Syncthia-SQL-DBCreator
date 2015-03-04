@@ -8,7 +8,7 @@ public enum KeyType {
 		case PRIMARY_KEY:
 			return "PRIMARY KEY";
 		case UNIQUE_KEY:
-			return "UNIQUE KEY";
+			return "UNIQUE";
 		default:
 			return "";
 		}
