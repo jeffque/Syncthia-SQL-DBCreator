@@ -17,8 +17,8 @@ public abstract class SchemaCreator {
 		schemaTables.add(t);
 	}
 	
-	protected void addView(View t) {
-		schemaViews.add(t);
+	protected void addView(View v) {
+		schemaViews.add(v);
 	}
 	
 	protected void createSchema() {
