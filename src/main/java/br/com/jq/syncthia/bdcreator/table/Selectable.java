@@ -1,12 +1,15 @@
 package br.com.jq.syncthia.bdcreator.table;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
+import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
 
-public class Selectable {
+public class Selectable implements Connectable {
 	protected List<Column> columnList;
+	private Connection sqlConnection;
 	
 	public Selectable() {
 		columnList = new ArrayList<Column>();
@@ -42,6 +45,16 @@ public class Selectable {
 		}
 		
 		return sql.append("\n");
+	}
+	
+	@Override
+	public void setConnection(Connection sqlConnection) {
+		this.sqlConnection = sqlConnection;
+	}
+	
+	@Override
+	public Connection getConnection() {
+		return sqlConnection;
 	}
 
 }

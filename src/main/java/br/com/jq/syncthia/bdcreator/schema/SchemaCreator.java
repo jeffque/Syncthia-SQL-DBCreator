@@ -1,24 +1,30 @@
 package br.com.jq.syncthia.bdcreator.schema;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.View;
 
-public abstract class SchemaCreator {
+public abstract class SchemaCreator implements Connectable {
 	public abstract String getSchemaName();
 	protected abstract void schemaDefinition();
 	
 	protected List<Table> schemaTables = new ArrayList<Table>();
 	protected List<View> schemaViews = new ArrayList<View>();
 	
+	private Connection sqlConnection;
+	
 	protected void addTable(Table t) {
 		schemaTables.add(t);
+		t.setConnection(sqlConnection);
 	}
 	
 	protected void addView(View v) {
 		schemaViews.add(v);
+		v.setConnection(sqlConnection);
 	}
 	
 	protected void createSchema() {
@@ -79,6 +85,24 @@ public abstract class SchemaCreator {
 		
 		for (View v: schemaViews) {
 			v.saveMigratable();
+		}
+	}
+	
+	@Override
+	public Connection getConnection() {
+		return sqlConnection;
+	}
+	
+	@Override
+	public void setConnection(Connection sqlConnection) {
+		this.sqlConnection = sqlConnection;
+		
+		for (Table t: schemaTables) {
+			t.setConnection(sqlConnection);
+		}
+		
+		for (View v: schemaViews) {
+			v.setConnection(sqlConnection);
 		}
 	}
 	
