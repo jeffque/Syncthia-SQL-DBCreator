@@ -12,10 +12,15 @@ public abstract class SchemaCreator implements Connectable {
 	public abstract String getSchemaName();
 	protected abstract void schemaDefinition();
 	
-	protected List<Table> schemaTables = new ArrayList<Table>();
-	protected List<View> schemaViews = new ArrayList<View>();
+	protected List<Table> schemaTables;
+	protected List<View> schemaViews;
 	
 	private Connection sqlConnection;
+	
+	public SchemaCreator() {
+		schemaTables = new ArrayList<Table>();
+		schemaViews = new ArrayList<View>();
+	}
 	
 	protected void addTable(Table t) {
 		schemaTables.add(t);
