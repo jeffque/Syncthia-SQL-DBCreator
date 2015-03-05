@@ -59,7 +59,7 @@ public class Table extends MigratableSelectable {
 
 	@Override
 	public List<MigrationStrategy> getDesiredMigrations() {
-		return getDesiredMigrations(new ArrayList<MigrationStrategy>(), desiredVersion, schemaVersion);
+		return getDesiredMigrations(new ArrayList<MigrationStrategy>(), desiredVersion, registeredVersion);
 	}
 	
 	private List<MigrationStrategy> getDesiredMigrations(List<MigrationStrategy> list, String leafVersion, String rootVersion) {

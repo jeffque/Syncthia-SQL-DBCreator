@@ -2,16 +2,17 @@ package br.com.jq.syncthia.bdcreator.table;
 
 import java.util.List;
 
+import br.com.jq.syncthia.bdcreator.interfaces.Versionable;
 import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
-public abstract class MigratableSelectable extends Selectable {
+public abstract class MigratableSelectable extends Selectable implements Versionable {
 	public abstract void dropUnit();
 	public abstract void createUnit();
 	public abstract void doMigrations();
 	public abstract List<MigrationStrategy> getDesiredMigrations();
 	public abstract void saveMigratable();
 	
-	protected String desiredVersion, schemaVersion;
+	protected String desiredVersion, registeredVersion;
 	protected String name;
 
 
@@ -23,19 +24,23 @@ public abstract class MigratableSelectable extends Selectable {
 		this.name = name;
 	}
 	
+	@Override
 	public String getDesiredVersion() {
 		return desiredVersion;
 	}
 
+	@Override
 	public void setDesiredVersion(String desiredVersion) {
 		this.desiredVersion = desiredVersion;
 	}
 
-	public String getSchemaVersion() {
-		return schemaVersion;
+	@Override
+	public String getRegisteredVersion() {
+		return registeredVersion;
 	}
 
-	public void setSchemaVersion(String schemaVersion) {
-		this.schemaVersion = schemaVersion;
+	@Override
+	public void setRegisteredVersion(String registeredVersion) {
+		this.registeredVersion = registeredVersion;
 	}
 }

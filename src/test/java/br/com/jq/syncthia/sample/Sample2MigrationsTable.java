@@ -25,7 +25,7 @@ public class Sample2MigrationsTable extends Table {
 		addColumn(address);
 		
 		setDesiredVersion("v3");
-		setSchemaVersion("v1");
+		setRegisteredVersion("v1");
 		
 		MigrationSqlCommandStrategy migration1 = new MigrationSqlCommandStrategy();
 		migration1.setNewVersion("v2");

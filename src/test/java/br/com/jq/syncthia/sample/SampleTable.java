@@ -14,6 +14,6 @@ public class SampleTable extends Table {
 		addColumn(idade);
 		
 		setDesiredVersion("v1");
-		setSchemaVersion("v1");
+		setRegisteredVersion("v1");
 	}
 }

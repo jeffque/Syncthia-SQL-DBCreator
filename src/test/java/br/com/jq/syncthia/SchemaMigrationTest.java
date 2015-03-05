@@ -52,11 +52,11 @@ public class SchemaMigrationTest extends TestCase {
 		SchemaCreator schema2Migrations = collection.getSchema("Sample 2 migrations schema");
 		
 		for (Table t: schema1Migration.getTables()) {
-			assertEquals("v1", t.getSchemaVersion());
+			assertEquals("v1", t.getRegisteredVersion());
 		}
 		
 		for (Table t: schema2Migrations.getTables()) {
-			assertEquals("v1", t.getSchemaVersion());
+			assertEquals("v1", t.getRegisteredVersion());
 		}
 	}
 	

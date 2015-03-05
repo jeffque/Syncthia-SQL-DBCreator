@@ -20,7 +20,7 @@ public class Sample1MigrationTable extends Table {
 		addColumn(idade);
 		
 		setDesiredVersion("v2");
-		setSchemaVersion("v1");
+		setRegisteredVersion("v1");
 		
 		MigrationSqlCommandStrategy migration1 = new MigrationSqlCommandStrategy();
 		migration1.setNewVersion("v2");
