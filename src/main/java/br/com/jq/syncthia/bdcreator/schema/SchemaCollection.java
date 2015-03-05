@@ -24,12 +24,30 @@ public class SchemaCollection extends SchemaCollectionInternal {
 	}
 	
 	public void registerSchema(SchemaCreator schema) {
+		super.registerDefinitor(schema);
+		
 		registeredSchemas.add(schema);
 		schema.schemaDefinition();
 		schema.setConnection(getConnection());
 	}
 	
+	private void schemaMetaDataFromExisting() {
+		ExistingSchemaCollection existingCollection = new ExistingSchemaCollection(getConnection());
+		
+		for (ExistingSchema existingSchema: existingCollection.getExistingSchemas()) {
+			SchemaCreator counterPartSchema = getSchema(existingSchema.getSchemaName());
+			
+			for (MigratableSelectable existingMigratable: existingSchema.getMigratables()) {
+				MigratableSelectable counterPartMigratable = counterPartSchema.getMigratable(existingMigratable.getName());
+				
+				counterPartMigratable.setRegisteredVersion(existingMigratable.getRegisteredVersion());
+			}
+		}
+	}
+	
 	public final void createOrMigrateSchema() {
+		schemaMetaDataFromExisting();
+		
 		// Create all schemas, if not created
 		for (SchemaCreator schema: registeredSchemas) {
 			schema.createSchema();
