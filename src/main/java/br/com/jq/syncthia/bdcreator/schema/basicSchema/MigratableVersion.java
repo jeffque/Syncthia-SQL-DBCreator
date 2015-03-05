@@ -1,6 +1,7 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
+import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.table.Table;
@@ -9,15 +10,11 @@ public class MigratableVersion extends Table {
 	public MigratableVersion() {
 		setName("MIGRATABLE_VERSION");
 		
-		Column pkCol = new Column();
+		ColumnAutoIncrement pkCol = new ColumnAutoIncrement("PK_MIGRATABLE_VERSION");
 		Column migratableName = new Column();
 		Column migratableSchemaName = new Column();
 		Column migratableSchemaVersion = new Column();
 		Column migratableType = new Column();
-		
-		pkCol.setName("PK_MIGRATABLE_VERSION");
-		pkCol.setType("INT");
-		pkCol.setNullable(false);
 		
 		migratableName.setName("MIGRATABLE_NAME");
 		migratableName.setType("STRING");
@@ -41,15 +38,12 @@ public class MigratableVersion extends Table {
 		addColumn(migratableSchemaVersion);
 		addColumn(migratableType);
 		
-		TableKey pk = new TableKey(KeyType.PRIMARY_KEY);
-		pk.setName("PRIMARY_KEY_CONSTRAINT");
-		pk.addColumn(pkCol);
-		
 		TableKey uniqueName = new TableKey(KeyType.UNIQUE_KEY);
 		uniqueName.setName("MIGRATABLE_NAME_CONSTRAINT");
 		uniqueName.addColumn(migratableName);
 		
-		addKey(pk);
 		addKey(uniqueName);
+		
+		setDesiredVersion("v1");
 	}
 }

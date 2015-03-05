@@ -5,6 +5,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.jq.syncthia.bdcreator.column.Column;
+import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.exception.DuplicatedPrimaryKeyException;
@@ -13,10 +15,29 @@ import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 public class Table extends MigratableSelectable {
 	protected List<MigrationStrategy> migrations;
 	protected List<TableKey> keys;
+	protected List<Column> ordinaryColumns;
+	private ColumnAutoIncrement aipkCol;
 	
 	public Table() {
 		migrations = new ArrayList<MigrationStrategy>();
 		keys = new ArrayList<TableKey>();
+		ordinaryColumns = new ArrayList<Column>();
+	}
+	
+	public void addColumn(ColumnAutoIncrement aipkCol) {
+		super.addColumn(aipkCol);
+		this.aipkCol = aipkCol;
+		
+		TableKey pkKey = new TableKey(KeyType.PRIMARY_KEY);
+		pkKey.setName("PRIMARY_KEY_CONSTRAINT");
+		pkKey.addColumn(aipkCol);
+		addKey(pkKey);
+	}
+	
+	@Override
+	public void addColumn(Column col) {
+		super.addColumn(col);
+		ordinaryColumns.add(col);
 	}
 	
 	public void addKey(TableKey newKey) throws DuplicatedPrimaryKeyException {
@@ -119,6 +140,9 @@ public class Table extends MigratableSelectable {
 		
 		boolean firstTime = true;
 		for (TableKey k: keys) {
+			if (k.getKeyType() == KeyType.PRIMARY_KEY && aipkCol != null) {
+				continue;
+			}
 			if (!firstTime) {
 				sql.append(",\n");
 			} else {
