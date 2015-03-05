@@ -11,6 +11,7 @@ public class MigratableVersion extends Table {
 		
 		Column pkCol = new Column();
 		Column migratableName = new Column();
+		Column migratableSchemaName = new Column();
 		Column migratableSchemaVersion = new Column();
 		Column migratableType = new Column();
 		
@@ -22,6 +23,10 @@ public class MigratableVersion extends Table {
 		migratableName.setType("STRING");
 		migratableName.setNullable(false);
 		
+		migratableSchemaName.setName("MIGRATABLE_SCHEMA_NAME");
+		migratableSchemaName.setType("STRING");
+		migratableSchemaName.setNullable(false);
+		
 		migratableSchemaVersion.setName("MIGRATABLE_SCHEMA_VERSION");
 		migratableSchemaVersion.setType("STRING");
 		migratableSchemaVersion.setNullable(false);
@@ -32,6 +37,7 @@ public class MigratableVersion extends Table {
 		
 		addColumn(pkCol);
 		addColumn(migratableName);
+		addColumn(migratableSchemaName);
 		addColumn(migratableSchemaVersion);
 		addColumn(migratableType);
 		
