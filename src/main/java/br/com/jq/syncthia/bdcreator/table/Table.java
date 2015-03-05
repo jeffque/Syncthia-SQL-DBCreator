@@ -1,5 +1,7 @@
 package br.com.jq.syncthia.bdcreator.table;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +76,20 @@ public class Table extends MigratableSelectable {
 
 	@Override
 	public void dropUnit() {
-		System.out.println("DROP TABLE " + name);
+		String sql = "DROP TABLE " + name;
+		System.out.println(sql);
+		
+		if (getConnection() != null) {
+			try {
+				Statement stmt = getConnection().createStatement();
+				stmt.execute(sql);
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	@Override
@@ -85,6 +100,16 @@ public class Table extends MigratableSelectable {
 		sql.append(")");
 		
 		System.out.println(sql.toString());
+		if (getConnection() != null) {
+			try {
+				Statement stmt = getConnection().createStatement();
+				stmt.execute(sql.toString());
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected StringBuilder listKeyMetadata(StringBuilder sql) {
