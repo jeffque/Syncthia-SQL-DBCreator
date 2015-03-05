@@ -5,8 +5,8 @@ import br.com.jq.syncthia.bdcreator.columnset.KeyType;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.table.Table;
 
-public class RegisteredSchemas extends Table {
-	public RegisteredSchemas() {
+public class RegisteredSchema extends Table {
+	public RegisteredSchema() {
 		setName("REGISTERED_SCHEMAS");
 		
 		Column pkCol = new Column();
