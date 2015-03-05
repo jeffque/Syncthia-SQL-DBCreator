@@ -31,6 +31,7 @@ public class SchemaMigrationTest extends TestCase {
 		
 		collection.registerSchema(new Sample1MigrationSchema());
 		collection.registerSchema(new Sample2MigrationsSchema());
+		
 		collection.createOrMigrateSchema();
 	}
 
