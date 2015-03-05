@@ -1,6 +1,8 @@
 package br.com.jq.syncthia.bdcreator.schema;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,7 +130,22 @@ public abstract class SchemaDefinitor implements Connectable, Versionable {
 		return this;
 	}
 	
-	public void dropSchema() {
-		//TODO placeholder comment
+	public boolean dropSchema() {
+		boolean okDrop = true;
+		for (MigratableSelectable m: getMigratables()) {
+			okDrop = okDrop && m.dropUnit();
+		}
+		
+		try {
+			Statement stmt = getConnection().createStatement();
+			stmt.executeUpdate("DELETE FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_NAME ='" + getSchemaName() + "'");
+			stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMAS WHERE SCHEMA_NAME ='" + getSchemaName() + "'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			okDrop = false;
+			e.printStackTrace();
+		}
+		
+		return okDrop;
 	}
 }
