@@ -1,5 +1,7 @@
 package br.com.jq.syncthia;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
@@ -29,6 +31,14 @@ public class CreateSchemaTest extends TestCase {
 		collection = new SchemaCollection();
 		
 		collection.registerSchema(new SampleSchema());
+		
+		try {
+			collection.setConnection(DriverManager.getConnection("jdbc:sqlite:teste.db"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		collection.createOrMigrateSchema();
 	}
 
