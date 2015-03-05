@@ -139,6 +139,16 @@ public class Table extends MigratableSelectable {
 	public String getMigratableType() {
 		return "T";
 	}
+
+	public TableKey getKey(String keyName) {
+		for (TableKey k: keys) {
+			if (keyName.equals(k.getName())) {
+				return k;
+			}
+		}
+		
+		return null;
+	}
 	
 	
 }
