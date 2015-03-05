@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
+import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.View;
 
@@ -63,6 +64,14 @@ public abstract class SchemaCreator implements Connectable {
 		return schemaViews;
 	}
 	
+	public List<MigratableSelectable> getMigratables() {
+		List<MigratableSelectable> ret = new ArrayList<MigratableSelectable>();
+		
+		ret.addAll(schemaTables);
+		ret.addAll(schemaViews);
+		return ret;
+	}
+	
 	public Table getTable(String tableName) {
 		for (Table t: schemaTables) {
 			if (tableName.equals(t.getName())) {
@@ -81,6 +90,11 @@ public abstract class SchemaCreator implements Connectable {
 		}
 		
 		return null;
+	}
+	
+	public MigratableSelectable getMigratableSelectable(String migratableName) {
+		Table tableCandidate = getTable(migratableName);
+		return tableCandidate != null? tableCandidate: getView(migratableName);
 	}
 	
 	public void saveSchema() {
