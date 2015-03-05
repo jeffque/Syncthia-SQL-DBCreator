@@ -1,9 +1,6 @@
 package br.com.jq.syncthia;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 import junit.framework.Test;
@@ -57,11 +54,20 @@ public class DropSchemaTest extends TestCase {
 		
 		assertEquals(2, schemaList.size()); // Basic Structural Scheme AND Sample schema
 		
-		collection.getSchema("Basic Structural Scheme").dropSchema();
+		collection.getSchema("Sample schema").dropSchema();
 		
 		try {
 			Statement stmt = conn.createStatement();
-			stmt.execute("erro de sintaxe");
+			
+			ResultSet rsRegisteredSchema = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMAS WHERE SCHEMA_NAME ='Sample schema'");
+			assertFalse(rsRegisteredSchema.next());
+			rsRegisteredSchema.close();
+			
+			ResultSet rsMigratables = stmt.executeQuery("SELECT * FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_VERSION ='Sample schema'");
+			assertFalse(rsMigratables.next());
+			rsMigratables.close();
+
+			stmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			eThrowed = e;
