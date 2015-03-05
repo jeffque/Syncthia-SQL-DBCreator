@@ -37,12 +37,15 @@ public class View extends MigratableSelectable {
 	}
 
 	@Override
-	public void dropUnit() {
+	public boolean dropUnit() {
+		//TODO implement this stuff
 		System.out.println("DROP VIEW " + name);
+		return true;
 	}
 
 	@Override
 	public void createUnit() {
+		//TODO implement this stuff
 		StringBuilder sql = new StringBuilder("CREATE VIEW " + name + " AS\n");
 		sql.append(viewQuery);
 		sql.append("\n");

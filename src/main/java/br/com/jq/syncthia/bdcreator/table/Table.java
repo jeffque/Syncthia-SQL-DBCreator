@@ -96,7 +96,8 @@ public class Table extends MigratableSelectable {
 	}
 
 	@Override
-	public void dropUnit() {
+	public boolean dropUnit() {
+		boolean okDrop = true;
 		String sql = "DROP TABLE " + name;
 		System.out.println(sql);
 		
@@ -107,10 +108,11 @@ public class Table extends MigratableSelectable {
 				stmt.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
+				okDrop = false;
 				e.printStackTrace();
 			}
 		}
-		
+		return okDrop;
 	}
 
 	@Override

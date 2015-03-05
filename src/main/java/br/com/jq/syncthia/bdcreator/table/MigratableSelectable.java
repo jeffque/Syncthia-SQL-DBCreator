@@ -8,7 +8,7 @@ import br.com.jq.syncthia.bdcreator.schema.basicSchema.entity.MigratableVersionE
 import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
 public abstract class MigratableSelectable extends Selectable implements Versionable {
-	public abstract void dropUnit();
+	public abstract boolean dropUnit();
 	public abstract void createUnit();
 	public abstract void doMigrations();
 	public abstract List<MigrationStrategy> getDesiredMigrations();
