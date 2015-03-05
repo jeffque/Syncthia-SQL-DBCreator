@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.schema;
 
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.entity.RegisteredSchemaEntity;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public abstract class SchemaCreator extends SchemaDefinitor {
@@ -22,10 +23,23 @@ public abstract class SchemaCreator extends SchemaDefinitor {
 		return "SchemaCreator [schemaName()=" + getSchemaName() + "]";
 	}
 	
-	public void saveSchema() {
-		for (MigratableSelectable m: getMigratables()) {
-			m.saveMigratable();
+	public boolean saveSchema() {
+		boolean persisted = true;
+		if (getConnection() != null) {
+			RegisteredSchemaEntity entity = new RegisteredSchemaEntity();
+			
+			entity.setSchemaName(getSchemaName());
+			entity.setSchemaVersion(getDesiredVersion());
+			
+			persisted = persisted && entity.persistEntity(getConnection());
 		}
+		
+		
+		for (MigratableSelectable m: getMigratables()) {
+			persisted = persisted && m.saveMigratable();
+		}
+		
+		return persisted;
 	}
 	
 	
