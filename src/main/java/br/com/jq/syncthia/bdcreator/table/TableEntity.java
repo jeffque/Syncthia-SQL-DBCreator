@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.table;
 
+import java.sql.Connection;
 import br.com.jq.syncthia.bdcreator.annotations.GetAnnotation;
 import br.com.jq.syncthia.bdcreator.exceptions.CantPersistAutomaticException;
 
@@ -10,7 +11,7 @@ public abstract class TableEntity {
 		getAnnotation = new GetAnnotation();
 	}
 	
-	protected final boolean persistEntityInternal() throws CantPersistAutomaticException {
+	protected final boolean persistEntityInternal(Connection conn) throws CantPersistAutomaticException {
 		Table t = getAnnotation.getRelatedTable(getClass());
 		
 		if (t == null) {
@@ -20,18 +21,18 @@ public abstract class TableEntity {
 		return false;
 	}
 	
-	protected boolean persistEntityManually() {
+	protected boolean persistEntityManually(Connection conn) {
 		return false;
 	}
 	
-	public final boolean persistEntity() {
+	public final boolean persistEntity(Connection conn) {
 		try {
-			return persistEntityInternal();
+			return persistEntityInternal(conn);
 		} catch (CantPersistAutomaticException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-			return persistEntityManually();
+			return persistEntityManually(conn);
 		}
 	}
 }
