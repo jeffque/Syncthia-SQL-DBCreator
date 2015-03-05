@@ -10,11 +10,14 @@ public abstract class MigratableSelectable extends Selectable implements Version
 	public abstract void createUnit();
 	public abstract void doMigrations();
 	public abstract List<MigrationStrategy> getDesiredMigrations();
-	public abstract void saveMigratable();
+	public abstract String getMigratableType();
 	
 	protected String desiredVersion, registeredVersion;
 	protected String name;
 
+	public void saveMigratable() {
+		// TODO Auto-generated method stub
+	}
 
 	public String getName() {
 		return name;

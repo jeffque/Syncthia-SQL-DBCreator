@@ -50,9 +50,8 @@ public class View extends MigratableSelectable {
 	}
 	
 	@Override
-	public void saveMigratable() {
-		// TODO Auto-generated method stub
-		
+	public String getMigratableType() {
+		return "V";
 	}
 
 }

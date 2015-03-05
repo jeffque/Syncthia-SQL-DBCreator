@@ -136,9 +136,8 @@ public class Table extends MigratableSelectable {
 	}
 
 	@Override
-	public void saveMigratable() {
-		// TODO Auto-generated method stub
-		
+	public String getMigratableType() {
+		return "T";
 	}
 	
 	
