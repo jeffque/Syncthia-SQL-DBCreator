@@ -9,6 +9,7 @@ public class BasicSchema extends SchemaCreator {
 	protected void schemaDefinition() {
 		addTable(new MigratableVersion());
 		addTable(new RegisteredSchema());
+		setDesiredVersion("v1");
 	}
 
 	@Override
