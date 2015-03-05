@@ -5,22 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
+import br.com.jq.syncthia.bdcreator.interfaces.Versionable;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.View;
 
-public abstract class SchemaCreator implements Connectable {
+public abstract class SchemaCreator implements Connectable, Versionable {
 	public abstract String getSchemaName();
 	protected abstract void schemaDefinition();
 	
 	protected List<Table> schemaTables;
 	protected List<View> schemaViews;
 	
+	private String registeredVersion;
+	private String desiredVersion;
+	
 	private Connection sqlConnection;
 	
 	public SchemaCreator() {
 		schemaTables = new ArrayList<Table>();
 		schemaViews = new ArrayList<View>();
+		
+		registeredVersion = "";
+		desiredVersion = "";
 	}
 	
 	protected void addTable(Table t) {
@@ -124,5 +131,27 @@ public abstract class SchemaCreator implements Connectable {
 			v.setConnection(sqlConnection);
 		}
 	}
+	
+	@Override
+	public String getDesiredVersion() {
+		return desiredVersion;
+	}
+	
+	@Override
+	public void setDesiredVersion(String desiredVersion) {
+		this.desiredVersion = desiredVersion;
+	}
+	
+	@Override
+	public String getRegisteredVersion() {
+		return registeredVersion;
+	}
+	
+	@Override
+	public void setRegisteredVersion(String registeredVersion) {
+		this.registeredVersion = registeredVersion;
+	}
+	
+	
 	
 }
