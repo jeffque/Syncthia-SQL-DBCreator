@@ -54,6 +54,24 @@ public class DropSchemaTest extends TestCase {
 		
 		assertEquals(2, schemaList.size()); // Basic Structural Scheme AND Sample schema
 		
+		try {
+			Statement stmt = conn.createStatement();
+			
+			ResultSet rsRegisteredSchema = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMAS WHERE SCHEMA_NAME ='Sample schema'");
+			assertTrue(rsRegisteredSchema.next());
+			rsRegisteredSchema.close();
+			
+			ResultSet rsMigratables = stmt.executeQuery("SELECT * FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_NAME ='Sample schema'");
+			assertTrue(rsMigratables.next());
+			rsMigratables.close();
+
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			eThrowed = e;
+			e.printStackTrace();
+		};
+		
 		collection.getSchema("Sample schema").dropSchema();
 		
 		try {
