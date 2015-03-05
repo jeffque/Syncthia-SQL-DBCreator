@@ -51,7 +51,6 @@ class ExistingSchemaCollection extends SchemaCollectionInternal {
 	}
 	
 	private void searchTables() {
-		// TODO Auto-generated method stub
 		Connection conn = getConnection();
 		try {
 			Statement stmt = conn.createStatement();
