@@ -37,9 +37,17 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		for (ExistingSchema existingSchema: existingCollection.getExistingSchemas()) {
 			SchemaCreator counterPartSchema = getSchema(existingSchema.getSchemaName());
 			
+			// It happens when there is a registered schema not in the present schema collection
+			if (counterPartSchema == null) {
+				continue;
+			}
 			for (MigratableSelectable existingMigratable: existingSchema.getMigratables()) {
 				MigratableSelectable counterPartMigratable = counterPartSchema.getMigratable(existingMigratable.getName());
 				
+				// It happens when there is a metadata from a table but it is not in the schema anymore
+				if (counterPartMigratable == null) {
+					continue;
+				}
 				counterPartMigratable.setRegisteredVersion(existingMigratable.getRegisteredVersion());
 			}
 		}
