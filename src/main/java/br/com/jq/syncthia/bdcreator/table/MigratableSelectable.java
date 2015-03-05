@@ -3,6 +3,7 @@ package br.com.jq.syncthia.bdcreator.table;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.interfaces.Versionable;
+import br.com.jq.syncthia.bdcreator.schema.SchemaDefinitor;
 import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
 public abstract class MigratableSelectable extends Selectable implements Versionable {
@@ -14,6 +15,8 @@ public abstract class MigratableSelectable extends Selectable implements Version
 	
 	protected String desiredVersion, registeredVersion;
 	protected String name;
+	
+	private SchemaDefinitor schema;
 
 	public void saveMigratable() {
 		// TODO Auto-generated method stub
@@ -45,5 +48,14 @@ public abstract class MigratableSelectable extends Selectable implements Version
 	@Override
 	public void setRegisteredVersion(String registeredVersion) {
 		this.registeredVersion = registeredVersion;
+	}
+	
+	@Override
+	public SchemaDefinitor getSchema() {
+		return schema;
+	}
+	
+	public void setSchema(SchemaDefinitor schema) {
+		this.schema = schema;
 	}
 }

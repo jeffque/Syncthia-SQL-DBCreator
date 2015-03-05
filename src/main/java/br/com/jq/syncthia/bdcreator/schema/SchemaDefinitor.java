@@ -10,7 +10,7 @@ import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.View;
 
-abstract class SchemaDefinitor implements Connectable, Versionable {
+public abstract class SchemaDefinitor implements Connectable, Versionable {
 	public abstract String getSchemaName();
 	
 	private List<Table> schemaTables;
@@ -119,6 +119,12 @@ abstract class SchemaDefinitor implements Connectable, Versionable {
 	
 	private void addMigratable(MigratableSelectable m) {
 		schemaMigratables.add(m);
+		m.setSchema(this);
 		m.setConnection(getConnection());
+	}
+	
+	@Override
+	public SchemaDefinitor getSchema() {
+		return this;
 	}
 }
