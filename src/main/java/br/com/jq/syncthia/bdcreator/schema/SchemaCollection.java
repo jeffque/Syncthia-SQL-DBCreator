@@ -4,12 +4,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
+import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
-public class SchemaCollection implements Connectable {
+public class SchemaCollection extends SchemaCollectionInternal {
 	private List<SchemaCreator> registeredSchemas;
-	
-	private Connection sqlConnection;
 	
 	public SchemaCollection() {
 		registeredSchemas = new ArrayList<SchemaCreator>();
@@ -17,13 +15,8 @@ public class SchemaCollection implements Connectable {
 	}
 	
 	@Override
-	public Connection getConnection() {
-		return sqlConnection;
-	}
-	
-	@Override
 	public void setConnection(Connection sqlConnection) {
-		this.sqlConnection = sqlConnection;
+		super.setConnection(sqlConnection);
 		
 		for (SchemaCreator schema: registeredSchemas) {
 			schema.setConnection(sqlConnection);
@@ -33,7 +26,7 @@ public class SchemaCollection implements Connectable {
 	public void registerSchema(SchemaCreator schema) {
 		registeredSchemas.add(schema);
 		schema.schemaDefinition();
-		schema.setConnection(sqlConnection);
+		schema.setConnection(getConnection());
 	}
 	
 	public final void createOrMigrateSchema() {
@@ -66,4 +59,5 @@ public class SchemaCollection implements Connectable {
 		
 		return null;
 	}
+	
 }
