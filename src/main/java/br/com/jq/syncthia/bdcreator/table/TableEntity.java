@@ -3,7 +3,7 @@ package br.com.jq.syncthia.bdcreator.table;
 import br.com.jq.syncthia.bdcreator.annotations.GetAnnotation;
 import br.com.jq.syncthia.bdcreator.exceptions.CantPersistAutomaticException;
 
-public class TableEntity {
+public abstract class TableEntity {
 	private GetAnnotation getAnnotation;
 	
 	public TableEntity() {
