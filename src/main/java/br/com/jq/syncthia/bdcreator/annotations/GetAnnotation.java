@@ -52,4 +52,17 @@ public class GetAnnotation implements GetAnnotationInterface {
 		
 		return null;
 	}
+
+	@Override
+	public Field getFieldFromColumn(Class<? extends TableEntity> entityClass, String colName) {
+		for (Field f: entityClass.getFields()) {
+			ColumnMapper columnMapper = f.getAnnotation(ColumnMapper.class);
+			
+			if (columnMapper != null && colName.equals(columnMapper.column())) {
+				return f;
+			}
+		}
+		
+		return null;
+	}
 }
