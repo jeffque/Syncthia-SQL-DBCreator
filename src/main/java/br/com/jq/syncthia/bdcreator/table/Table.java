@@ -94,7 +94,7 @@ public class Table extends MigratableSelectable {
 
 	@Override
 	public void createUnit() {
-		StringBuilder sql = new StringBuilder("CREATE TABLE " + name + " (\n");
+		StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + name + " (\n");
 		listColumnsSql(sql);
 		listKeyMetadata(sql);
 		sql.append(")");
