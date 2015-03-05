@@ -127,4 +127,8 @@ public abstract class SchemaDefinitor implements Connectable, Versionable {
 	public SchemaDefinitor getSchema() {
 		return this;
 	}
+	
+	public void dropSchema() {
+		//TODO placeholder comment
+	}
 }
