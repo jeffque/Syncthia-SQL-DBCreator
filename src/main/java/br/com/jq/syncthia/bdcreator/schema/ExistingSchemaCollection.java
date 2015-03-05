@@ -18,87 +18,85 @@ class ExistingSchemaCollection extends SchemaCollectionInternal {
 		setConnection(sqlConnection);
 		schemasFromDB = new ArrayList<ExistingSchema>();
 		
-		searchMetadata();
+		if (sqlConnection != null) {
+			searchMetadata();
+		}
 	}
 
 	private void searchMetadata() {
-		searchSchemas();
-		searchTables();
-	}
-
-	private void searchSchemas() {
-		Connection conn = getConnection();
 		try {
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMAS");
-			
-			
-			while(rs.next()) {
-				ExistingSchema schema = new ExistingSchema();
-				String schemaName = rs.getString("SCHEMA_NAME");
-				String schemaVersion = rs.getString("SCHEMA_VERSION");
-				
-				schema.setSchemaName(schemaName);
-				schema.setRegisteredVersion(schemaVersion);
-			}
-			
-			rs.close();
-			stmt.close();
+			searchSchemas();
+			searchTables();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	private void searchTables() {
+
+	private void searchSchemas() throws SQLException {
 		Connection conn = getConnection();
-		try {
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM MIGRATABLE_VERSION");
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMAS");
+		
+		
+		while(rs.next()) {
+			ExistingSchema schema = new ExistingSchema();
+			String schemaName = rs.getString("SCHEMA_NAME");
+			String schemaVersion = rs.getString("SCHEMA_VERSION");
 			
+			schema.setSchemaName(schemaName);
+			schema.setRegisteredVersion(schemaVersion);
 			
-			while (rs.next()) {
-				String schemaName = rs.getString("MIGRATABLE_SCHEMA_NAME");
-				String schemaVersion = rs.getString("MIGRATABLE_SCHEMA_VERSION");
-				
-				ExistingSchema schema = getExistingSchema(schemaName);
-				
-				String migratableName = rs.getString("MIGRATABLE_NAME");
-				String migratableType = rs.getString("MIGRATABLE_TYPE");
-				
-				MigratableSelectable m;
+			registerExistingSchema(schema);
+		}
+		
+		rs.close();
+		stmt.close();
+	}
+	
+	private void searchTables() throws SQLException {
+		Connection conn = getConnection();
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM MIGRATABLE_VERSION");
+		
+		while (rs.next()) {
+			String schemaName = rs.getString("MIGRATABLE_SCHEMA_NAME");
+			String schemaVersion = rs.getString("MIGRATABLE_SCHEMA_VERSION");
+			
+			ExistingSchema schema = getExistingSchema(schemaName);
+			
+			String migratableName = rs.getString("MIGRATABLE_NAME");
+			String migratableType = rs.getString("MIGRATABLE_TYPE");
+			
+			MigratableSelectable m;
+			
+			switch (migratableType) {
+			case "T":
+				m = new Table();
+				break;
+			case "V":
+				m = new View();
+				break;
+			default:
+				m = null;
+			}
+			
+			if (m != null) {
+				m.setName(migratableName);
+				m.setRegisteredVersion(schemaVersion);
 				
 				switch (migratableType) {
 				case "T":
-					m = new Table();
+					schema.addTable((Table) m);
 					break;
 				case "V":
-					m = new View();
-					break;
-				default:
-					m = null;
-				}
-				
-				if (m != null) {
-					m.setName(migratableName);
-					m.setRegisteredVersion(schemaVersion);
-					
-					switch (migratableType) {
-					case "T":
-						schema.addTable((Table) m);
-						break;
-					case "V":
-						schema.addView((View) m);
-					}
+					schema.addView((View) m);
 				}
 			}
-			
-			rs.close();
-			stmt.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		
+		rs.close();
+		stmt.close();
 	}
 
 	private ExistingSchema getExistingSchema(String schemaName) {
