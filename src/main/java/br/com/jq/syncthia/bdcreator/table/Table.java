@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.table;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -178,6 +179,43 @@ public class Table extends MigratableSelectable {
 		}
 		
 		return null;
+	}
+
+	public PreparedStatement prepareInsertStatement() throws SQLException {
+		if (getConnection() == null) {
+			return null;
+		}
+		
+		StringBuilder sql = new StringBuilder("INSERT INTO ").append(getName()).append(" (");
+		boolean isFirst;
+		
+		isFirst = true;
+		for (Column c: getColumnList()) {
+			if (isFirst) {
+				isFirst = false;
+			} else {
+				sql.append(",");
+			}
+			
+			sql.append(c.getName());
+		}
+		
+		sql.append(" VALUES (");
+		
+		isFirst = true;
+		for (int i = getColumnList().size() - 1; i >= 0; i--) {
+			if (isFirst) {
+				isFirst = false;
+			} else {
+				sql.append(",");
+			}
+			
+			sql.append("?");
+		}
+		
+		sql.append(")");
+		
+		return getConnection().prepareStatement(sql.toString());
 	}
 	
 	
