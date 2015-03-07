@@ -203,7 +203,7 @@ public class Table extends MigratableSelectable {
 			deleteSql.append(col.getName()).append(" = ?");
 		}
 		
-		
+		System.out.println("delete stmt (" + getName() + "):\n\t" + deleteSql);
 		return getConnection().prepareStatement(deleteSql.toString());
 	}
 	
@@ -242,7 +242,7 @@ public class Table extends MigratableSelectable {
 			updateSql.append(col.getName()).append(" = ?");
 		}
 		
-		
+		System.out.println("update stmt (" + getName() + "):\n\t" + updateSql);
 		return getConnection().prepareStatement(updateSql.toString());
 	}
 
@@ -279,6 +279,7 @@ public class Table extends MigratableSelectable {
 		}
 		sql.append(")");
 		
+		System.out.println("insert stmt (" + getName() + "):\n\t" + sql);
 		return getConnection().prepareStatement(sql.toString());
 	}
 	
