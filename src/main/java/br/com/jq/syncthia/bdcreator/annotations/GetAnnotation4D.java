@@ -1,6 +1,7 @@
 package br.com.jq.syncthia.bdcreator.annotations;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
@@ -14,7 +15,7 @@ public class GetAnnotation4D implements GetAnnotationInterface {
 	}
 
 	@Override
-	public Column[] getColumns(Class<? extends TableEntity> entityClass, Table t) {
+	public List<Column> getColumns(Class<? extends TableEntity> entityClass, Table t) {
 		return null;
 	}
 	@Override

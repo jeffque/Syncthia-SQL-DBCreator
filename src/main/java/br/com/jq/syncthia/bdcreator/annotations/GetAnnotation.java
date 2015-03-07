@@ -28,7 +28,7 @@ public class GetAnnotation implements GetAnnotationInterface {
 	}
 
 	@Override
-	public Column[] getColumns(Class<? extends TableEntity> entityClass, Table t) {
+	public List<Column> getColumns(Class<? extends TableEntity> entityClass, Table t) {
 		List<Column> l = new ArrayList<Column>();
 		
 		for (Field f: entityClass.getFields()) {
@@ -40,7 +40,7 @@ public class GetAnnotation implements GetAnnotationInterface {
 			}
 		}
 		
-		return l.toArray(new Column[0]);
+		return l;
 	}
 
 	@Override

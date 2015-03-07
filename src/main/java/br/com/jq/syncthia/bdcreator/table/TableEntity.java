@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.annotations.GetAnnotation;
 import br.com.jq.syncthia.bdcreator.column.Column;
@@ -44,9 +45,9 @@ public abstract class TableEntity {
 			throw new CantPersistAutomaticException(); //XXX create exception for FindTable
 		}
 		
-		Column[] columns = getAnnotation.getColumns(getClass(), t);
+		List<Column> columns = getAnnotation.getColumns(getClass(), t);
 		
-		if (columns == null || columns.length == 0) {
+		if (columns == null || columns.size() == 0) {
 			throw new CantPersistAutomaticException(); //XXX create exception for FindColumns
 		}
 		
@@ -56,68 +57,20 @@ public abstract class TableEntity {
 			throw new CantPersistAutomaticException(); //XXX create exception for FindUniqueKey
 		}
 		
-		boolean firstCol;
-		
-		StringBuilder updateSql = new StringBuilder("UPDATE ").append(t.getName()).append(" SET ");
-		
-		firstCol = true;
-		for (Column col: columns) {
-			if (!firstCol) {
-				updateSql.append(", ");
-			} else {
-				firstCol = false;
-			}
-			updateSql.append(col.getName()).append("= ?");
-		}
-		
-		updateSql.append(" WHERE ");
-		
-		firstCol = true;
-		for (Column col: uniqueKey.getColumns()) {
-			if (!firstCol) {
-				updateSql.append(" AND ");
-			} else {
-				firstCol = false;
-			}
-			updateSql.append(col.getName()).append("= ?");
-		}
-		
-		StringBuilder insertSql = new StringBuilder("INSERT INTO ").append(t.getName()).append(" (");
-		firstCol = true;
-		for (Column col: columns) {
-			if (!firstCol) {
-				insertSql.append(", ");
-			} else {
-				firstCol = false;
-			}
-			insertSql.append(col.getName());
-		}
-		insertSql.append(") VALUES (");
-		firstCol = true;
-		for (int i = columns.length - 1; i >= 0; i--) {
-			if (!firstCol) {
-				insertSql.append(", ");
-			} else {
-				firstCol = false;
-			}
-			insertSql.append("?");
-		}
-		insertSql.append(")");
-		
 		int updatedRows = 0;
 		
 		try {
 			int pStmtOffset;
 			
-			PreparedStatement updateStmt = conn.prepareStatement(updateSql.toString());
+			PreparedStatement updateStmt = t.prepareUpdateStatement(uniqueKey, columns);
 			pStmtOffset = 1;
-			for (int i = columns.length - 1; i >= 0; i--) {
+			for (int i = columns.size() - 1; i >= 0; i--) {
 				int pStmtPos = i + pStmtOffset;
-				Column col = columns[i];
+				Column col = columns.get(i);
 				setParamPStmt(updateStmt, pStmtPos, col);
 			}
 			
-			pStmtOffset = columns.length + 1;
+			pStmtOffset = columns.size() + 1;
 			for (int i = uniqueKey.getColumns().size() - 1; i >= 0; i--) {
 				int pStmtPos = i + pStmtOffset;
 				Column col = uniqueKey.getColumns().get(i);
@@ -126,11 +79,11 @@ public abstract class TableEntity {
 			updatedRows = updateStmt.executeUpdate();
 			
 			if (updatedRows == 0) {
-				PreparedStatement insertStmt = conn.prepareStatement(insertSql.toString());
+				PreparedStatement insertStmt = t.prepareInsertStatement(columns);
 				pStmtOffset = 1;
-				for (int i = columns.length - 1; i >= 0; i--) {
+				for (int i = columns.size() - 1; i >= 0; i--) {
 					int pStmtPos = i + pStmtOffset;
-					Column col = columns[i];
+					Column col = columns.get(i);
 					setParamPStmt(insertStmt, pStmtPos, col);
 				}
 				updatedRows = insertStmt.executeUpdate();
