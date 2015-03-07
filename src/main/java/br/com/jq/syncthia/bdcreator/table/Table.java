@@ -181,6 +181,29 @@ public class Table extends MigratableSelectable {
 		return null;
 	}
 	
+	public PreparedStatement prepareDeleteStatement() throws SQLException {
+		return prepareDeleteStatement(getPrimaryKey());
+	}
+
+	public PreparedStatement prepareDeleteStatement(TableKey uniqueKey) throws SQLException {
+		
+		boolean firstCol;
+		StringBuilder deleteSql = new StringBuilder("DELETE FROM ").append(getName()).append(" WHERE ");
+		
+		firstCol = true;
+		for (Column col: uniqueKey.getColumns()) {
+			if (!firstCol) {
+				deleteSql.append(" AND ");
+			} else {
+				firstCol = false;
+			}
+			deleteSql.append(col.getName()).append(" = ?");
+		}
+		
+		
+		return getConnection().prepareStatement(deleteSql.toString());
+	}
+	
 	public PreparedStatement prepareUpdateStatement() throws SQLException {
 		return prepareUpdateStatement(getPrimaryKey(), getColumnList());
 	}
