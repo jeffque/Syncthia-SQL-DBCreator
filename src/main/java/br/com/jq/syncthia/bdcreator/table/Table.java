@@ -182,6 +182,10 @@ public class Table extends MigratableSelectable {
 	}
 
 	public PreparedStatement prepareInsertStatement() throws SQLException {
+		return prepareInsertStatement(getColumnList());
+	}
+	
+	public PreparedStatement prepareInsertStatement(List<Column> columnListSignificant) throws SQLException {
 		if (getConnection() == null) {
 			return null;
 		}
