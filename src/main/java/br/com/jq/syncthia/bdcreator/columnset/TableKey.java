@@ -22,9 +22,12 @@ public class TableKey extends ColumnSet {
 	}
 
 	public String keyDescription() {
-		StringBuilder builder = new StringBuilder(" CONSTRAINT ");
+		StringBuilder builder = new StringBuilder();
 		
-		builder.append(getName()).append(" ");
+		if (getName() != null) {
+			builder.append(" CONSTRAINT ");
+			builder.append(getName()).append(" ");
+		}
 		builder.append(keyType.keySql()).append(" (");
 		
 		boolean firstTime = true;
