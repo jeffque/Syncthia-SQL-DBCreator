@@ -186,6 +186,9 @@ public class Table extends MigratableSelectable {
 	}
 
 	public PreparedStatement prepareDeleteStatement(TableKey uniqueKey) throws SQLException {
+		if (getConnection() == null) {
+			return null;
+		}
 		
 		boolean firstCol;
 		StringBuilder deleteSql = new StringBuilder("DELETE FROM ").append(getName()).append(" WHERE ");
@@ -210,6 +213,9 @@ public class Table extends MigratableSelectable {
 
 	public PreparedStatement prepareUpdateStatement(TableKey uniqueKey,
 			List<Column> columnListSignificant) throws SQLException {
+		if (getConnection() == null) {
+			return null;
+		}
 		
 		boolean firstCol;
 		StringBuilder updateSql = new StringBuilder("UPDATE ").append(getName()).append(" SET ");
