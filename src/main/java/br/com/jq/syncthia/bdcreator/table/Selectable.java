@@ -33,7 +33,7 @@ public class Selectable implements Connectable {
 		return columnList;
 	}
 	
-	protected StringBuilder listColumnsSql(StringBuilder sql) {
+	public StringBuilder listColumnsSql(StringBuilder sql) {
 		boolean firstTime = true;
 		for (Column col: columnList) {
 			if (!firstTime) {

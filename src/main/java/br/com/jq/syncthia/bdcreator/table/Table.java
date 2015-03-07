@@ -135,7 +135,7 @@ public class Table extends MigratableSelectable {
 		}
 	}
 
-	protected StringBuilder listKeyMetadata(StringBuilder sql) {
+	public StringBuilder listKeyMetadata(StringBuilder sql) {
 		// If there is just one key and is the aipkCol, there is no need to do this
 		if (keys.size() == 1 && aipkCol != null) {
 			return sql;
