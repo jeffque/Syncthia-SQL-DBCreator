@@ -180,6 +180,42 @@ public class Table extends MigratableSelectable {
 		
 		return null;
 	}
+	
+	public PreparedStatement prepareUpdateStatement() throws SQLException {
+		return prepareUpdateStatement(getPrimaryKey(), getColumnList());
+	}
+
+	public PreparedStatement prepareUpdateStatement(TableKey uniqueKey,
+			List<Column> columnListSignificant) throws SQLException {
+		
+		boolean firstCol;
+		StringBuilder updateSql = new StringBuilder("UPDATE ").append(getName()).append(" SET ");
+		
+		firstCol = true;
+		for (Column col: columnListSignificant) {
+			if (!firstCol) {
+				updateSql.append(", ");
+			} else {
+				firstCol = false;
+			}
+			updateSql.append(col.getName()).append("= ?");
+		}
+		
+		updateSql.append(" WHERE ");
+		
+		firstCol = true;
+		for (Column col: uniqueKey.getColumns()) {
+			if (!firstCol) {
+				updateSql.append(" AND ");
+			} else {
+				firstCol = false;
+			}
+			updateSql.append(col.getName()).append("= ?");
+		}
+		
+		
+		return getConnection().prepareStatement(updateSql.toString());
+	}
 
 	public PreparedStatement prepareInsertStatement() throws SQLException {
 		return prepareInsertStatement(getColumnList());
