@@ -198,7 +198,7 @@ public class Table extends MigratableSelectable {
 			} else {
 				firstCol = false;
 			}
-			updateSql.append(col.getName()).append("= ?");
+			updateSql.append(col.getName()).append(" = ?");
 		}
 		
 		updateSql.append(" WHERE ");
@@ -210,7 +210,7 @@ public class Table extends MigratableSelectable {
 			} else {
 				firstCol = false;
 			}
-			updateSql.append(col.getName()).append("= ?");
+			updateSql.append(col.getName()).append(" = ?");
 		}
 		
 		
