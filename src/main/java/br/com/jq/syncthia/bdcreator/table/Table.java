@@ -259,7 +259,7 @@ public class Table extends MigratableSelectable {
 		boolean firstCol;
 		
 		firstCol = true;
-		for (Column c: getColumnList()) {
+		for (Column c: columnListSignificant) {
 			if (firstCol) {
 				firstCol = false;
 			} else {
@@ -269,7 +269,7 @@ public class Table extends MigratableSelectable {
 		}
 		sql.append(") VALUES (");
 		firstCol = true;
-		for (int i = getColumnList().size() - 1; i >= 0; i--) {
+		for (int i = columnListSignificant.size() - 1; i >= 0; i--) {
 			if (firstCol) {
 				firstCol = false;
 			} else {
