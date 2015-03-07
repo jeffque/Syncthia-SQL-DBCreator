@@ -58,6 +58,7 @@ public abstract class TableEntity {
 		}
 		
 		int updatedRows = 0;
+		t.setConnection(conn);
 		
 		try {
 			int pStmtOffset;
