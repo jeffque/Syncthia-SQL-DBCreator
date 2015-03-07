@@ -191,32 +191,27 @@ public class Table extends MigratableSelectable {
 		}
 		
 		StringBuilder sql = new StringBuilder("INSERT INTO ").append(getName()).append(" (");
-		boolean isFirst;
+		boolean firstCol;
 		
-		isFirst = true;
+		firstCol = true;
 		for (Column c: getColumnList()) {
-			if (isFirst) {
-				isFirst = false;
+			if (firstCol) {
+				firstCol = false;
 			} else {
 				sql.append(",");
 			}
-			
 			sql.append(c.getName());
 		}
-		
-		sql.append(" VALUES (");
-		
-		isFirst = true;
+		sql.append(") VALUES (");
+		firstCol = true;
 		for (int i = getColumnList().size() - 1; i >= 0; i--) {
-			if (isFirst) {
-				isFirst = false;
+			if (firstCol) {
+				firstCol = false;
 			} else {
-				sql.append(",");
+				sql.append(", ");
 			}
-			
 			sql.append("?");
 		}
-		
 		sql.append(")");
 		
 		return getConnection().prepareStatement(sql.toString());
