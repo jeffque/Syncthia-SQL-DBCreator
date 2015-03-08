@@ -46,19 +46,19 @@ public abstract class TableEntity {
 		Table t = getAnnotation.getRelatedTable(getClass());
 		
 		if (t == null) {
-			throw new NoTableToPersistAutomaticException(); //XXX create exception for FindTable
+			throw new NoTableToPersistAutomaticException();
 		}
 		
 		List<Column> columns = getAnnotation.getColumns(getClass(), t);
 		
 		if (columns == null || columns.size() == 0) {
-			throw new NoColumnToPersistAutomaticException(); //XXX create exception for FindColumns
+			throw new NoColumnToPersistAutomaticException();
 		}
 		
 		TableKey uniqueKey = getAnnotation.getUniqueKey(getClass(), t);
 		
 		if (uniqueKey == null) {
-			throw new NoUniqueKeyToPersistAutomaticException(); //XXX create exception for FindUniqueKey
+			throw new NoUniqueKeyToPersistAutomaticException();
 		}
 		
 		int updatedRows = 0;
