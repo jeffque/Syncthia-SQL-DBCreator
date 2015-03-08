@@ -54,7 +54,7 @@ public class GetAnnotation implements GetAnnotationInterface {
 		for (ColumnMapper columnMapper: entityClass.getAnnotationsByType(ColumnMapper.class)) {
 			if (colName.equals(columnMapper.column())) {
 				String getterName = columnMapper.columnEntityGetter();
-				if (getterName.equals(ColumnMapper.invalidString)) {
+				if (getterName.equals(AnnotationsUtils.invalidString)) {
 					StringBuilder getterBuilder = new StringBuilder("get");
 					for (String part: columnMapper.column().split("_")) {
 						getterBuilder.append(part.substring(0, 1).toUpperCase()).append(part.substring(1).toLowerCase());

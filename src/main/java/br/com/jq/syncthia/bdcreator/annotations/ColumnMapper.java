@@ -7,9 +7,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ColumnMapper {
-	public static final String invalidString = "invalid string";
-	
 	String column();
-	String columnEntityGetter() default invalidString;
-	String columnEntitySetter() default invalidString;
+	String columnEntityGetter() default AnnotationsUtils.invalidString;
+	String columnEntitySetter() default AnnotationsUtils.invalidString;
 }
