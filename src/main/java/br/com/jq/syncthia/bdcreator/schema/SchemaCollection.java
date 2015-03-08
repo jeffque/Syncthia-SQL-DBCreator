@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.BasicSchema;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public class SchemaCollection extends SchemaCollectionInternal {
