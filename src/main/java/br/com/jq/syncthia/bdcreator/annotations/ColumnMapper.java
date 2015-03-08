@@ -1,12 +1,15 @@
 package br.com.jq.syncthia.bdcreator.annotations;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
-@Target(ElementType.FIELD)
+
+@Repeatable(ColumnMapperContainer.class)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ColumnMapper {
+	public static final String invalidString = "invalid string";
+	
 	String column();
+	String columnEntityGetter() default invalidString;
+	String columnEntitySetter() default invalidString;
 }

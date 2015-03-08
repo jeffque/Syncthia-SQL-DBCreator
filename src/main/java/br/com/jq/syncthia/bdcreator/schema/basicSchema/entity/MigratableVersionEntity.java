@@ -6,16 +6,17 @@ import br.com.jq.syncthia.bdcreator.schema.basicSchema.MigratableVersion;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
 
 @TableMapper(table = MigratableVersion.class, uniqueKeyUsed = "MIGRATABLE_NAME_CONSTRAINT")
+@ColumnMapper(column = "MIGRATABLE_NAME")
+@ColumnMapper(column = "MIGRATABLE_SCHEMA_NAME")
+@ColumnMapper(column = "MIGRATABLE_SCHEMA_VERSION")
+@ColumnMapper(column = "MIGRATABLE_TYPE")
 public class MigratableVersionEntity extends TableEntity {
-	@ColumnMapper(column = "MIGRATABLE_NAME")
-	public String migratableName;
-	@ColumnMapper(column = "MIGRATABLE_SCHEMA_NAME")
-	public String migratableSchema;
-	@ColumnMapper(column = "MIGRATABLE_SCHEMA_VERSION")
-	public String migratableSchemaVersion;
-	@ColumnMapper(column = "MIGRATABLE_TYPE")
-	public String migratableType;
 	
+	private String migratableName;
+	private String migratableSchema;
+	private String migratableSchemaVersion;
+	private String migratableType;
+
 	public MigratableVersionEntity() {
 		migratableName = "";
 		migratableSchema = "";

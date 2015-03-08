@@ -6,11 +6,11 @@ import br.com.jq.syncthia.bdcreator.schema.basicSchema.RegisteredSchema;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
 
 @TableMapper(table = RegisteredSchema.class, uniqueKeyUsed = "SCHEMA_NAME_CONSTRAINT")
-public class RegisteredSchemaEntity extends TableEntity {
-	@ColumnMapper(column = "SCHEMA_NAME")
-	public String schemaName;
-	@ColumnMapper(column = "SCHEMA_VERSION")
-	public String schemaVersion;
+@ColumnMapper(column = "SCHEMA_NAME")
+@ColumnMapper(column = "SCHEMA_VERSION")
+public class RegisteredSchemaEntity extends TableEntity {	
+	private String schemaName;
+	private String schemaVersion;
 	
 	public String getSchemaName() {
 		return schemaName;

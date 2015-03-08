@@ -1,7 +1,7 @@
 package br.com.jq.syncthia.bdcreator.table;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,18 +20,19 @@ public abstract class TableEntity {
 	}
 	
 	private void setParamPStmt(PreparedStatement pStmt, int pStmtPos, Column col) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SQLException {
-		Field f = getAnnotation.getFieldFromColumn(getClass(), col.getName());
+		Method m = getAnnotation.getGetterFromColumn(getClass(), col.getName());
+		Object returnGot = m.invoke(this);
 		
-		if (f.get(this) != null) {
+		if (returnGot != null) {
 			switch (col.getType().toLowerCase()) {
 			case "int":
-				pStmt.setInt(pStmtPos, f.getInt(this));
+				pStmt.setInt(pStmtPos, (Integer)returnGot);
 				break;
 			case "varchar":
 			case "char":
 			case "string":
 			default:
-				pStmt.setString(pStmtPos, f.get(this).toString());
+				pStmt.setString(pStmtPos, returnGot.toString());
 			}
 		} else {
 			pStmt.setNull(pStmtPos, 0);

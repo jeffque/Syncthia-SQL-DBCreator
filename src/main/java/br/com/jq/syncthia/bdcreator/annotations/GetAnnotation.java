@@ -1,6 +1,6 @@
 package br.com.jq.syncthia.bdcreator.annotations;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +31,9 @@ public class GetAnnotation implements GetAnnotationInterface {
 	public List<Column> getColumns(Class<? extends TableEntity> entityClass, Table t) {
 		List<Column> l = new ArrayList<Column>();
 		
-		for (Field f: entityClass.getFields()) {
-			ColumnMapper columnMapper = f.getAnnotation(ColumnMapper.class);
-			
-			if (columnMapper != null) {
-				Column c = t.getColumn(columnMapper.column());
-				l.add(c);
-			}
+		for (ColumnMapper columnMapper: entityClass.getAnnotationsByType(ColumnMapper.class)) {
+			Column c = t.getColumn(columnMapper.column());
+			l.add(c);
 		}
 		
 		return l;
@@ -54,12 +50,20 @@ public class GetAnnotation implements GetAnnotationInterface {
 	}
 
 	@Override
-	public Field getFieldFromColumn(Class<? extends TableEntity> entityClass, String colName) {
-		for (Field f: entityClass.getFields()) {
-			ColumnMapper columnMapper = f.getAnnotation(ColumnMapper.class);
-			
-			if (columnMapper != null && colName.equals(columnMapper.column())) {
-				return f;
+	public Method getGetterFromColumn(Class<? extends TableEntity> entityClass, String colName) throws NoSuchMethodException, SecurityException {
+		for (ColumnMapper columnMapper: entityClass.getAnnotationsByType(ColumnMapper.class)) {
+			if (colName.equals(columnMapper.column())) {
+				String getterName = columnMapper.columnEntityGetter();
+				if (getterName.equals(ColumnMapper.invalidString)) {
+					StringBuilder getterBuilder = new StringBuilder("get");
+					for (String part: columnMapper.column().split("_")) {
+						getterBuilder.append(part.substring(0, 1).toUpperCase()).append(part.substring(1).toLowerCase());
+					}
+					
+					getterName = getterBuilder.toString();
+				}
+				
+				return entityClass.getMethod(getterName);
 			}
 		}
 		
