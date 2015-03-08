@@ -10,7 +10,7 @@ import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
-import br.com.jq.syncthia.bdcreator.exception.DuplicatedPrimaryKeyException;
+import br.com.jq.syncthia.bdcreator.exceptions.DuplicatedPrimaryKeyException;
 import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
 public class Table extends MigratableSelectable {

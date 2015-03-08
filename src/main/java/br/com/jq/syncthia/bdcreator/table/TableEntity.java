@@ -11,6 +11,9 @@ import br.com.jq.syncthia.bdcreator.annotations.GetAnnotation;
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.exceptions.CantPersistAutomaticException;
+import br.com.jq.syncthia.bdcreator.exceptions.NoColumnToPersistAutomaticException;
+import br.com.jq.syncthia.bdcreator.exceptions.NoTableToPersistAutomaticException;
+import br.com.jq.syncthia.bdcreator.exceptions.NoUniqueKeyToPersistAutomaticException;
 
 public abstract class TableEntity {
 	private GetAnnotation getAnnotation;
@@ -43,19 +46,19 @@ public abstract class TableEntity {
 		Table t = getAnnotation.getRelatedTable(getClass());
 		
 		if (t == null) {
-			throw new CantPersistAutomaticException(); //XXX create exception for FindTable
+			throw new NoTableToPersistAutomaticException(); //XXX create exception for FindTable
 		}
 		
 		List<Column> columns = getAnnotation.getColumns(getClass(), t);
 		
 		if (columns == null || columns.size() == 0) {
-			throw new CantPersistAutomaticException(); //XXX create exception for FindColumns
+			throw new NoColumnToPersistAutomaticException(); //XXX create exception for FindColumns
 		}
 		
 		TableKey uniqueKey = getAnnotation.getUniqueKey(getClass(), t);
 		
 		if (uniqueKey == null) {
-			throw new CantPersistAutomaticException(); //XXX create exception for FindUniqueKey
+			throw new NoUniqueKeyToPersistAutomaticException(); //XXX create exception for FindUniqueKey
 		}
 		
 		int updatedRows = 0;
