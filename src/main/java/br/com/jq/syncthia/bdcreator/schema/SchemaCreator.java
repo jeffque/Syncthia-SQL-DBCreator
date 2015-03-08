@@ -6,13 +6,13 @@ import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 public abstract class SchemaCreator extends SchemaDefinitor {
 	protected abstract void schemaDefinition();
 	
-	protected void createSchema() {
+	public void createSchema() {
 		for (MigratableSelectable m: getMigratables()) {
 			m.createUnit();
 		}
 	}
 	
-	protected void migrateSchema() {
+	public void migrateSchema() {
 		for (MigratableSelectable m: getMigratables()) {
 			m.doMigrations();
 		}

@@ -5,14 +5,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.schema.basicSchema.BasicSchema;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.SchemaCreatorProcessor;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.SchemaMigratorProcessor;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.SchemaSaveProcessor;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public class SchemaCollection extends SchemaCollectionInternal {
 	private List<SchemaCreator> registeredSchemas;
+	private List<SchemaPreProcessor> preProcessors;
+	private List<SchemaProcessor> processors;
+	private List<SchemaPostProcessor> postProcessors;
 	
 	public SchemaCollection() {
 		registeredSchemas = new ArrayList<SchemaCreator>();
+		
+		preProcessors = new ArrayList<SchemaPreProcessor>();
+		processors = new ArrayList<SchemaProcessor>();
+		postProcessors = new ArrayList<SchemaPostProcessor>();
+		
 		registerSchema(new BasicSchema());
+		addProcessor(new SchemaCreatorProcessor());
+		addProcessor(new SchemaMigratorProcessor());
+		addPostProcessor(new SchemaSaveProcessor());
+	}
+	
+	public void addPreProcessor(SchemaPreProcessor preProcessor) {
+		preProcessors.add(preProcessor);
+	}
+	
+	public void addProcessor(SchemaProcessor processor) {
+		processors.add(processor);
+	}
+	
+	public void addPostProcessor(SchemaPostProcessor postProcessor) {
+		postProcessors.add(postProcessor);
 	}
 	
 	@Override
@@ -21,6 +47,18 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		
 		for (SchemaCreator schema: registeredSchemas) {
 			schema.setConnection(sqlConnection);
+		}
+		
+		for (SchemaAbstractProcessor processor: preProcessors) {
+			processor.setConnection(sqlConnection);
+		}
+		
+		for (SchemaAbstractProcessor processor: processors) {
+			processor.setConnection(sqlConnection);
+		}
+		
+		for (SchemaAbstractProcessor processor: postProcessors) {
+			processor.setConnection(sqlConnection);
 		}
 	}
 	
@@ -57,19 +95,22 @@ public class SchemaCollection extends SchemaCollectionInternal {
 	public final void createOrMigrateSchema() {
 		schemaMetaDataFromExisting();
 		
-		// Create all schemas, if not created
-		for (SchemaCreator schema: registeredSchemas) {
-			schema.createSchema();
+		for (SchemaPreProcessor preProcessor: preProcessors) {
+			for (SchemaCreator schema: registeredSchemas) {
+				preProcessor.processSchemaCreator(schema);
+			}
 		}
 		
-		// Migrate all schemas, if needed
-		for (SchemaCreator schema: registeredSchemas) {
-			schema.migrateSchema();
+		for (SchemaProcessor processor: processors) {
+			for (SchemaCreator schema: registeredSchemas) {
+				processor.processSchemaCreator(schema);
+			}
 		}
-		
-		// Save all schemas
-		for (SchemaCreator schema: registeredSchemas) {
-			schema.saveSchema();
+				
+		for (SchemaPostProcessor postProcessor: postProcessors) {
+			for (SchemaCreator schema: registeredSchemas) {
+				postProcessor.processSchemaCreator(schema);
+			}
 		}
 	}
 	
