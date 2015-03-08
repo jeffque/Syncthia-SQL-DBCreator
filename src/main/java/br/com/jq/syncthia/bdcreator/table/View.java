@@ -39,14 +39,14 @@ public class View extends MigratableSelectable {
 	@Override
 	public boolean dropUnit() {
 		//TODO implement this stuff
-		System.out.println("DROP VIEW " + name);
+		System.out.println("DROP VIEW " + getName());
 		return true;
 	}
 
 	@Override
 	public void createUnit() {
 		//TODO implement this stuff
-		StringBuilder sql = new StringBuilder("CREATE VIEW " + name + " AS\n");
+		StringBuilder sql = new StringBuilder("CREATE VIEW " + getName() + " AS\n");
 		sql.append(viewQuery);
 		sql.append("\n");
 		System.out.println(sql.toString());

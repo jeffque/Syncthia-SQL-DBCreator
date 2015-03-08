@@ -12,7 +12,7 @@ public class BasicSchema extends SchemaCreator {
 	}
 
 	@Override
-	public String getSchemaName() {
+	public String getName() {
 		return "Basic Structural Scheme";
 	}
 

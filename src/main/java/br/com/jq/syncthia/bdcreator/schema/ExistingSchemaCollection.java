@@ -44,7 +44,7 @@ class ExistingSchemaCollection extends SchemaCollectionInternal {
 			String schemaName = rs.getString("SCHEMA_NAME");
 			String schemaVersion = rs.getString("SCHEMA_VERSION");
 			
-			schema.setSchemaName(schemaName);
+			schema.setName(schemaName);
 			schema.setRegisteredVersion(schemaVersion);
 			
 			registerExistingSchema(schema);
@@ -101,7 +101,7 @@ class ExistingSchemaCollection extends SchemaCollectionInternal {
 
 	private ExistingSchema getExistingSchema(String schemaName) {
 		for (ExistingSchema schema: schemasFromDB) {
-			if (schemaName.equals(schema.getSchemaName())) {
+			if (schemaName.equals(schema.getName())) {
 				return schema;
 			}
 		}

@@ -10,7 +10,7 @@ public class SampleSchema extends SchemaCreator {
 	}
 
 	@Override
-	public String getSchemaName() {
+	public String getName() {
 		return "Sample schema";
 	}
 

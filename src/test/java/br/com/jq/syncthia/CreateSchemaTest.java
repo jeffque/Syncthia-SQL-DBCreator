@@ -59,8 +59,8 @@ public class CreateSchemaTest extends TestCase {
 		assertNull(collection.getSchema("Not Basic Structural Scheme"));
 		assertNull(collection.getSchema("Not Sample schema"));
 		
-		assertEquals("Basic Structural Scheme", collection.getSchema("Basic Structural Scheme").getSchemaName());
-		assertEquals("Sample schema", collection.getSchema("Sample schema").getSchemaName());
+		assertEquals("Basic Structural Scheme", collection.getSchema("Basic Structural Scheme").getName());
+		assertEquals("Sample schema", collection.getSchema("Sample schema").getName());
 		
 		assertEquals(collection.getSchema("Basic Structural Scheme"), schemaList.get(0));
 		assertEquals(collection.getSchema("Sample schema"), schemaList.get(1));

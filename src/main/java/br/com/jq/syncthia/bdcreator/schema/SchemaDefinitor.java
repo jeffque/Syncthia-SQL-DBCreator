@@ -7,13 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
+import br.com.jq.syncthia.bdcreator.interfaces.Nameable;
 import br.com.jq.syncthia.bdcreator.interfaces.Versionable;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.View;
 
-public abstract class SchemaDefinitor implements Connectable, Versionable {
-	public abstract String getSchemaName();
+public abstract class SchemaDefinitor implements Connectable, Versionable, Nameable {
+	@Override
+	public abstract String getName();
+	
+	@Override
+	public void setName(String name) {
+		// a priori, it shan't be possible
+		throw new UnsupportedOperationException();
+	}
 	
 	private List<Table> schemaTables;
 	private List<View> schemaViews;
@@ -138,8 +146,8 @@ public abstract class SchemaDefinitor implements Connectable, Versionable {
 		
 		try {
 			Statement stmt = getConnection().createStatement();
-			stmt.executeUpdate("DELETE FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_NAME ='" + getSchemaName() + "'");
-			stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='" + getSchemaName() + "'");
+			stmt.executeUpdate("DELETE FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_NAME ='" + getName() + "'");
+			stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='" + getName() + "'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			okDrop = false;

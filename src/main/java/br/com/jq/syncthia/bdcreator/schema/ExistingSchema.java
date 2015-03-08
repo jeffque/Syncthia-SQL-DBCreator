@@ -3,12 +3,13 @@ package br.com.jq.syncthia.bdcreator.schema;
 class ExistingSchema extends SchemaDefinitor {
 	protected String schemaName = "";
 
-	public void setSchemaName(String schemaName) {
+	@Override
+	public void setName(String schemaName) {
 		this.schemaName = schemaName;
 	}
 	
 	@Override
-	public String getSchemaName() {
+	public String getName() {
 		return schemaName;
 	}
 

@@ -20,7 +20,7 @@ public abstract class SchemaCreator extends SchemaDefinitor {
 	
 	@Override
 	public String toString() {
-		return "SchemaCreator [schemaName()=" + getSchemaName() + "]";
+		return "SchemaCreator [schemaName()=" + getName() + "]";
 	}
 	
 	public boolean saveSchema() {
@@ -28,7 +28,7 @@ public abstract class SchemaCreator extends SchemaDefinitor {
 		if (getConnection() != null) {
 			RegisteredSchemaEntity entity = new RegisteredSchemaEntity();
 			
-			entity.setSchemaName(getSchemaName());
+			entity.setSchemaName(getName());
 			entity.setSchemaVersion(getDesiredVersion());
 			
 			persisted = persisted && entity.persistEntity(getConnection());

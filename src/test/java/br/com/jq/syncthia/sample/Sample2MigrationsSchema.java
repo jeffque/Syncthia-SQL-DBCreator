@@ -10,7 +10,7 @@ public class Sample2MigrationsSchema extends SchemaCreator {
 	}
 
 	@Override
-	public String getSchemaName() {
+	public String getName() {
 		return "Sample 2 migrations schema";
 	}
 

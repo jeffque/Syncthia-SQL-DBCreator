@@ -15,14 +15,12 @@ public abstract class MigratableSelectable extends Selectable implements Version
 	public abstract String getMigratableType();
 	
 	protected String desiredVersion, registeredVersion;
-	protected String name;
 	
 	private SchemaDefinitor schema;
 	
 	public MigratableSelectable() {
 		desiredVersion = "";
 		registeredVersion = "";
-		name = "";
 	}
 
 	public boolean saveMigratable() {
@@ -30,7 +28,7 @@ public abstract class MigratableSelectable extends Selectable implements Version
 			MigratableVersionEntity entity = new MigratableVersionEntity();
 			
 			entity.setMigratableName(getName());
-			entity.setMigratableSchemaName(getSchema() != null? getSchema().getSchemaName(): "");
+			entity.setMigratableSchemaName(getSchema() != null? getSchema().getName(): "");
 			entity.setMigratableSchemaVersion(getDesiredVersion());
 			entity.setMigratableType(getMigratableType());
 			
@@ -40,14 +38,6 @@ public abstract class MigratableSelectable extends Selectable implements Version
 		return false;
 	}
 
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 	@Override
 	public String getDesiredVersion() {
 		return desiredVersion;

@@ -31,7 +31,7 @@ class SchemaCollectionInternal implements Connectable {
 	
 	public SchemaDefinitor getDefinitor(String definitorName) {
 		for (SchemaDefinitor definitor: registeredDefinitors) {
-			if (definitorName.equals(definitor.getSchemaName())) {
+			if (definitorName.equals(definitor.getName())) {
 				return definitor;
 			}
 		}

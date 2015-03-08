@@ -6,8 +6,10 @@ import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
+import br.com.jq.syncthia.bdcreator.interfaces.Nameable;
 
-public class Selectable implements Connectable {
+public class Selectable implements Connectable, Nameable {
+	private String name;
 	protected List<Column> columnList;
 	private Connection sqlConnection;
 	
@@ -55,6 +57,16 @@ public class Selectable implements Connectable {
 	@Override
 	public Connection getConnection() {
 		return sqlConnection;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 
 }

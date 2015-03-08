@@ -99,7 +99,7 @@ public class Table extends MigratableSelectable {
 	@Override
 	public boolean dropUnit() {
 		boolean okDrop = true;
-		String sql = "DROP TABLE " + name;
+		String sql = "DROP TABLE " + getName();
 		System.out.println(sql);
 		
 		if (getConnection() != null) {
@@ -118,7 +118,7 @@ public class Table extends MigratableSelectable {
 
 	@Override
 	public void createUnit() {
-		StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + name + " (\n");
+		StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + getName() + " (\n");
 		listColumnsSql(sql);
 		listKeyMetadata(sql);
 		sql.append(")");
@@ -163,7 +163,7 @@ public class Table extends MigratableSelectable {
 
 	@Override
 	public String toString() {
-		return "Table [tableName=" + name + "]";
+		return "Table [tableName=" + getName() + "]";
 	}
 
 	@Override

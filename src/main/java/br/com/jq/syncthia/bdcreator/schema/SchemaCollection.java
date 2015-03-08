@@ -74,7 +74,7 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		ExistingSchemaCollection existingCollection = new ExistingSchemaCollection(getConnection());
 		
 		for (ExistingSchema existingSchema: existingCollection.getExistingSchemas()) {
-			SchemaCreator counterPartSchema = getSchema(existingSchema.getSchemaName());
+			SchemaCreator counterPartSchema = getSchema(existingSchema.getName());
 			
 			// It happens when there is a registered schema not in the present schema collection
 			if (counterPartSchema == null) {
@@ -120,7 +120,7 @@ public class SchemaCollection extends SchemaCollectionInternal {
 	
 	public SchemaCreator getSchema(String schemaName) {
 		for (SchemaCreator s: registeredSchemas) {
-			if (schemaName.equals(s.getSchemaName())) {
+			if (schemaName.equals(s.getName())) {
 				return s;
 			}
 		}
