@@ -57,7 +57,7 @@ public class DropSchemaTest extends TestCase {
 		try {
 			Statement stmt = conn.createStatement();
 			
-			ResultSet rsRegisteredSchema = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMAS WHERE SCHEMA_NAME ='Sample schema'");
+			ResultSet rsRegisteredSchema = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='Sample schema'");
 			assertTrue(rsRegisteredSchema.next());
 			rsRegisteredSchema.close();
 			
@@ -77,7 +77,7 @@ public class DropSchemaTest extends TestCase {
 		try {
 			Statement stmt = conn.createStatement();
 			
-			ResultSet rsRegisteredSchema = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMAS WHERE SCHEMA_NAME ='Sample schema'");
+			ResultSet rsRegisteredSchema = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='Sample schema'");
 			assertFalse(rsRegisteredSchema.next());
 			rsRegisteredSchema.close();
 			

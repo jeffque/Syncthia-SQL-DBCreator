@@ -8,7 +8,7 @@ import br.com.jq.syncthia.bdcreator.table.Table;
 
 public class RegisteredSchema extends Table {
 	public RegisteredSchema() {
-		setName("REGISTERED_SCHEMAS");
+		setName("REGISTERED_SCHEMA");
 		
 		ColumnAutoIncrement pkCol = new ColumnAutoIncrement("PK_MIGRATABLE_VERSION");
 		Column schemaName = new Column();

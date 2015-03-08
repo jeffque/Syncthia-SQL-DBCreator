@@ -139,7 +139,7 @@ public abstract class SchemaDefinitor implements Connectable, Versionable {
 		try {
 			Statement stmt = getConnection().createStatement();
 			stmt.executeUpdate("DELETE FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_NAME ='" + getSchemaName() + "'");
-			stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMAS WHERE SCHEMA_NAME ='" + getSchemaName() + "'");
+			stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='" + getSchemaName() + "'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			okDrop = false;

@@ -36,7 +36,7 @@ class ExistingSchemaCollection extends SchemaCollectionInternal {
 	private void searchSchemas() throws SQLException {
 		Connection conn = getConnection();
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMAS");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM REGISTERED_SCHEMA");
 		
 		
 		while(rs.next()) {
