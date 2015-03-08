@@ -13,13 +13,13 @@ import br.com.jq.syncthia.bdcreator.table.TableEntity;
 public class MigratableVersionEntity extends TableEntity {
 	
 	private String migratableName;
-	private String migratableSchema;
+	private String migratableSchemaName;
 	private String migratableSchemaVersion;
 	private String migratableType;
 
 	public MigratableVersionEntity() {
 		migratableName = "";
-		migratableSchema = "";
+		migratableSchemaName = "";
 		migratableSchemaVersion = "";
 		migratableType = "";
 	}
@@ -40,12 +40,12 @@ public class MigratableVersionEntity extends TableEntity {
 		this.migratableSchemaVersion = migratableSchemaVersion;
 	}
 
-	public String getMigratableSchema() {
-		return migratableSchema;
+	public String getMigratableSchemaName() {
+		return migratableSchemaName;
 	}
 
-	public void setMigratableSchema(String migratableSchema) {
-		this.migratableSchema = migratableSchema;
+	public void setMigratableSchemaName(String migratableSchema) {
+		this.migratableSchemaName = migratableSchema;
 	}
 
 	public String getMigratableType() {

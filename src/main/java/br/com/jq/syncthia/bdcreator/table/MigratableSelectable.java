@@ -30,7 +30,7 @@ public abstract class MigratableSelectable extends Selectable implements Version
 			MigratableVersionEntity entity = new MigratableVersionEntity();
 			
 			entity.setMigratableName(getName());
-			entity.setMigratableSchema(getSchema() != null? getSchema().getSchemaName(): "");
+			entity.setMigratableSchemaName(getSchema() != null? getSchema().getSchemaName(): "");
 			entity.setMigratableSchemaVersion(getDesiredVersion());
 			entity.setMigratableType(getMigratableType());
 			
