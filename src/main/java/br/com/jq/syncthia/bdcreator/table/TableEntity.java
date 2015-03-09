@@ -116,4 +116,24 @@ public abstract class TableEntity {
 			return persistEntityManually(conn);
 		}
 	}
+	
+	protected final boolean removeEntityInternal(Connection conn) throws CantPersistAutomaticException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	protected boolean removeEntityManually(Connection conn) {
+		return false;
+	}
+	
+	public boolean removeEntity(Connection conn) {
+		try {
+			return removeEntityInternal(conn);
+		} catch (CantPersistAutomaticException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			return removeEntityManually(conn);
+		}
+	}
 }
