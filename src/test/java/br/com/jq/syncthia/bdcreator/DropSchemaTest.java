@@ -1,4 +1,4 @@
-package br.com.jq.syncthia;
+package br.com.jq.syncthia.bdcreator;
 
 import java.sql.*;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import br.com.jq.syncthia.bdcreator.sample.SampleSchema;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
-import br.com.jq.syncthia.sample.SampleSchema;
 
 /**
  * Unit test for simple App.
@@ -33,7 +33,7 @@ public class DropSchemaTest extends TestCase {
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:teste.db");
 			collection.setConnection(conn);
-		} catch (SQLException e) {
+		} catch (java.sql.SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

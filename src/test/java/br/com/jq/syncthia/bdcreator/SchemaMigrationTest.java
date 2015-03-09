@@ -1,16 +1,16 @@
-package br.com.jq.syncthia;
+package br.com.jq.syncthia.bdcreator;
 
 import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import br.com.jq.syncthia.bdcreator.sample.Sample1MigrationSchema;
+import br.com.jq.syncthia.bdcreator.sample.Sample2MigrationsSchema;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
 import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
-import br.com.jq.syncthia.sample.Sample1MigrationSchema;
-import br.com.jq.syncthia.sample.Sample2MigrationsSchema;
 
 /**
  * Unit test for simple App.

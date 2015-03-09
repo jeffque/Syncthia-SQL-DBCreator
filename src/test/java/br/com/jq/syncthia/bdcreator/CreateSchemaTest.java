@@ -1,17 +1,17 @@
-package br.com.jq.syncthia;
+package br.com.jq.syncthia.bdcreator;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.jq.syncthia.bdcreator.column.Column;
-import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
-import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
-import br.com.jq.syncthia.bdcreator.table.Table;
-import br.com.jq.syncthia.sample.SampleSchema;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import br.com.jq.syncthia.bdcreator.column.Column;
+import br.com.jq.syncthia.bdcreator.sample.SampleSchema;
+import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
+import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
+import br.com.jq.syncthia.bdcreator.table.Table;
 
 /**
  * Unit test for simple App.

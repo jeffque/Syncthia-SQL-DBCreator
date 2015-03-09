@@ -1,13 +1,13 @@
-package br.com.jq.syncthia;
+package br.com.jq.syncthia.bdcreator;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
+import br.com.jq.syncthia.bdcreator.sample.SampleTableAIPK;
+import br.com.jq.syncthia.bdcreator.sample.SampleTableNameledKey;
+import br.com.jq.syncthia.bdcreator.sample.SampleTableNamelessKey;
 import br.com.jq.syncthia.bdcreator.table.Table;
-import br.com.jq.syncthia.sample.SampleTableAIPK;
-import br.com.jq.syncthia.sample.SampleTableNameledKey;
-import br.com.jq.syncthia.sample.SampleTableNamelessKey;
 
 /**
  * Unit test for simple App.

@@ -1,4 +1,4 @@
-package br.com.jq.syncthia.sample;
+package br.com.jq.syncthia.bdcreator.sample;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.table.Table;

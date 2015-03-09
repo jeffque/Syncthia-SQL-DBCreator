@@ -1,4 +1,4 @@
-package br.com.jq.syncthia;
+package br.com.jq.syncthia.bdcreator;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
