@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema.entity;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
