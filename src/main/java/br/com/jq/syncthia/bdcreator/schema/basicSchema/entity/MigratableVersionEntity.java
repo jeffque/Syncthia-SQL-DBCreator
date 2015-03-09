@@ -3,6 +3,7 @@ package br.com.jq.syncthia.bdcreator.schema.basicSchema.entity;
 import br.com.jq.syncthia.bdcreator.annotations.ColumnMapper;
 import br.com.jq.syncthia.bdcreator.annotations.TableMapper;
 import br.com.jq.syncthia.bdcreator.schema.basicSchema.MigratableVersion;
+import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
 
 @TableMapper(table = MigratableVersion.class, uniqueKeyUsed = "MIGRATABLE_NAME_CONSTRAINT")
@@ -54,5 +55,16 @@ public class MigratableVersionEntity extends TableEntity {
 
 	public void setMigratableType(String migratableType) {
 		this.migratableType = migratableType;
+	}
+
+	public static MigratableVersionEntity getEntity(MigratableSelectable t) {
+		MigratableVersionEntity entity = new MigratableVersionEntity();
+		
+		entity.setMigratableName(t.getName());
+		entity.setMigratableSchemaName(t.getSchema() != null? t.getSchema().getName(): "");
+		entity.setMigratableSchemaVersion(t.getDesiredVersion());
+		entity.setMigratableType(t.getMigratableType());
+		
+		return entity;
 	}
 }
