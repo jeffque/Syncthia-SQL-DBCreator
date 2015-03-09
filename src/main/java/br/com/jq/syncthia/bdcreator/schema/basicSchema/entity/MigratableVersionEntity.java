@@ -1,7 +1,11 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.jq.syncthia.bdcreator.annotations.ColumnMapper;
 import br.com.jq.syncthia.bdcreator.annotations.TableMapper;
+import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.schema.basicSchema.MigratableVersion;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
@@ -12,7 +16,7 @@ import br.com.jq.syncthia.bdcreator.table.TableEntity;
 @ColumnMapper(column = "MIGRATABLE_SCHEMA_VERSION")
 @ColumnMapper(column = "MIGRATABLE_TYPE")
 public class MigratableVersionEntity extends TableEntity {
-	
+	List<MigratableColumnEntity> columnsEntities;
 	private String migratableName;
 	private String migratableSchemaName;
 	private String migratableSchemaVersion;
@@ -23,6 +27,8 @@ public class MigratableVersionEntity extends TableEntity {
 		migratableSchemaName = "";
 		migratableSchemaVersion = "";
 		migratableType = "";
+		
+		columnsEntities = new ArrayList<MigratableColumnEntity>();
 	}
 
 	public String getMigratableName() {
@@ -65,6 +71,27 @@ public class MigratableVersionEntity extends TableEntity {
 		entity.setMigratableSchemaVersion(t.getDesiredVersion());
 		entity.setMigratableType(t.getMigratableType());
 		
+		entity.setColumnsEntity(t);
+		
 		return entity;
 	}
+
+	private void setColumnsEntity(MigratableSelectable t) {
+		for (Column col: t.getColumnList()) {
+			columnsEntities.add(MigratableColumnEntity.getInstance(col));
+		}
+		
+	}
+
+	@Override
+	public boolean persistEntity(Connection conn) {
+		boolean ret = super.persistEntity(conn);
+		
+		for (MigratableColumnEntity colEntity: columnsEntities) {
+			ret = ret && colEntity.persistEntity(conn);
+		}
+		return ret;
+	}
+	
+	
 }

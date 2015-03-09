@@ -106,7 +106,7 @@ public abstract class TableEntity {
 		return false;
 	}
 	
-	public final boolean persistEntity(Connection conn) {
+	public boolean persistEntity(Connection conn) {
 		try {
 			return persistEntityInternal(conn);
 		} catch (CantPersistAutomaticException e) {
