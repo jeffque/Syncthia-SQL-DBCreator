@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import junit.framework.Test;
@@ -32,7 +33,12 @@ public class SchemaMigrationTest extends TestCase {
 		collection.registerSchema(new Sample1MigrationSchema());
 		collection.registerSchema(new Sample2MigrationsSchema());
 		
-		collection.createOrMigrateSchema();
+		try {
+			collection.createOrMigrateSchema();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

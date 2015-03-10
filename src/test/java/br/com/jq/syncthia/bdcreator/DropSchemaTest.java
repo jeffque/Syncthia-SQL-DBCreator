@@ -33,12 +33,11 @@ public class DropSchemaTest extends TestCase {
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:teste.db");
 			collection.setConnection(conn);
-		} catch (java.sql.SQLException e) {
+			collection.createOrMigrateSchema();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		collection.createOrMigrateSchema();
 	}
 
 	/**

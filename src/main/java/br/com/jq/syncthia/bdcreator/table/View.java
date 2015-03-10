@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.table;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class View extends MigratableSelectable {
 	}
 
 	@Override
-	public void doMigrations() {
+	public void doMigrations() throws SQLException {
 		viewMigration.migrateUnit();
 	}
 

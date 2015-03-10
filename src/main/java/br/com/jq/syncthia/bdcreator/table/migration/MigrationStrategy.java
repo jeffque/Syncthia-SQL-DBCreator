@@ -1,5 +1,7 @@
 package br.com.jq.syncthia.bdcreator.table.migration;
 
+import java.sql.SQLException;
+
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public abstract class MigrationStrategy {
@@ -30,5 +32,5 @@ public abstract class MigrationStrategy {
 		this.migratable = migratable;
 	}
 	
-	public abstract void migrateUnit();
+	public abstract void migrateUnit() throws SQLException;
 }

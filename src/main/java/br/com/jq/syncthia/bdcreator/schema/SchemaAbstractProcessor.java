@@ -1,6 +1,7 @@
 package br.com.jq.syncthia.bdcreator.schema;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
 
@@ -17,6 +18,6 @@ public abstract class SchemaAbstractProcessor implements Connectable {
 		return sqlConnection;
 	}
 	
-	public abstract void processSchemaCreator(SchemaCreator schema);
+	public abstract void processSchemaCreator(SchemaCreator schema) throws SQLException;
 
 }

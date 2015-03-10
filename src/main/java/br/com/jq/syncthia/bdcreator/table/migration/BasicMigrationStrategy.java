@@ -1,5 +1,7 @@
 package br.com.jq.syncthia.bdcreator.table.migration;
 
+import java.sql.SQLException;
+
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public class BasicMigrationStrategy extends MigrationStrategy {
@@ -9,7 +11,7 @@ public class BasicMigrationStrategy extends MigrationStrategy {
 	}
 
 	@Override
-	public void migrateUnit() {
+	public void migrateUnit() throws SQLException {
 		migratable.dropUnit();
 		migratable.createUnit();
 	}

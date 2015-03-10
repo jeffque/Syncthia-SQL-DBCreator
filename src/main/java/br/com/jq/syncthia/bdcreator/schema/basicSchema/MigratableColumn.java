@@ -1,10 +1,14 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.table.Table;
+import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
 public class MigratableColumn extends Table {
 	public MigratableColumn() {
@@ -41,6 +45,11 @@ public class MigratableColumn extends Table {
 		colNullable.setNullable(true);
 		colNullable.setType("STRING");
 		
+		Column colPosition = new Column();
+		colPosition.setName("COLUMN_POSITION");
+		colPosition.setNullable(true);
+		colPosition.setType("INTEGER");
+		
 		addColumn(aipk);
 		addColumn(tableName);
 		addColumn(colName);
@@ -48,12 +57,28 @@ public class MigratableColumn extends Table {
 		addColumn(colPrecision1);
 		addColumn(colPrecision2);
 		addColumn(colNullable);
+		addColumn(colPosition);
 		
 		TableKey uniqueTableColumn = new TableKey(KeyType.UNIQUE_KEY);
 		uniqueTableColumn.setName("TABLE_COLUMN_NAME_CONSTRAINT");
 		uniqueTableColumn.addColumn(tableName);
 		uniqueTableColumn.addColumn(colName);
 		addKey(uniqueTableColumn);
+		
+		setDesiredVersion("V2");
+		
+		MigrationStrategy migrationV1__V2 = new MigrationStrategy() {
+			@Override
+			public void migrateUnit() throws SQLException {
+				Statement migrationStmt = getConnection().createStatement();
+				String sqlMigration = "";
+				
+				migrationStmt.executeUpdate(sqlMigration);
+			}
+		};
+		
+		migrationV1__V2.setOldVersion("V1");
+		migrationV1__V2.setNewVersion("V2");
 	}
 
 }

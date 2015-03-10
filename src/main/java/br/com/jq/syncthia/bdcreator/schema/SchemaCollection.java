@@ -1,6 +1,7 @@
 package br.com.jq.syncthia.bdcreator.schema;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +93,7 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		}
 	}
 	
-	public final void createOrMigrateSchema() {
+	public final void createOrMigrateSchema() throws SQLException {
 		schemaMetaDataFromExisting();
 		
 		for (SchemaPreProcessor preProcessor: preProcessors) {

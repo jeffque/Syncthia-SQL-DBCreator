@@ -7,6 +7,7 @@ public class Column {
 	private String name, type;
 	private Integer precision1, precision2;
 	private Boolean nullable;
+	private int position;
 
 	public String getName() {
 		return name;
@@ -46,6 +47,7 @@ public class Column {
 
 	public void setOrigin(Selectable origin) {
 		this.origin = origin;
+		setPosition(origin.getColumnList().size());
 	}
 
 	public String colDescription() {
@@ -69,5 +71,13 @@ public class Column {
 
 	public Boolean getNullable() {
 		return nullable;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 }

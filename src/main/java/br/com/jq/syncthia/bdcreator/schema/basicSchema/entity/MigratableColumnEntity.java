@@ -13,6 +13,7 @@ import br.com.jq.syncthia.bdcreator.table.TableEntity;
 @ColumnMapper(column = "COLUMN_PRECISION1")
 @ColumnMapper(column = "COLUMN_PRECISION2")
 @ColumnMapper(column = "COLUMN_NULLABLE")
+@ColumnMapper(column = "COLUMN_POSITION")
 public class MigratableColumnEntity extends TableEntity {
 	private String tableName;
 	private String columnName;
@@ -20,6 +21,7 @@ public class MigratableColumnEntity extends TableEntity {
 	private Integer columnPrecision1;
 	private Integer columnPrecision2;
 	private Boolean columnNullable;
+	private Integer columnPosition;
 	
 	public static MigratableColumnEntity getInstance(Column col) {
 		MigratableColumnEntity entity = new MigratableColumnEntity();
@@ -30,6 +32,7 @@ public class MigratableColumnEntity extends TableEntity {
 		entity.setColumnPrecision1(col.getPrecision1());
 		entity.setColumnPrecision2(col.getPrecision2());
 		entity.setColumnNullable(col.getNullable());
+		entity.setColumnPosition(col.getPosition());
 		
 		return entity;
 	}
@@ -80,6 +83,14 @@ public class MigratableColumnEntity extends TableEntity {
 	
 	public void setColumnNullable(Boolean columnNullable) {
 		this.columnNullable = columnNullable;
+	}
+
+	public Integer getColumnPosition() {
+		return columnPosition;
+	}
+
+	public void setColumnPosition(Integer columnPosition) {
+		this.columnPosition = columnPosition;
 	}
 
 }

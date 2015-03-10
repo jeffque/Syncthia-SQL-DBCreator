@@ -36,12 +36,11 @@ public class SchemaMigrationWithConnectionTest extends TestCase {
 		
 		try {
 			collection.setConnection(DriverManager.getConnection("jdbc:sqlite:teste.db"));
+			collection.createOrMigrateSchema();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		collection.createOrMigrateSchema();
 	}
 
 	/**

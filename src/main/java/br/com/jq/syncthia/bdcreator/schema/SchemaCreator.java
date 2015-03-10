@@ -1,18 +1,20 @@
 package br.com.jq.syncthia.bdcreator.schema;
 
+import java.sql.SQLException;
+
 import br.com.jq.syncthia.bdcreator.schema.basicSchema.entity.RegisteredSchemaEntity;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public abstract class SchemaCreator extends SchemaDefinitor {
 	protected abstract void schemaDefinition();
 	
-	public void createSchema() {
+	public void createSchema() throws SQLException {
 		for (MigratableSelectable m: getMigratables()) {
 			m.createUnit();
 		}
 	}
 	
-	public void migrateSchema() {
+	public void migrateSchema() throws SQLException {
 		for (MigratableSelectable m: getMigratables()) {
 			m.doMigrations();
 		}

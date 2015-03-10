@@ -140,11 +140,12 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 	
 	public boolean dropSchema() {
 		boolean okDrop = true;
-		for (MigratableSelectable m: getMigratables()) {
-			okDrop = okDrop && m.dropUnit();
-		}
 		
 		try {
+			for (MigratableSelectable m: getMigratables()) {
+				okDrop = okDrop && m.dropUnit();
+			}
+			
 			Statement stmt = getConnection().createStatement();
 			stmt.executeUpdate("DELETE FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_NAME ='" + getName() + "'");
 			stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='" + getName() + "'");

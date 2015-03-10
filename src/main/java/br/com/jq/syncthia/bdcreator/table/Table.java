@@ -73,7 +73,7 @@ public class Table extends MigratableSelectable {
 	}
 	
 	@Override
-	public void doMigrations() {
+	public void doMigrations() throws SQLException {
 		for (MigrationStrategy migration: getDesiredMigrations()) {
 			migration.migrateUnit();
 		}
@@ -117,7 +117,7 @@ public class Table extends MigratableSelectable {
 	}
 
 	@Override
-	public void createUnit() {
+	public void createUnit() throws SQLException {
 		StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + getName() + " (\n");
 		listColumnsSql(sql);
 		listKeyMetadata(sql);
@@ -125,14 +125,9 @@ public class Table extends MigratableSelectable {
 		
 		System.out.println(sql.toString());
 		if (getConnection() != null) {
-			try {
-				Statement stmt = getConnection().createStatement();
-				stmt.execute(sql.toString());
-				stmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Statement stmt = getConnection().createStatement();
+			stmt.execute(sql.toString());
+			stmt.close();
 		}
 	}
 
