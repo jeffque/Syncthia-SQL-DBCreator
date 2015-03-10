@@ -1,4 +1,4 @@
-package br.com.jq.syncthia.bdcreator.schema.basicSchema;
+package br.com.jq.syncthia.bdcreator.schema.basicSchema.processor;
 
 import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
 import br.com.jq.syncthia.bdcreator.schema.SchemaPostProcessor;
