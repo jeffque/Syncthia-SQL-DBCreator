@@ -38,7 +38,7 @@ public class View extends MigratableSelectable {
 	}
 
 	@Override
-	public boolean dropUnit() {
+	public boolean dropUnit() throws SQLException {
 		//TODO implement this stuff
 		System.out.println("DROP VIEW " + getName());
 		return true;

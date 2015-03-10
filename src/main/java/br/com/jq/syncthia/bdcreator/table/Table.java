@@ -97,21 +97,17 @@ public class Table extends MigratableSelectable {
 	}
 
 	@Override
-	public boolean dropUnit() {
+	public boolean dropUnit() throws SQLException {
 		boolean okDrop = true;
 		String sql = "DROP TABLE " + getName();
 		System.out.println(sql);
 		
 		if (getConnection() != null) {
-			try {
-				Statement stmt = getConnection().createStatement();
-				stmt.execute(sql);
-				stmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				okDrop = false;
-				e.printStackTrace();
-			}
+			Statement stmt = getConnection().createStatement();
+			stmt.execute(sql);
+			stmt.close();
+		} else {
+			okDrop = false;
 		}
 		return okDrop;
 	}
