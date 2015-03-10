@@ -13,6 +13,7 @@ import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public class SchemaCollection extends SchemaCollectionInternal {
 	private List<SchemaCreator> registeredSchemas;
+	
 	private List<SchemaPreProcessor> preProcessors;
 	private List<SchemaProcessor> processors;
 	private List<SchemaPostProcessor> postProcessors;
@@ -93,26 +94,32 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		}
 	}
 	
+	private void abstractProcessIteration(List<? extends SchemaAbstractProcessor> abstractProcessorList) throws SQLException {
+		for (SchemaAbstractProcessor abstractProcessor: abstractProcessorList) {
+			for (SchemaCreator schema: registeredSchemas) {
+				abstractProcessor.processSchemaCreator(schema);
+			}
+		}
+	}
+	
+	private void preProcessIteration() throws SQLException {
+		abstractProcessIteration(preProcessors);
+	}
+	
+	private void processIteration() throws SQLException {
+		abstractProcessIteration(processors);
+	}
+	
+	private void postProcessIteration() throws SQLException {
+		abstractProcessIteration(postProcessors);
+	}
+
 	public final void createOrMigrateSchema() throws SQLException {
 		schemaMetaDataFromExisting();
 		
-		for (SchemaPreProcessor preProcessor: preProcessors) {
-			for (SchemaCreator schema: registeredSchemas) {
-				preProcessor.processSchemaCreator(schema);
-			}
-		}
-		
-		for (SchemaProcessor processor: processors) {
-			for (SchemaCreator schema: registeredSchemas) {
-				processor.processSchemaCreator(schema);
-			}
-		}
-				
-		for (SchemaPostProcessor postProcessor: postProcessors) {
-			for (SchemaCreator schema: registeredSchemas) {
-				postProcessor.processSchemaCreator(schema);
-			}
-		}
+		preProcessIteration();
+		processIteration();	
+		postProcessIteration();
 	}
 	
 	public List<SchemaCreator> getRegisteredSchemas() {
