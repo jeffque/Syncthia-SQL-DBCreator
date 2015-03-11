@@ -33,4 +33,9 @@ public class RegisteredSchema extends Table {
 		addKey(uniqueName);
 		setDesiredVersion("v1");
 	}
+	
+	@Override
+	public boolean getCachePreparedStmt() {
+		return true;
+	}
 }

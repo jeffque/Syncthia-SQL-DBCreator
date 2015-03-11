@@ -81,4 +81,8 @@ public class MigratableColumn extends Table {
 		migrationV1__V2.setNewVersion("V2");
 	}
 
+	@Override
+	public boolean getCachePreparedStmt() {
+		return true;
+	}
 }

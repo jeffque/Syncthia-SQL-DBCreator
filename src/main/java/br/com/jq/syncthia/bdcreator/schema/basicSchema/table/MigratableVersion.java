@@ -46,4 +46,9 @@ public class MigratableVersion extends Table {
 		
 		setDesiredVersion("v1");
 	}
+	
+	@Override
+	public boolean getCachePreparedStmt() {
+		return true;
+	}
 }

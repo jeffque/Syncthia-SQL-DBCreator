@@ -31,8 +31,8 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		addProcessor(new SchemaCreatorProcessor());
 		addProcessor(new SchemaMigratorProcessor());
 		
-		addPostProcessor(new RunSchemaPostProcessors());
 		addPostProcessor(new SchemaSaveProcessor());
+		addPostProcessor(new RunSchemaPostProcessors());
 	}
 	
 	public void addPreProcessor(SchemaPreProcessor preProcessor) {

@@ -82,7 +82,10 @@ public abstract class TableEntity {
 				setParamPStmt(updateStmt, pStmtPos, col);
 			}
 			updatedRows = updateStmt.executeUpdate();
-			updateStmt.close();
+			
+			if (!t.getCachePreparedStmt()) {
+				updateStmt.close();
+			}
 			
 			if (updatedRows == 0) {
 				PreparedStatement insertStmt = t.prepareInsertStatement(columns);
@@ -93,7 +96,9 @@ public abstract class TableEntity {
 					setParamPStmt(insertStmt, pStmtPos, col);
 				}
 				updatedRows = insertStmt.executeUpdate();
-				insertStmt.close();
+				if (!t.getCachePreparedStmt()) {
+					insertStmt.close();
+				}
 			}
 		} catch (SQLException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block

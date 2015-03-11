@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
@@ -14,15 +16,41 @@ import br.com.jq.syncthia.bdcreator.exceptions.DuplicatedPrimaryKeyException;
 import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
 public class Table extends MigratableSelectable {
+	private PreparedStatement insertStmtCache;
+	private Map<TableKey, PreparedStatement> updateStmtCacheMap;
+	private Map<TableKey, PreparedStatement> deleteStmtCacheMap;
 	protected List<MigrationStrategy> migrations;
 	protected List<TableKey> keys;
 	protected List<Column> ordinaryColumns;
 	private ColumnAutoIncrement aipkCol;
 	
+	public boolean getCachePreparedStmt() {
+		return false;
+	}
+	
+	public void dropAllCachePreparedStmt() throws SQLException {
+		if (insertStmtCache != null) {
+			insertStmtCache.close();
+			insertStmtCache = null;
+		}
+		dropCachePreparedStmt(updateStmtCacheMap);
+		dropCachePreparedStmt(deleteStmtCacheMap);
+	}
+	
+	private void dropCachePreparedStmt(Map<TableKey, PreparedStatement> stmtCache) throws SQLException {
+		for (PreparedStatement pStmt: stmtCache.values()) {
+			pStmt.close();
+		}
+		stmtCache.clear();
+	}
+	
 	public Table() {
 		migrations = new ArrayList<MigrationStrategy>();
 		keys = new ArrayList<TableKey>();
 		ordinaryColumns = new ArrayList<Column>();
+		
+		updateStmtCacheMap = new HashMap<TableKey, PreparedStatement>();
+		deleteStmtCacheMap = new HashMap<TableKey, PreparedStatement>();
 	}
 	
 	public void addColumn(ColumnAutoIncrement aipkCol) {
@@ -181,6 +209,10 @@ public class Table extends MigratableSelectable {
 			return null;
 		}
 		
+		if (getCachePreparedStmt() && deleteStmtCacheMap.get(uniqueKey) != null) {
+			return deleteStmtCacheMap.get(uniqueKey);
+		}
+		
 		boolean firstCol;
 		StringBuilder deleteSql = new StringBuilder("DELETE FROM ").append(getName()).append(" WHERE ");
 		
@@ -195,7 +227,12 @@ public class Table extends MigratableSelectable {
 		}
 		
 		System.out.println("delete stmt (" + getName() + "):\n\t" + deleteSql);
-		return getConnection().prepareStatement(deleteSql.toString());
+		PreparedStatement deleteStmt = getConnection().prepareStatement(deleteSql.toString());
+		
+		if (getCachePreparedStmt()) {
+			deleteStmtCacheMap.put(uniqueKey, deleteStmt);
+		}
+		return deleteStmt;
 	}
 	
 	public PreparedStatement prepareUpdateStatement() throws SQLException {
@@ -206,6 +243,10 @@ public class Table extends MigratableSelectable {
 			List<Column> columnListSignificant) throws SQLException {
 		if (getConnection() == null) {
 			return null;
+		}
+		
+		if (getCachePreparedStmt() && updateStmtCacheMap.get(uniqueKey) != null) {
+			return updateStmtCacheMap.get(uniqueKey);
 		}
 		
 		boolean firstCol;
@@ -234,7 +275,13 @@ public class Table extends MigratableSelectable {
 		}
 		
 		System.out.println("update stmt (" + getName() + "):\n\t" + updateSql);
-		return getConnection().prepareStatement(updateSql.toString());
+		
+		PreparedStatement updateStmt = getConnection().prepareStatement(updateSql.toString());
+		
+		if (getCachePreparedStmt()) {
+			updateStmtCacheMap.put(uniqueKey, updateStmt);
+		}
+		return updateStmt;
 	}
 
 	public PreparedStatement prepareInsertStatement() throws SQLException {
@@ -246,7 +293,11 @@ public class Table extends MigratableSelectable {
 			return null;
 		}
 		
-		StringBuilder sql = new StringBuilder("INSERT INTO ").append(getName()).append(" (");
+		if (getCachePreparedStmt() && insertStmtCache != null) {
+			return insertStmtCache;
+		}
+		
+		StringBuilder insertSql = new StringBuilder("INSERT INTO ").append(getName()).append(" (");
 		boolean firstCol;
 		
 		firstCol = true;
@@ -254,24 +305,30 @@ public class Table extends MigratableSelectable {
 			if (firstCol) {
 				firstCol = false;
 			} else {
-				sql.append(",");
+				insertSql.append(",");
 			}
-			sql.append(c.getName());
+			insertSql.append(c.getName());
 		}
-		sql.append(") VALUES (");
+		insertSql.append(") VALUES (");
 		firstCol = true;
 		for (int i = columnListSignificant.size() - 1; i >= 0; i--) {
 			if (firstCol) {
 				firstCol = false;
 			} else {
-				sql.append(", ");
+				insertSql.append(", ");
 			}
-			sql.append("?");
+			insertSql.append("?");
 		}
-		sql.append(")");
+		insertSql.append(")");
 		
-		System.out.println("insert stmt (" + getName() + "):\n\t" + sql);
-		return getConnection().prepareStatement(sql.toString());
+		System.out.println("insert stmt (" + getName() + "):\n\t" + insertSql);
+		
+		PreparedStatement insertStmt = getConnection().prepareStatement(insertSql.toString());
+		
+		if (getCachePreparedStmt()) {
+			insertStmtCache = insertStmt;
+		}
+		return insertStmt;
 	}
 	
 	
