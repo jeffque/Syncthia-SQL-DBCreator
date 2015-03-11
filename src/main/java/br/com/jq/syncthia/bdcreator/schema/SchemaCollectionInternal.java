@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
+import br.com.jq.syncthia.bdcreator.table.Table;
 
 class SchemaCollectionInternal implements Connectable {
 	private Connection sqlConnection;
@@ -37,6 +38,32 @@ class SchemaCollectionInternal implements Connectable {
 		}
 		
 		return null;
+	}
+
+	public Table getTable(Class<? extends Table> tclazz) {
+		Table t = null;
+		
+		for (SchemaDefinitor schema: registeredDefinitors) {
+			t = schema.getTable(tclazz);
+			if (t != null) {
+				return t;
+			}
+		}
+		
+		return t;
+	}
+	
+	public Table getTable(String tableName) {
+		Table t = null;
+		
+		for (SchemaDefinitor schema: registeredDefinitors) {
+			t = schema.getTable(tableName);
+			if (t != null) {
+				return t;
+			}
+		}
+		
+		return t;
 	}
 
 }
