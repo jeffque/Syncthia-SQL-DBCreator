@@ -2,7 +2,6 @@ package br.com.jq.syncthia.bdcreator.table;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -125,23 +124,23 @@ public abstract class TableEntity {
 		}
 	}
 	
-	protected final boolean removeEntityInternal(Connection conn) throws CantPersistAutomaticException {
+	protected final boolean removeEntityInternal(SchemaCollectionInternal schemaCollection) throws CantPersistAutomaticException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
-	protected boolean removeEntityManually(Connection conn) {
+	protected boolean removeEntityManually(SchemaCollectionInternal schemaCollection) {
 		return false;
 	}
 	
-	public boolean removeEntity(Connection conn) {
+	public boolean removeEntity(SchemaCollectionInternal schemaCollection) {
 		try {
-			return removeEntityInternal(conn);
+			return removeEntityInternal(schemaCollection);
 		} catch (CantPersistAutomaticException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-			return removeEntityManually(conn);
+			return removeEntityManually(schemaCollection);
 		}
 	}
 }
