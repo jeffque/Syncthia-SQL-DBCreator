@@ -14,6 +14,7 @@ import br.com.jq.syncthia.bdcreator.exceptions.CantPersistAutomaticException;
 import br.com.jq.syncthia.bdcreator.exceptions.NoColumnToPersistAutomaticException;
 import br.com.jq.syncthia.bdcreator.exceptions.NoTableToPersistAutomaticException;
 import br.com.jq.syncthia.bdcreator.exceptions.NoUniqueKeyToPersistAutomaticException;
+import br.com.jq.syncthia.bdcreator.schema.SchemaCollectionInternal;
 
 public abstract class TableEntity {
 	private GetAnnotation getAnnotation;
@@ -42,8 +43,8 @@ public abstract class TableEntity {
 		}
 	}
 	
-	protected final boolean persistEntityInternal(Connection conn) throws CantPersistAutomaticException {
-		Table t = getAnnotation.getRelatedTable(getClass());
+	protected final boolean persistEntityInternal(SchemaCollectionInternal schemaCollection) throws CantPersistAutomaticException {
+		Table t = getAnnotation.getRelatedTable(getClass(), schemaCollection);
 		
 		if (t == null) {
 			throw new NoTableToPersistAutomaticException();
@@ -62,7 +63,6 @@ public abstract class TableEntity {
 		}
 		
 		int updatedRows = 0;
-		t.setConnection(conn);
 		
 		try {
 			int pStmtOffset;
@@ -104,18 +104,19 @@ public abstract class TableEntity {
 		return updatedRows != 0;
 	}
 	
-	protected boolean persistEntityManually(Connection conn) {
+	protected boolean persistEntityManually(SchemaCollectionInternal schemaCollection) {
+		System.out.println("olá? " + this.getClass());
 		return false;
 	}
 	
-	public boolean persistEntity(Connection conn) {
+	public boolean persistEntity(SchemaCollectionInternal schemaCollection) {
 		try {
-			return persistEntityInternal(conn);
+			return persistEntityInternal(schemaCollection);
 		} catch (CantPersistAutomaticException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-			return persistEntityManually(conn);
+			return persistEntityManually(schemaCollection);
 		}
 	}
 	

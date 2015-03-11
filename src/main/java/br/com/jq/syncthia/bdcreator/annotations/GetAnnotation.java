@@ -6,22 +6,15 @@ import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
+import br.com.jq.syncthia.bdcreator.schema.SchemaCollectionInternal;
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
 
 public class GetAnnotation implements GetAnnotationInterface {
-	public Table getRelatedTable(Class<? extends TableEntity> entityClass) {
+	public Table getRelatedTable(Class<? extends TableEntity> entityClass, SchemaCollectionInternal schemaCollection) {
 		TableMapper tableMapper = entityClass.getAnnotation(TableMapper.class);
 		if (tableMapper != null) {
-			try {
-				return tableMapper.table().newInstance();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			return schemaCollection.getTable(tableMapper.table());
 		}
 		
 		return null;

@@ -76,7 +76,7 @@ public abstract class SchemaCreator extends SchemaDefinitor {
 			entity.setSchemaName(getName());
 			entity.setSchemaVersion(getDesiredVersion());
 			
-			persisted = persisted && entity.persistEntity(getConnection());
+			persisted = persisted && entity.persistEntity(getSchemaCollection());
 		}
 		
 		

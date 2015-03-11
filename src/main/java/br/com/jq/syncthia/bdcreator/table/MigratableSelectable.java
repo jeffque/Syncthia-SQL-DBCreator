@@ -26,7 +26,7 @@ public abstract class MigratableSelectable extends Selectable implements Version
 
 	public boolean saveMigratable() {
 		if (getConnection() != null) {
-			return MigratableVersionEntity.getEntity(this).persistEntity(getConnection());
+			return MigratableVersionEntity.getEntity(this).persistEntity(getSchema().getSchema().getSchemaCollection());
 		}
 		
 		return false;

@@ -20,6 +20,7 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 		throw new UnsupportedOperationException();
 	}
 	
+	private SchemaCollectionInternal rootCollection;
 	private List<Table> schemaTables;
 	private List<View> schemaViews;
 	private List<MigratableSelectable> schemaMigratables;
@@ -94,6 +95,16 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 		return null;
 	}
 	
+	public Table getTable(Class<? extends Table> tclazz) {
+		for (Table t: schemaTables) {
+			if (t.getClass() == tclazz) {
+				return t;
+			}
+		}
+		
+		return null;
+	}
+	
 	public View getView(String viewName) {
 		for (View v: schemaViews) {
 			if (viewName.equals(v.getName())) {
@@ -153,5 +164,13 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 		}
 		
 		return okDrop;
+	}
+	
+	public void setSchemaCollection(SchemaCollectionInternal rootCollection) {
+		this.rootCollection = rootCollection;
+	}
+
+	public SchemaCollectionInternal getSchemaCollection() {
+		return rootCollection;
 	}
 }

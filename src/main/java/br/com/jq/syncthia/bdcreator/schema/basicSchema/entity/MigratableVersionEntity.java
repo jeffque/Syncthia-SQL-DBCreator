@@ -1,12 +1,12 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema.entity;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.annotations.ColumnMapper;
 import br.com.jq.syncthia.bdcreator.annotations.TableMapper;
 import br.com.jq.syncthia.bdcreator.column.Column;
+import br.com.jq.syncthia.bdcreator.schema.SchemaCollectionInternal;
 import br.com.jq.syncthia.bdcreator.schema.basicSchema.table.MigratableVersion;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
@@ -85,11 +85,11 @@ public class MigratableVersionEntity extends TableEntity {
 	}
 
 	@Override
-	public boolean persistEntity(Connection conn) {
-		boolean ret = super.persistEntity(conn);
+	public boolean persistEntity(SchemaCollectionInternal schemaCollection) {
+		boolean ret = super.persistEntity(schemaCollection);
 		
 		for (MigratableColumnEntity colEntity: columnsEntities) {
-			ret = ret && colEntity.persistEntity(conn);
+			ret = ret && colEntity.persistEntity(schemaCollection);
 		}
 		return ret;
 	}
