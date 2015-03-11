@@ -3,7 +3,6 @@ package br.com.jq.syncthia.bdcreator;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import br.com.jq.syncthia.bdcreator.annotations.AnnotationsUtils;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.sample.SampleTableAIPK;
 import br.com.jq.syncthia.bdcreator.sample.SampleTableNameledKey;
@@ -39,7 +38,7 @@ public class TableKeyMetadataTest extends TestCase {
 		
 		assertEquals(1, k.getColumns().size());
 		assertEquals(t.getColumn("PK"), k.getColumn("PK"));
-		assertEquals(AnnotationsUtils.invalidString, k.getName());
+		assertEquals(null, k.getName());
 		assertEquals("", t.listKeyMetadata(new StringBuilder()).toString());
 	}
 	
