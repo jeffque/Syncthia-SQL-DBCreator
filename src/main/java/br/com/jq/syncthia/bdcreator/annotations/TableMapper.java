@@ -8,5 +8,5 @@ import br.com.jq.syncthia.bdcreator.table.Table;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TableMapper {
 	Class<? extends Table> table();
-	String uniqueKeyUsed() default "PRIMARY_KEY_CONSTRAINT";
+	String uniqueKeyUsed() default AnnotationsUtils.invalidString;
 }

@@ -43,7 +43,11 @@ public class GetAnnotation implements GetAnnotationInterface {
 	public TableKey getUniqueKey(Class<? extends TableEntity> entityClass, Table t) {
 		TableMapper tableMapper = entityClass.getAnnotation(TableMapper.class);
 		if (tableMapper != null) {
-			return t.getKey(tableMapper.uniqueKeyUsed());
+			if (AnnotationsUtils.invalidString.equals(tableMapper.uniqueKeyUsed())) {
+				return t.getPrimaryKey();
+			} else {
+				return t.getKey(tableMapper.uniqueKeyUsed());
+			}
 		}
 		
 		return null;
