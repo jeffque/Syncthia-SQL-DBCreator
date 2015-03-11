@@ -1,4 +1,4 @@
-package br.com.jq.syncthia.bdcreator.schema.basicSchema;
+package br.com.jq.syncthia.bdcreator.schema.basicSchema.table;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;

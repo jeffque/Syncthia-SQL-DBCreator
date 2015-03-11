@@ -1,4 +1,4 @@
-package br.com.jq.syncthia.bdcreator.schema.basicSchema;
+package br.com.jq.syncthia.bdcreator.schema.basicSchema.table;
 
 import java.sql.SQLException;
 import java.sql.Statement;

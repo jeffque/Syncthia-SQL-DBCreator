@@ -2,7 +2,7 @@ package br.com.jq.syncthia.bdcreator.schema.basicSchema.entity;
 
 import br.com.jq.syncthia.bdcreator.annotations.ColumnMapper;
 import br.com.jq.syncthia.bdcreator.annotations.TableMapper;
-import br.com.jq.syncthia.bdcreator.schema.basicSchema.RegisteredSchema;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.table.RegisteredSchema;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
 
 @TableMapper(table = RegisteredSchema.class, uniqueKeyUsed = "SCHEMA_NAME_CONSTRAINT")

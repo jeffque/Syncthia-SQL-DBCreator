@@ -1,6 +1,9 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema;
 
 import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.table.MigratableColumn;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.table.MigratableVersion;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.table.RegisteredSchema;
 
 public class BasicSchema extends SchemaCreator {
 

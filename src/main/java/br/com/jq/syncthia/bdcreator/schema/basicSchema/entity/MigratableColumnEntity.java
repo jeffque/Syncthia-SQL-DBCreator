@@ -3,7 +3,7 @@ package br.com.jq.syncthia.bdcreator.schema.basicSchema.entity;
 import br.com.jq.syncthia.bdcreator.annotations.ColumnMapper;
 import br.com.jq.syncthia.bdcreator.annotations.TableMapper;
 import br.com.jq.syncthia.bdcreator.column.Column;
-import br.com.jq.syncthia.bdcreator.schema.basicSchema.MigratableColumn;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.table.MigratableColumn;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
 
 @TableMapper(table = MigratableColumn.class, uniqueKeyUsed = "TABLE_COLUMN_NAME_CONSTRAINT")

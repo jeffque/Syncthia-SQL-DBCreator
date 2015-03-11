@@ -7,7 +7,7 @@ import java.util.List;
 import br.com.jq.syncthia.bdcreator.annotations.ColumnMapper;
 import br.com.jq.syncthia.bdcreator.annotations.TableMapper;
 import br.com.jq.syncthia.bdcreator.column.Column;
-import br.com.jq.syncthia.bdcreator.schema.basicSchema.MigratableVersion;
+import br.com.jq.syncthia.bdcreator.schema.basicSchema.table.MigratableVersion;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.TableEntity;
 
