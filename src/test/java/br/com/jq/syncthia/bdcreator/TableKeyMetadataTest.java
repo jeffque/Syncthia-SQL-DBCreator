@@ -38,7 +38,7 @@ public class TableKeyMetadataTest extends TestCase {
 		
 		assertEquals(1, k.getColumns().size());
 		assertEquals(t.getColumn("PK"), k.getColumn("PK"));
-		assertEquals(null, k.getName());
+		assertEquals("PRIMARY_KEY_CONSTRAINT", k.getName());
 		assertEquals("", t.listKeyMetadata(new StringBuilder()).toString());
 	}
 	
