@@ -15,9 +15,6 @@ import br.com.jq.syncthia.bdcreator.table.View;
 
 public abstract class SchemaDefinitor implements Connectable, Versionable, Nameable {
 	@Override
-	public abstract String getName();
-	
-	@Override
 	public void setName(String name) {
 		// a priori, it shan't be possible
 		throw new UnsupportedOperationException();
