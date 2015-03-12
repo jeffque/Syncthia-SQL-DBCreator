@@ -7,15 +7,13 @@ import java.util.List;
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
 import br.com.jq.syncthia.bdcreator.table.Table;
 
-public class SchemaCollectionInternal implements Connectable {
+class SchemaCollectionInternal implements Connectable {
 	private Connection sqlConnection;
-	private SchemaCollectionInternal rootCollection;
 	
 	private List<SchemaDefinitor> registeredDefinitors;
 	
 	public SchemaCollectionInternal() {
 		registeredDefinitors = new ArrayList<SchemaDefinitor>();
-		rootCollection = this;
 	}
 	
 	@Override
@@ -30,7 +28,6 @@ public class SchemaCollectionInternal implements Connectable {
 	
 	public void registerDefinitor(SchemaDefinitor definitor) {
 		registeredDefinitors.add(definitor);
-		definitor.setSchemaCollection(rootCollection);
 	}
 	
 	public SchemaDefinitor getDefinitor(String definitorName) {

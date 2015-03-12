@@ -13,7 +13,7 @@ import br.com.jq.syncthia.bdcreator.exceptions.CantPersistAutomaticException;
 import br.com.jq.syncthia.bdcreator.exceptions.NoColumnToPersistAutomaticException;
 import br.com.jq.syncthia.bdcreator.exceptions.NoTableToPersistAutomaticException;
 import br.com.jq.syncthia.bdcreator.exceptions.NoUniqueKeyToPersistAutomaticException;
-import br.com.jq.syncthia.bdcreator.schema.SchemaCollectionInternal;
+import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
 
 public abstract class TableEntity {
 	private GetAnnotation getAnnotation;
@@ -42,7 +42,7 @@ public abstract class TableEntity {
 		}
 	}
 	
-	protected final boolean persistEntityInternal(SchemaCollectionInternal schemaCollection) throws CantPersistAutomaticException {
+	protected final boolean persistEntityInternal(SchemaCollection schemaCollection) throws CantPersistAutomaticException {
 		Table t = getAnnotation.getRelatedTable(getClass(), schemaCollection);
 		
 		if (t == null) {
@@ -108,12 +108,12 @@ public abstract class TableEntity {
 		return updatedRows != 0;
 	}
 	
-	protected boolean persistEntityManually(SchemaCollectionInternal schemaCollection) {
+	protected boolean persistEntityManually(SchemaCollection schemaCollection) {
 		System.out.println("olá? " + this.getClass());
 		return false;
 	}
 	
-	public boolean persistEntity(SchemaCollectionInternal schemaCollection) {
+	public boolean persistEntity(SchemaCollection schemaCollection) {
 		try {
 			return persistEntityInternal(schemaCollection);
 		} catch (CantPersistAutomaticException e) {
@@ -124,16 +124,16 @@ public abstract class TableEntity {
 		}
 	}
 	
-	protected final boolean removeEntityInternal(SchemaCollectionInternal schemaCollection) throws CantPersistAutomaticException {
+	protected final boolean removeEntityInternal(SchemaCollection schemaCollection) throws CantPersistAutomaticException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
-	protected boolean removeEntityManually(SchemaCollectionInternal schemaCollection) {
+	protected boolean removeEntityManually(SchemaCollection schemaCollection) {
 		return false;
 	}
 	
-	public boolean removeEntity(SchemaCollectionInternal schemaCollection) {
+	public boolean removeEntity(SchemaCollection schemaCollection) {
 		try {
 			return removeEntityInternal(schemaCollection);
 		} catch (CantPersistAutomaticException e) {

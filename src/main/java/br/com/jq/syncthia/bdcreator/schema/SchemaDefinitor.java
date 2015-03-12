@@ -20,7 +20,7 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 		throw new UnsupportedOperationException();
 	}
 	
-	private SchemaCollectionInternal rootCollection;
+	private SchemaCollection rootCollection;
 	private List<Table> schemaTables;
 	private List<View> schemaViews;
 	private List<MigratableSelectable> schemaMigratables;
@@ -166,11 +166,11 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 		return okDrop;
 	}
 	
-	public void setSchemaCollection(SchemaCollectionInternal rootCollection) {
+	public void setSchemaCollection(SchemaCollection rootCollection) {
 		this.rootCollection = rootCollection;
 	}
 
-	public SchemaCollectionInternal getSchemaCollection() {
+	public SchemaCollection getSchemaCollection() {
 		return rootCollection;
 	}
 }

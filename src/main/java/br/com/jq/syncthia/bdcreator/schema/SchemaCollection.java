@@ -10,6 +10,8 @@ import br.com.jq.syncthia.bdcreator.schema.basicSchema.processor.*;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 
 public class SchemaCollection extends SchemaCollectionInternal {
+	private SchemaCollection rootCollection;
+	
 	private List<SchemaCreator> registeredSchemas;
 	
 	private List<SchemaPreProcessor> preProcessors;
@@ -17,6 +19,7 @@ public class SchemaCollection extends SchemaCollectionInternal {
 	private List<SchemaPostProcessor> postProcessors;
 	
 	public SchemaCollection() {
+		setRootCollection(this);
 		registeredSchemas = new ArrayList<SchemaCreator>();
 		
 		preProcessors = new ArrayList<SchemaPreProcessor>();
@@ -72,6 +75,7 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		super.registerDefinitor(schema);
 		
 		registeredSchemas.add(schema);
+		schema.setSchemaCollection(getRootCollection());
 		schema.schemaDefinition();
 		schema.setConnection(getConnection());
 	}
@@ -138,6 +142,14 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		}
 		
 		return null;
+	}
+	
+	public SchemaCollection getRootCollection() {
+		return rootCollection;
+	}
+
+	public void setRootCollection(SchemaCollection rootCollection) {
+		this.rootCollection = rootCollection;
 	}
 	
 }
