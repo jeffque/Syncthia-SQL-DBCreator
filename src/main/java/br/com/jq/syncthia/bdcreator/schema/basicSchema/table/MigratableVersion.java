@@ -43,8 +43,6 @@ public class MigratableVersion extends Table {
 		uniqueName.addColumn(migratableName);
 		
 		addKey(uniqueName);
-		
-		setDesiredVersion("v1");
 	}
 	
 	@Override

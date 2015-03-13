@@ -31,7 +31,6 @@ public class RegisteredSchema extends Table {
 		uniqueName.addColumn(schemaName);
 		
 		addKey(uniqueName);
-		setDesiredVersion("v1");
 	}
 	
 	@Override

@@ -13,7 +13,7 @@ public class BasicSchema extends SchemaCreator {
 		addTable(new MigratableVersion());
 		addTable(new RegisteredSchema());
 		addTable(new MigratableColumn());
-		setDesiredVersion("v1");
+		setDesiredVersion("v3");
 		
 		addPostProcessor(new CloseSchemaMetadaProcessor());
 	}

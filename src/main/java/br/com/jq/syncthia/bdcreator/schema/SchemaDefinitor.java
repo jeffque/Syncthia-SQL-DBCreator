@@ -47,6 +47,10 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 	@Override
 	public void setDesiredVersion(String desiredVersion) {
 		this.desiredVersion = desiredVersion;
+		
+		for (MigratableSelectable m: getMigratables()) {
+			m.setDesiredVersion(desiredVersion);
+		}
 	}
 	
 	@Override
@@ -138,6 +142,7 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 	private void addMigratable(MigratableSelectable m) {
 		schemaMigratables.add(m);
 		m.setSchema(this);
+		m.setDesiredVersion(getDesiredVersion());
 		m.setConnection(getConnection());
 	}
 	
