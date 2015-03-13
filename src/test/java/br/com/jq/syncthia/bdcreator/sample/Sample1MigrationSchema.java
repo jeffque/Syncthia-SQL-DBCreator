@@ -7,6 +7,7 @@ public class Sample1MigrationSchema extends SchemaCreator {
 	@Override
 	protected void schemaDefinition() {
 		addTable(new Sample1MigrationTable());
+		setDesiredVersion("v2");
 	}
 
 	@Override
