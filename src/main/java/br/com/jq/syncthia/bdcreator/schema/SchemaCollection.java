@@ -126,17 +126,25 @@ public class SchemaCollection extends SchemaCollectionInternal {
 		schemaMetaDataFromExisting();
 		
 		try {
-			getConnection().setAutoCommit(false);
+			if (getConnection() != null) {
+				getConnection().setAutoCommit(false);
+			}
 			preProcessIteration();
 			processIteration();	
 			postProcessIteration();
-			getConnection().commit();
+			if (getConnection() != null) {
+				getConnection().commit();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			getConnection().rollback();
+			if (getConnection() != null) {
+				getConnection().rollback();
+			}
 		} finally {
-			getConnection().setAutoCommit(true);
+			if (getConnection() != null) {
+				getConnection().setAutoCommit(true);
+			}
 		}
 	}
 	
