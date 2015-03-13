@@ -125,9 +125,12 @@ public class SchemaCollection extends SchemaCollectionInternal {
 	public final void createOrMigrateSchema() throws SQLException {
 		schemaMetaDataFromExisting();
 		
+		getConnection().setAutoCommit(false);
 		preProcessIteration();
 		processIteration();	
 		postProcessIteration();
+		getConnection().commit();
+		getConnection().setAutoCommit(true);
 	}
 	
 	public List<SchemaCreator> getRegisteredSchemas() {
