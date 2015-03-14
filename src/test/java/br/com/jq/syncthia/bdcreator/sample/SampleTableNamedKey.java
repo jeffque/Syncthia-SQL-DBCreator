@@ -5,8 +5,8 @@ import br.com.jq.syncthia.bdcreator.columnset.KeyType;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.table.Table;
 
-public class SampleTableNameledKey extends Table {
-	public SampleTableNameledKey() {
+public class SampleTableNamedKey extends Table {
+	public SampleTableNamedKey() {
 		Column c = new Column();
 		c.setName("PK");
 		

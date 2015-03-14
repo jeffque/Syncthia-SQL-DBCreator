@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.sample.SampleTableAIPK;
-import br.com.jq.syncthia.bdcreator.sample.SampleTableNameledKey;
+import br.com.jq.syncthia.bdcreator.sample.SampleTableNamedKey;
 import br.com.jq.syncthia.bdcreator.sample.SampleTableNamelessKey;
 import br.com.jq.syncthia.bdcreator.table.Table;
 
@@ -53,8 +53,8 @@ public class TableKeyMetadataTest extends TestCase {
 		assertEquals("\t,\n\t" + k.keyDescription() + "\n", t.listKeyMetadata(new StringBuilder()).toString());
 	}
 	
-	public void testNameledPK() {
-		Table t = new SampleTableNameledKey();
+	public void testNamedPK() {
+		Table t = new SampleTableNamedKey();
 		
 		TableKey k = t.getPrimaryKey();
 		
