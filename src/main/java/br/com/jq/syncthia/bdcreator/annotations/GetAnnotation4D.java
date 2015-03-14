@@ -19,6 +19,7 @@ public class GetAnnotation4D implements GetAnnotationInterface {
 	public List<Column> getColumns(Class<? extends TableEntity> entityClass, Table t) {
 		return null;
 	}
+	
 	@Override
 	public TableKey getUniqueKey(Class<? extends TableEntity> entityClass, Table t) {
 		return null;
