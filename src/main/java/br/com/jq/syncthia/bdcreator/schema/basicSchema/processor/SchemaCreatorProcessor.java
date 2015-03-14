@@ -9,7 +9,7 @@ public class SchemaCreatorProcessor extends SchemaProcessor {
 
 	@Override
 	public void processSchemaCreator(SchemaCreator schema) throws SQLException {
-		schema.createSchema();
+		schema.createUnit();
 	}
 
 }

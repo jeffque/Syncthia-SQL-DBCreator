@@ -1,18 +1,10 @@
 package br.com.jq.syncthia.bdcreator.table;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import br.com.jq.syncthia.bdcreator.interfaces.Versionable;
 import br.com.jq.syncthia.bdcreator.schema.SchemaDefinitor;
 import br.com.jq.syncthia.bdcreator.schema.basicSchema.entity.MigratableVersionEntity;
-import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
 public abstract class MigratableSelectable extends Selectable implements Versionable {
-	public abstract boolean dropUnit() throws SQLException;
-	public abstract void createUnit() throws SQLException;
-	public abstract void doMigrations() throws SQLException;
-	public abstract List<MigrationStrategy> getDesiredMigrations();
 	public abstract String getMigratableType();
 	
 	protected String desiredVersion, registeredVersion;

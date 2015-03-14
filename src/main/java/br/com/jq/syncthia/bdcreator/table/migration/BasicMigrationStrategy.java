@@ -7,13 +7,13 @@ import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 public class BasicMigrationStrategy extends MigrationStrategy {
 
 	public BasicMigrationStrategy(MigratableSelectable migratable) {
-		setMigratable(migratable);
+		setVersionable(migratable);
 	}
 
 	@Override
 	public void migrateUnit() throws SQLException {
-		migratable.dropUnit();
-		migratable.createUnit();
+		getVersionable().dropUnit();
+		getVersionable().createUnit();
 	}
 
 	

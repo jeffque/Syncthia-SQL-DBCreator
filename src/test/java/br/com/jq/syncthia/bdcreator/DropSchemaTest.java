@@ -69,9 +69,15 @@ public class DropSchemaTest extends TestCase {
 			// TODO Auto-generated catch block
 			eThrowed = e;
 			e.printStackTrace();
-		};
+		}
 		
-		collection.getSchema("Sample schema").dropSchema();
+		try {
+			collection.getSchema("Sample schema").dropUnit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			eThrowed = e;
+			e.printStackTrace();
+		}
 		
 		try {
 			Statement stmt = conn.createStatement();

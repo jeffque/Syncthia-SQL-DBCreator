@@ -12,6 +12,7 @@ import br.com.jq.syncthia.bdcreator.interfaces.Versionable;
 import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
 import br.com.jq.syncthia.bdcreator.table.Table;
 import br.com.jq.syncthia.bdcreator.table.View;
+import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
 public abstract class SchemaDefinitor implements Connectable, Versionable, Nameable {
 	@Override
@@ -151,26 +152,30 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 		return this;
 	}
 	
-	public boolean dropSchema() {
-		boolean okDrop = true;
-		
-		try {
-			for (MigratableSelectable m: getMigratables()) {
-				okDrop = okDrop && m.dropUnit();
-			}
-			
-			Statement stmt = getConnection().createStatement();
-			stmt.executeUpdate("DELETE FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_NAME ='" + getName() + "'");
-			stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='" + getName() + "'");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			okDrop = false;
-			e.printStackTrace();
+	@Override
+	public void dropUnit() throws SQLException {
+		for (MigratableSelectable m: getMigratables()) {
+			m.dropUnit();
 		}
 		
-		return okDrop;
+		Statement stmt = getConnection().createStatement();
+		stmt.executeUpdate("DELETE FROM MIGRATABLE_VERSION WHERE MIGRATABLE_SCHEMA_NAME ='" + getName() + "'");
+		stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='" + getName() + "'");
 	}
 	
+	
+	
+	
+	@Override
+	public List<MigrationStrategy> getDesiredMigrations() {
+		List<MigrationStrategy> migrations = new ArrayList<MigrationStrategy>();
+		for (MigratableSelectable m: getMigratables()) {
+			migrations.addAll(m.getDesiredMigrations());
+		}
+		
+		return migrations;
+	}
+
 	public void setSchemaCollection(SchemaCollection rootCollection) {
 		this.rootCollection = rootCollection;
 	}

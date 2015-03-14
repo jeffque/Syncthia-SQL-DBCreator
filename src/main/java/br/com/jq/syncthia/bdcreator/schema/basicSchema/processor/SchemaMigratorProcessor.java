@@ -9,7 +9,7 @@ public class SchemaMigratorProcessor extends SchemaProcessor {
 
 	@Override
 	public void processSchemaCreator(SchemaCreator schema) throws SQLException {
-		schema.migrateSchema();
+		schema.migrateUnit();
 	}
 
 }

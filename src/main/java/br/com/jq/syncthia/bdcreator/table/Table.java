@@ -101,7 +101,7 @@ public class Table extends MigratableSelectable {
 	}
 	
 	@Override
-	public void doMigrations() throws SQLException {
+	public void migrateUnit() throws SQLException {
 		for (MigrationStrategy migration: getDesiredMigrations()) {
 			migration.migrateUnit();
 		}
@@ -125,8 +125,7 @@ public class Table extends MigratableSelectable {
 	}
 
 	@Override
-	public boolean dropUnit() throws SQLException {
-		boolean okDrop = true;
+	public void dropUnit() throws SQLException {
 		String sql = "DROP TABLE " + getName();
 		System.out.println(sql);
 		
@@ -134,10 +133,7 @@ public class Table extends MigratableSelectable {
 			Statement stmt = getConnection().createStatement();
 			stmt.execute(sql);
 			stmt.close();
-		} else {
-			okDrop = false;
 		}
-		return okDrop;
 	}
 
 	@Override

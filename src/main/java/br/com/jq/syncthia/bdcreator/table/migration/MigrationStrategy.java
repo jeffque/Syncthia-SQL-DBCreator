@@ -2,11 +2,11 @@ package br.com.jq.syncthia.bdcreator.table.migration;
 
 import java.sql.SQLException;
 
-import br.com.jq.syncthia.bdcreator.table.MigratableSelectable;
+import br.com.jq.syncthia.bdcreator.interfaces.Versionable;
 
 public abstract class MigrationStrategy {
-	protected String oldVersion, newVersion;
-	protected MigratableSelectable migratable;
+	private String oldVersion, newVersion;
+	private Versionable versionable;
 
 	public String getOldVersion() {
 		return oldVersion;
@@ -24,12 +24,12 @@ public abstract class MigrationStrategy {
 		this.newVersion = newVersion;
 	}
 
-	public MigratableSelectable getMigratable() {
-		return migratable;
+	public Versionable getVersionable() {
+		return versionable;
 	}
 
-	public void setMigratable(MigratableSelectable migratable) {
-		this.migratable = migratable;
+	public void setVersionable(Versionable versionable) {
+		this.versionable = versionable;
 	}
 	
 	public abstract void migrateUnit() throws SQLException;

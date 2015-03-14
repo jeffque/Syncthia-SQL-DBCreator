@@ -51,15 +51,17 @@ public abstract class SchemaCreator extends SchemaDefinitor {
 		abstractProcessIteration(postProcessors);
 	}
 	
-	public void createSchema() throws SQLException {
+	@Override
+	public void createUnit() throws SQLException {
 		for (MigratableSelectable m: getMigratables()) {
 			m.createUnit();
 		}
 	}
 	
-	public void migrateSchema() throws SQLException {
+	@Override
+	public void migrateUnit() throws SQLException {
 		for (MigratableSelectable m: getMigratables()) {
-			m.doMigrations();
+			m.migrateUnit();
 		}
 	}
 	
@@ -103,6 +105,5 @@ public abstract class SchemaCreator extends SchemaDefinitor {
 			processor.setConnection(sqlConnection);
 		}
 	}
-	
-	
+
 }

@@ -33,15 +33,14 @@ public class View extends MigratableSelectable {
 	}
 
 	@Override
-	public void doMigrations() throws SQLException {
+	public void migrateUnit() throws SQLException {
 		viewMigration.migrateUnit();
 	}
 
 	@Override
-	public boolean dropUnit() throws SQLException {
+	public void dropUnit() throws SQLException {
 		//TODO implement this stuff
 		System.out.println("DROP VIEW " + getName());
-		return true;
 	}
 
 	@Override
