@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema.entity;
 
+import br.com.jq.syncthia.bdcreator.annotations.AIPKColMapper;
 import br.com.jq.syncthia.bdcreator.annotations.ColumnMapper;
 import br.com.jq.syncthia.bdcreator.annotations.TableMapper;
 import br.com.jq.syncthia.bdcreator.column.Column;
@@ -14,6 +15,7 @@ import br.com.jq.syncthia.bdcreator.table.TableEntity;
 @ColumnMapper(column = "COLUMN_PRECISION2")
 @ColumnMapper(column = "COLUMN_NULLABLE")
 @ColumnMapper(column = "COLUMN_POSITION")
+@AIPKColMapper(column = "PK_MIGRATABLE_COLUMN")
 public class MigratableColumnEntity extends TableEntity {
 	private String tableName;
 	private String columnName;
@@ -22,6 +24,7 @@ public class MigratableColumnEntity extends TableEntity {
 	private Integer columnPrecision2;
 	private Boolean columnNullable;
 	private Integer columnPosition;
+	private Integer pkMigratableColumn;
 	
 	public static MigratableColumnEntity getInstance(Column col) {
 		MigratableColumnEntity entity = new MigratableColumnEntity();
@@ -91,6 +94,14 @@ public class MigratableColumnEntity extends TableEntity {
 
 	public void setColumnPosition(Integer columnPosition) {
 		this.columnPosition = columnPosition;
+	}
+
+	public Integer getPkMigratableColumn() {
+		return pkMigratableColumn;
+	}
+
+	public void setPkMigratableColumn(Integer pkMigratableColumn) {
+		this.pkMigratableColumn = pkMigratableColumn;
 	}
 
 }

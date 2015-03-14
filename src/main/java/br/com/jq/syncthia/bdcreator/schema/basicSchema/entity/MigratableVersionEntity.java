@@ -3,6 +3,7 @@ package br.com.jq.syncthia.bdcreator.schema.basicSchema.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.jq.syncthia.bdcreator.annotations.AIPKColMapper;
 import br.com.jq.syncthia.bdcreator.annotations.ColumnMapper;
 import br.com.jq.syncthia.bdcreator.annotations.TableMapper;
 import br.com.jq.syncthia.bdcreator.column.Column;
@@ -16,12 +17,15 @@ import br.com.jq.syncthia.bdcreator.table.TableEntity;
 @ColumnMapper(column = "MIGRATABLE_SCHEMA_NAME")
 @ColumnMapper(column = "MIGRATABLE_SCHEMA_VERSION")
 @ColumnMapper(column = "MIGRATABLE_TYPE")
+@AIPKColMapper(column = "PK_MIGRATABLE_VERSION")
 public class MigratableVersionEntity extends TableEntity {
 	List<MigratableColumnEntity> columnsEntities;
 	private String migratableName;
 	private String migratableSchemaName;
 	private String migratableSchemaVersion;
 	private String migratableType;
+	
+	private Integer pkMigratableVersion;
 
 	public MigratableVersionEntity() {
 		migratableName = "";
@@ -93,6 +97,13 @@ public class MigratableVersionEntity extends TableEntity {
 		}
 		return ret;
 	}
-	
+
+	public Integer getPkMigratableVersion() {
+		return pkMigratableVersion;
+	}
+
+	public void setPkMigratableVersion(Integer pkMigratableVersion) {
+		this.pkMigratableVersion = pkMigratableVersion;
+	}
 	
 }
