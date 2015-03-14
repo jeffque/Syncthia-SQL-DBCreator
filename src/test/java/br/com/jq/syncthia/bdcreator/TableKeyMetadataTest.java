@@ -1,12 +1,15 @@
 package br.com.jq.syncthia.bdcreator;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
-import br.com.jq.syncthia.bdcreator.sample.SampleTableAIPK;
-import br.com.jq.syncthia.bdcreator.sample.SampleTableNamedKey;
-import br.com.jq.syncthia.bdcreator.sample.SampleTableNamelessKey;
+import br.com.jq.syncthia.bdcreator.sample.*;
+import br.com.jq.syncthia.bdcreator.schema.SchemaCollection;
+import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
 import br.com.jq.syncthia.bdcreator.table.Table;
 
 /**
@@ -62,5 +65,43 @@ public class TableKeyMetadataTest extends TestCase {
 		assertEquals(t.getColumn("PK"), k.getColumn("PK"));
 		assertEquals("NAMED_KEY", k.getName());
 		assertEquals("\t,\n\t" + k.keyDescription() + "\n", t.listKeyMetadata(new StringBuilder()).toString());
+	}
+	
+	public void testArtificialAIPKSettet() throws SQLException {
+		SchemaCollection schemaCollection = new SchemaCollection();
+		SchemaCreator schemaCreator = new SchemaCreator() {
+			
+			@Override
+			public String getName() {
+				return "Sample Artificial AIPK Test";
+			}
+			
+			@Override
+			protected void schemaDefinition() {
+				addTable(new SampleTableArtificialAIPK());
+				
+			}
+		};
+		
+		schemaCollection.registerSchema(schemaCreator);
+		schemaCollection.setConnection(DriverManager.getConnection("jdbc:sqlite:teste.db"));
+		
+		try {
+			schemaCreator.dropUnit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			// I think I can ignore case it ain't possible to drop the table in the schema...
+			e.printStackTrace();
+		}
+		schemaCollection.createOrMigrateSchema();
+		
+		SampleTableArtificialAIPKEntity entity = new SampleTableArtificialAIPKEntity();
+		entity.setName("TEST 1");
+		entity.persistEntity(schemaCollection);
+		assertEquals(1, entity.getPk().intValue());
+		
+		entity.setName("TEST 2");
+		entity.persistEntity(schemaCollection);
+		assertEquals(2, entity.getPk().intValue());
 	}
 }
