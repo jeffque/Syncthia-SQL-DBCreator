@@ -42,6 +42,14 @@ public abstract class TableEntity {
 		}
 	}
 	
+	private void setParams(PreparedStatement pStmt, List<Column> columns, int pStmtOffset) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SQLException {
+		for (int i = columns.size() - 1; i >= 0; i--) {
+			int pStmtPos = i + pStmtOffset;
+			Column col = columns.get(i);
+			setParamPStmt(pStmt, pStmtPos, col);
+		}
+	}
+	
 	protected final boolean persistEntityInternal(SchemaCollection schemaCollection) throws CantPersistAutomaticException {
 		Table t = getAnnotation.getRelatedTable(getClass(), schemaCollection);
 		
@@ -68,18 +76,10 @@ public abstract class TableEntity {
 			
 			PreparedStatement updateStmt = t.prepareUpdateStatement(uniqueKey, columns);
 			pStmtOffset = 1;
-			for (int i = columns.size() - 1; i >= 0; i--) {
-				int pStmtPos = i + pStmtOffset;
-				Column col = columns.get(i);
-				setParamPStmt(updateStmt, pStmtPos, col);
-			}
+			setParams(updateStmt, columns, pStmtOffset);
 			
 			pStmtOffset = columns.size() + 1;
-			for (int i = uniqueKey.getColumns().size() - 1; i >= 0; i--) {
-				int pStmtPos = i + pStmtOffset;
-				Column col = uniqueKey.getColumns().get(i);
-				setParamPStmt(updateStmt, pStmtPos, col);
-			}
+			setParams(updateStmt, uniqueKey.getColumns(), pStmtOffset);
 			updatedRows = updateStmt.executeUpdate();
 			
 			if (!t.getCachePreparedStmt()) {
@@ -89,11 +89,8 @@ public abstract class TableEntity {
 			if (updatedRows == 0) {
 				PreparedStatement insertStmt = t.prepareInsertStatement(columns);
 				pStmtOffset = 1;
-				for (int i = columns.size() - 1; i >= 0; i--) {
-					int pStmtPos = i + pStmtOffset;
-					Column col = columns.get(i);
-					setParamPStmt(insertStmt, pStmtPos, col);
-				}
+				setParams(insertStmt, columns, pStmtOffset);
+				
 				updatedRows = insertStmt.executeUpdate();
 				if (!t.getCachePreparedStmt()) {
 					insertStmt.close();
@@ -107,7 +104,7 @@ public abstract class TableEntity {
 		
 		return updatedRows != 0;
 	}
-	
+
 	protected boolean persistEntityManually(SchemaCollection schemaCollection) {
 		System.out.println("olá? " + this.getClass());
 		return false;
