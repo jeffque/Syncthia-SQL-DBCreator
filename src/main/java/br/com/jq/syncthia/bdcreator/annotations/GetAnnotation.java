@@ -74,9 +74,9 @@ public class GetAnnotation implements GetAnnotationInterface {
 	public Method getAIPKSetter(Class<? extends TableEntity> entityClass, Table t) throws NoSuchMethodException, SecurityException {
 		AIPKColMapper aipkMapper = entityClass.getAnnotation(AIPKColMapper.class);
 		if (aipkMapper != null) {
-			String getterName = AnnotationsUtils.generateSetterName(aipkMapper.columnEntitySetter(), aipkMapper.column());
+			String setterName = AnnotationsUtils.generateSetterName(aipkMapper.columnEntitySetter(), aipkMapper.column());
 			
-			return entityClass.getMethod(getterName, Integer.TYPE);
+			return entityClass.getMethod(setterName, Integer.class);
 		}
 		
 		return null;
