@@ -29,4 +29,14 @@ public class GetAnnotation4D implements GetAnnotationInterface {
 	public Method getGetterFromColumn(Class<? extends TableEntity> entityClass, String colName) {
 		return null;
 	}
+	
+	@Override
+	public Column getAIPKCol(Class<? extends TableEntity> entityClass, Table t) {
+		return null;
+	}
+	
+	@Override
+	public Method getAIPKSetter(Class<? extends TableEntity> entityClass, Table t) throws NoSuchMethodException, SecurityException {
+		return null;
+	}
 }

@@ -14,4 +14,6 @@ interface GetAnnotationInterface {
 	public List<Column> getColumns(Class<? extends TableEntity> entityClass, Table t);
 	public TableKey getUniqueKey(Class<? extends TableEntity> entityClass, Table t);
 	public Method getGetterFromColumn(Class<? extends TableEntity> entityClass, String colName) throws NoSuchMethodException, SecurityException;
+	public Column getAIPKCol(Class<? extends TableEntity> entityClass, Table t);
+	public Method getAIPKSetter(Class<? extends TableEntity> entityClass, Table t) throws NoSuchMethodException, SecurityException;
 }

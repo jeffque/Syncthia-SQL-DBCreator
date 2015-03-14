@@ -59,4 +59,26 @@ public class GetAnnotation implements GetAnnotationInterface {
 		
 		return null;
 	}
+	
+	@Override
+	public Column getAIPKCol(Class<? extends TableEntity> entityClass, Table t) {
+		AIPKColMapper aipkMapper = entityClass.getAnnotation(AIPKColMapper.class);
+		if (aipkMapper != null) {
+			return t.getColumn(aipkMapper.column());
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public Method getAIPKSetter(Class<? extends TableEntity> entityClass, Table t) throws NoSuchMethodException, SecurityException {
+		AIPKColMapper aipkMapper = entityClass.getAnnotation(AIPKColMapper.class);
+		if (aipkMapper != null) {
+			String getterName = AnnotationsUtils.generateSetterName(aipkMapper.columnEntitySetter(), aipkMapper.column());
+			
+			return entityClass.getMethod(getterName, Integer.TYPE);
+		}
+		
+		return null;
+	}
 }

@@ -3,6 +3,7 @@ package br.com.jq.syncthia.bdcreator.table;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -94,6 +95,25 @@ public abstract class TableEntity {
 				updatedRows = insertStmt.executeUpdate();
 				if (!t.getCachePreparedStmt()) {
 					insertStmt.close();
+				}
+				
+				Method aipkSetter = getAnnotation.getAIPKSetter(getClass(), t);
+				Column aipkCol = getAnnotation.getAIPKCol(getClass(), t);
+				if (aipkSetter != null && aipkCol != null) {
+					PreparedStatement selectStmt = t.prepareSelectStatement(uniqueKey);
+					pStmtOffset = 1;
+					setParams(selectStmt, uniqueKey.getColumns(), pStmtOffset);
+					
+					ResultSet rsaipk = selectStmt.executeQuery();
+					
+					int aipkValue = rsaipk.getInt(aipkCol.getName());
+					rsaipk.close();
+					
+					if (!t.getCachePreparedStmt()) {
+						selectStmt.close();
+					}
+					
+					aipkSetter.invoke(this, aipkValue);
 				}
 			}
 		} catch (SQLException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
