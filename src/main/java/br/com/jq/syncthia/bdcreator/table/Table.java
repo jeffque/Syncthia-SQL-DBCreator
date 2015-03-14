@@ -19,6 +19,7 @@ public class Table extends MigratableSelectable {
 	private PreparedStatement insertStmtCache;
 	private Map<TableKey, PreparedStatement> updateStmtCacheMap;
 	private Map<TableKey, PreparedStatement> deleteStmtCacheMap;
+	private Map<TableKey, PreparedStatement> selectStmtCacheMap;
 	protected List<MigrationStrategy> migrations;
 	protected List<TableKey> keys;
 	protected List<Column> ordinaryColumns;
@@ -35,6 +36,7 @@ public class Table extends MigratableSelectable {
 		}
 		dropCachePreparedStmt(updateStmtCacheMap);
 		dropCachePreparedStmt(deleteStmtCacheMap);
+		dropCachePreparedStmt(selectStmtCacheMap);
 	}
 	
 	private void dropCachePreparedStmt(Map<TableKey, PreparedStatement> stmtCache) throws SQLException {
@@ -51,6 +53,7 @@ public class Table extends MigratableSelectable {
 		
 		updateStmtCacheMap = new HashMap<TableKey, PreparedStatement>();
 		deleteStmtCacheMap = new HashMap<TableKey, PreparedStatement>();
+		selectStmtCacheMap = new HashMap<TableKey, PreparedStatement>();
 	}
 	
 	public void addColumn(ColumnAutoIncrement aipkCol) {
@@ -194,6 +197,45 @@ public class Table extends MigratableSelectable {
 		}
 		
 		return null;
+	}
+	
+	public PreparedStatement prepareSelectStatement() throws SQLException {
+		return prepareSelectStatement(getPrimaryKey());
+	}
+	
+	public PreparedStatement prepareSelectStatement(TableKey uniqueKey) throws SQLException {
+		if (getConnection() == null) {
+			return null;
+		}
+		
+		if (getCachePreparedStmt() && selectStmtCacheMap.get(uniqueKey) != null) {
+			return selectStmtCacheMap.get(uniqueKey);
+		}
+		
+		StringBuilder selectSql = new StringBuilder("SELECT * FROM ").append(getName());
+		if (uniqueKey != null) {
+			boolean firstCol;
+			
+			selectSql.append(" WHERE ");
+			
+			firstCol = true;
+			for (Column col: uniqueKey.getColumns()) {
+				if (!firstCol) {
+					selectSql.append(" AND ");
+				} else {
+					firstCol = false;
+				}
+				selectSql.append(col.getName()).append(" = ?");
+			}
+		}
+		
+		System.out.println("select stmt (" + getName() + "):\n\t" + selectSql);
+		PreparedStatement selectStmt = getConnection().prepareStatement(selectSql.toString());
+		
+		if (getCachePreparedStmt()) {
+			selectStmtCacheMap.put(uniqueKey, selectStmt);
+		}
+		return selectStmt;
 	}
 	
 	public PreparedStatement prepareDeleteStatement() throws SQLException {
