@@ -97,24 +97,7 @@ public abstract class TableEntity {
 					insertStmt.close();
 				}
 				
-				Method aipkSetter = getAnnotation.getAIPKSetter(getClass(), t);
-				Column aipkCol = getAnnotation.getAIPKCol(getClass(), t);
-				if (aipkSetter != null && aipkCol != null) {
-					PreparedStatement selectStmt = t.prepareSelectStatement(uniqueKey);
-					pStmtOffset = 1;
-					setParams(selectStmt, uniqueKey.getColumns(), pStmtOffset);
-					
-					ResultSet rsaipk = selectStmt.executeQuery();
-					
-					int aipkValue = rsaipk.getInt(aipkCol.getName());
-					rsaipk.close();
-					
-					if (!t.getCachePreparedStmt()) {
-						selectStmt.close();
-					}
-					
-					aipkSetter.invoke(this, aipkValue);
-				}
+				autoSetAIPKCol(schemaCollection);
 			}
 		} catch (SQLException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
@@ -123,6 +106,50 @@ public abstract class TableEntity {
 		
 		
 		return updatedRows != 0;
+	}
+	
+	protected void autoSetAIPKCol(SchemaCollection schemaCollection) throws CantPersistAutomaticException {
+		Table t = getAnnotation.getRelatedTable(getClass(), schemaCollection);
+		
+		if (t == null) {
+			throw new NoTableToPersistAutomaticException();
+		}
+		
+		List<Column> columns = getAnnotation.getColumns(getClass(), t);
+		
+		if (columns == null || columns.size() == 0) {
+			throw new NoColumnToPersistAutomaticException();
+		}
+		
+		TableKey uniqueKey = getAnnotation.getUniqueKey(getClass(), t);
+		
+		if (uniqueKey == null) {
+			throw new NoUniqueKeyToPersistAutomaticException();
+		}
+		
+		try {
+			Method aipkSetter = getAnnotation.getAIPKSetter(getClass(), t);
+			Column aipkCol = getAnnotation.getAIPKCol(getClass(), t);
+			if (aipkSetter != null && aipkCol != null) {
+				PreparedStatement selectStmt = t.prepareSelectStatement(uniqueKey);
+				int pStmtOffset = 1;
+				setParams(selectStmt, uniqueKey.getColumns(), pStmtOffset);
+				
+				ResultSet rsaipk = selectStmt.executeQuery();
+				
+				int aipkValue = rsaipk.getInt(aipkCol.getName());
+				rsaipk.close();
+				
+				if (!t.getCachePreparedStmt()) {
+					selectStmt.close();
+				}
+				
+				aipkSetter.invoke(this, aipkValue);
+			}
+		} catch (SQLException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected boolean persistEntityManually(SchemaCollection schemaCollection) {
