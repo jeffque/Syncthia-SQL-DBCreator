@@ -163,9 +163,6 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 		stmt.executeUpdate("DELETE FROM REGISTERED_SCHEMA WHERE SCHEMA_NAME ='" + getName() + "'");
 	}
 	
-	
-	
-	
 	@Override
 	public List<MigrationStrategy> getDesiredMigrations() {
 		List<MigrationStrategy> migrations = new ArrayList<MigrationStrategy>();
@@ -174,6 +171,10 @@ public abstract class SchemaDefinitor implements Connectable, Versionable, Namea
 		}
 		
 		return migrations;
+	}
+	
+	public void addMigrationStrategyTable(MigrationStrategy migration, String tableName) {
+		getTable(tableName).addMigrationStrategy(migration);
 	}
 
 	public void setSchemaCollection(SchemaCollection rootCollection) {
