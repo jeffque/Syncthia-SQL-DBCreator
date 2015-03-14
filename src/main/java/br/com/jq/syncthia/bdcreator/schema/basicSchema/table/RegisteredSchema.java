@@ -10,7 +10,7 @@ public class RegisteredSchema extends Table {
 	public RegisteredSchema() {
 		setName("REGISTERED_SCHEMA");
 		
-		ColumnAutoIncrement pkCol = new ColumnAutoIncrement("PK_MIGRATABLE_VERSION");
+		ColumnAutoIncrement pkCol = new ColumnAutoIncrement("PK_REGISTERED_SCHEMA");
 		Column schemaName = new Column();
 		Column schemaVersion = new Column();
 		
