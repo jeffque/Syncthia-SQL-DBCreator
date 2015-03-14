@@ -51,15 +51,7 @@ public class GetAnnotation implements GetAnnotationInterface {
 	public Method getGetterFromColumn(Class<? extends TableEntity> entityClass, String colName) throws NoSuchMethodException, SecurityException {
 		for (ColumnMapper columnMapper: entityClass.getAnnotationsByType(ColumnMapper.class)) {
 			if (colName.equals(columnMapper.column())) {
-				String getterName = columnMapper.columnEntityGetter();
-				if (getterName.equals(AnnotationsUtils.invalidString)) {
-					StringBuilder getterBuilder = new StringBuilder("get");
-					for (String part: columnMapper.column().split("_")) {
-						getterBuilder.append(part.substring(0, 1).toUpperCase()).append(part.substring(1).toLowerCase());
-					}
-					
-					getterName = getterBuilder.toString();
-				}
+				String getterName = AnnotationsUtils.generateGetterName(columnMapper.columnEntityGetter(), columnMapper.column());
 				
 				return entityClass.getMethod(getterName);
 			}
