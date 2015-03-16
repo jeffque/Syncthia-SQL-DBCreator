@@ -1,14 +1,10 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema.table;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.table.Table;
-import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 
 public class MigratableColumn extends Table {
 	public MigratableColumn() {
