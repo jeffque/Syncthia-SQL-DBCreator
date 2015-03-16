@@ -169,5 +169,10 @@ public class SchemaCollection extends SchemaCollectionInternal {
 	public void setRootCollection(SchemaCollection rootCollection) {
 		this.rootCollection = rootCollection;
 	}
+
+	public void removeRegisteredSchema(SchemaCreator testedSchema) {
+		registeredSchemas.remove(testedSchema); //TODO shan't remove BasicSchema!!!
+		
+	}
 	
 }
