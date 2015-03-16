@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
+import br.com.jq.syncthia.bdcreator.columnset.ColumnSetInterface;
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
-import br.com.jq.syncthia.bdcreator.interfaces.Nameable;
 
-public class Selectable implements Connectable, Nameable {
+public class Selectable implements Connectable, ColumnSetInterface {
 	private String name;
 	protected List<Column> columnList;
 	private Connection sqlConnection;
@@ -17,11 +17,13 @@ public class Selectable implements Connectable, Nameable {
 		columnList = new ArrayList<Column>();
 	}
 	
+	@Override
 	public void addColumn(Column col) {
 		col.setOrigin(this);
 		columnList.add(col);
 	}
 	
+	@Override
 	public Column getColumn(String columnName) {
 		for (Column col: columnList) {
 			if (columnName.equals(col.getName())) {
@@ -31,7 +33,8 @@ public class Selectable implements Connectable, Nameable {
 		return null;
 	}
 	
-	public List<Column> getColumnList() {
+	@Override
+	public List<Column> getColumns() {
 		return columnList;
 	}
 	

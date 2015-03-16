@@ -47,7 +47,7 @@ public class Column {
 
 	public void setOrigin(Selectable origin) {
 		// Let us considerate that column position starts with 0
-		setPosition(origin.getColumnList().size());
+		setPosition(origin.getColumns().size());
 		this.origin = origin;
 	}
 

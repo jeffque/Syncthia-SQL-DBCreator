@@ -80,7 +80,7 @@ public class CreateSchemaTest extends TestCase {
 	
 	public void testColumnNames() {
 		Table sampleTable = collection.getRegisteredSchemas().get(1).getTables().get(0);
-		List<Column> columnsSampleTable = sampleTable.getColumnList();
+		List<Column> columnsSampleTable = sampleTable.getColumns();
 		
 		assertEquals(1, columnsSampleTable.size());
 		

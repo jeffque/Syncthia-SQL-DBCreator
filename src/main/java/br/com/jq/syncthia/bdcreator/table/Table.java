@@ -274,7 +274,7 @@ public class Table extends MigratableSelectable {
 	}
 	
 	public PreparedStatement prepareUpdateStatement() throws SQLException {
-		return prepareUpdateStatement(getPrimaryKey(), getColumnList());
+		return prepareUpdateStatement(getPrimaryKey(), getColumns());
 	}
 
 	public PreparedStatement prepareUpdateStatement(TableKey uniqueKey,
@@ -323,7 +323,7 @@ public class Table extends MigratableSelectable {
 	}
 
 	public PreparedStatement prepareInsertStatement() throws SQLException {
-		return prepareInsertStatement(getColumnList());
+		return prepareInsertStatement(getColumns());
 	}
 	
 	public PreparedStatement prepareInsertStatement(List<Column> columnListSignificant) throws SQLException {

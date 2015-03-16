@@ -82,7 +82,7 @@ public class MigratableVersionEntity extends TableEntity {
 	}
 
 	private void setColumnsEntity(MigratableSelectable t) {
-		for (Column col: t.getColumnList()) {
+		for (Column col: t.getColumns()) {
 			columnsEntities.add(MigratableColumnEntity.getInstance(col));
 		}
 		
