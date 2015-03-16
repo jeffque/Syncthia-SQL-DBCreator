@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
-import br.com.jq.syncthia.bdcreator.columnset.ColumnSetInterface;
+import br.com.jq.syncthia.bdcreator.columnset.ColumnSet;
 import br.com.jq.syncthia.bdcreator.interfaces.Connectable;
 
-public class Selectable implements Connectable, ColumnSetInterface {
+public class Selectable implements Connectable, ColumnSet {
 	private String name;
 	protected List<Column> columnList;
 	private Connection sqlConnection;

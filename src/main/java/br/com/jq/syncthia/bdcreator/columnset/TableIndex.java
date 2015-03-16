@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.table.Table;
 
-public class TableIndex implements ColumnSetInterface {
+public class TableIndex implements ColumnSet {
 	protected List<Column> columnList;
 	protected Table table;
 	protected String name;
