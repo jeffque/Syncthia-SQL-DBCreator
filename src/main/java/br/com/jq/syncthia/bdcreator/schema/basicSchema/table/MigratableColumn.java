@@ -64,19 +64,6 @@ public class MigratableColumn extends Table {
 		uniqueTableColumn.addColumn(tableName);
 		uniqueTableColumn.addColumn(colName);
 		addKey(uniqueTableColumn);
-		
-		MigrationStrategy migrationV1__V2 = new MigrationStrategy() {
-			@Override
-			public void migrateUnit() throws SQLException {
-				Statement migrationStmt = getConnection().createStatement();
-				String sqlMigration = "";
-				
-				migrationStmt.executeUpdate(sqlMigration);
-			}
-		};
-		
-		migrationV1__V2.setOldVersion("V1");
-		migrationV1__V2.setNewVersion("V2");
 	}
 
 	@Override
