@@ -108,7 +108,7 @@ public abstract class TableEntity {
 		return updatedRows != 0;
 	}
 	
-	protected void autoSetAIPKCol(SchemaCollection schemaCollection) throws CantPersistAutomaticException {
+	public void autoSetAIPKCol(SchemaCollection schemaCollection) throws CantPersistAutomaticException {
 		Table t = getAnnotation.getRelatedTable(getClass(), schemaCollection);
 		
 		if (t == null) {
