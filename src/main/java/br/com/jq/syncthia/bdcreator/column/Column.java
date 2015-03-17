@@ -8,6 +8,7 @@ public class Column {
 	private Integer precision1, precision2;
 	private Boolean nullable;
 	private int position;
+	private Collation collation;
 
 	public String getName() {
 		return name;
@@ -58,6 +59,7 @@ public class Column {
 				+ (precision1 != null ? "(" + precision1
 						+ (precision2 != null ? "," + precision2 : "") + ")"
 						: "")
+				+ (collation != null? " COLLATE " + collation: "")
 				+ (nullable != null ? (nullable ? " NULL" : " NOT NULL") : "");
 	}
 
@@ -80,5 +82,13 @@ public class Column {
 
 	public void setPosition(int position) {
 		this.position = position;
+	}
+
+	public Collation getCollation() {
+		return collation;
+	}
+
+	public void setCollation(Collation collation) {
+		this.collation = collation;
 	}
 }
