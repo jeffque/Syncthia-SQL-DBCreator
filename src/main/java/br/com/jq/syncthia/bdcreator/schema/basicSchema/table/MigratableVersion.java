@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema.table;
 
+import br.com.jq.syncthia.bdcreator.column.Collation;
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
@@ -18,18 +19,22 @@ public class MigratableVersion extends Table {
 		
 		migratableName.setName("MIGRATABLE_NAME");
 		migratableName.setType("STRING");
+		migratableName.setCollation(Collation.NOCASE);
 		migratableName.setNullable(false);
 		
 		migratableSchemaName.setName("MIGRATABLE_SCHEMA_NAME");
 		migratableSchemaName.setType("STRING");
+		migratableSchemaName.setCollation(Collation.NOCASE);
 		migratableSchemaName.setNullable(false);
 		
 		migratableSchemaVersion.setName("MIGRATABLE_SCHEMA_VERSION");
 		migratableSchemaVersion.setType("STRING");
+		migratableSchemaVersion.setCollation(Collation.NOCASE);
 		migratableSchemaVersion.setNullable(false);
 		
 		migratableType.setName("MIGRATABLE_TYPE"); // May be T for table or V for View
 		migratableType.setType("STRING");
+		migratableType.setCollation(Collation.NOCASE);
 		migratableType.setNullable(false);
 		
 		addColumn(pkCol);

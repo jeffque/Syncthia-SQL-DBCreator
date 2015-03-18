@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema.table;
 
+import br.com.jq.syncthia.bdcreator.column.Collation;
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
@@ -13,38 +14,42 @@ public class MigratableColumn extends Table {
 		
 		Column tableName = new Column();
 		tableName.setName("TABLE_NAME");
-		tableName.setNullable(false);
 		tableName.setType("STRING");
+		tableName.setCollation(Collation.NOCASE);
+		tableName.setNullable(false);
 		
 		Column colName = new Column();
 		colName.setName("COLUMN_NAME");
-		colName.setNullable(false);
 		colName.setType("STRING");
+		colName.setCollation(Collation.NOCASE);
+		colName.setNullable(false);
 		
 		Column colType = new Column();
 		colType.setName("COLUMN_TYPE");
-		colType.setNullable(false);
 		colType.setType("STRING");
+		colType.setCollation(Collation.NOCASE);
+		colType.setNullable(false);
 		
 		Column colPrecision1 = new Column();
 		colPrecision1.setName("COLUMN_PRECISION1");
-		colPrecision1.setNullable(true);
 		colPrecision1.setType("INTEGER");
+		colPrecision1.setNullable(true);
 		
 		Column colPrecision2 = new Column();
 		colPrecision2.setName("COLUMN_PRECISION2");
-		colPrecision2.setNullable(true);
 		colPrecision2.setType("INTEGER");
+		colPrecision2.setNullable(true);
 		
 		Column colNullable = new Column();
 		colNullable.setName("COLUMN_NULLABLE");
-		colNullable.setNullable(true);
 		colNullable.setType("STRING");
+		colNullable.setCollation(Collation.NOCASE);
+		colNullable.setNullable(true);
 		
 		Column colPosition = new Column();
 		colPosition.setName("COLUMN_POSITION");
-		colPosition.setNullable(true);
 		colPosition.setType("INTEGER");
+		colPosition.setNullable(true);
 		
 		addColumn(aipk);
 		addColumn(tableName);

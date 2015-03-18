@@ -1,5 +1,6 @@
 package br.com.jq.syncthia.bdcreator.schema.basicSchema.table;
 
+import br.com.jq.syncthia.bdcreator.column.Collation;
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
@@ -16,10 +17,12 @@ public class RegisteredSchema extends Table {
 		
 		schemaName.setName("SCHEMA_NAME");
 		schemaName.setType("STRING");
+		schemaName.setCollation(Collation.NOCASE);
 		schemaName.setNullable(false);
 		
 		schemaVersion.setName("SCHEMA_VERSION");
 		schemaVersion.setType("STRING");
+		schemaVersion.setCollation(Collation.NOCASE);
 		schemaVersion.setNullable(false);
 		
 		addColumn(pkCol);
