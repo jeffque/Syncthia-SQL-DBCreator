@@ -1,11 +1,13 @@
 package br.com.jq.syncthia.bdcreator.table.migration;
 
+import java.sql.SQLException;
+
 public class MigrationSqlCommandStrategy extends MigrationStrategy {
 	private String sqlMigration;
 	
 	@Override
-	public void migrateUnit() {
-		System.out.println(sqlMigration);
+	public void migrateUnit() throws SQLException {
+		getVersionable().getSchema().getConnection().createStatement().execute(sqlMigration);
 	}
 
 	public String getSqlMigration() {
