@@ -4,7 +4,7 @@ public class AnnotationsUtils {
 	public static final String invalidString = "invalid string";
 	
 	public static String generateGenericIfInvalidName(String columnEntityMethod, String columnName, String preffix) {
-		if (columnEntityMethod.equals(AnnotationsUtils.invalidString)) {
+		if (columnEntityMethod == null || AnnotationsUtils.invalidString.equals(columnEntityMethod)) {
 			StringBuilder methodNameBuilder = new StringBuilder(preffix);
 			for (String part: columnName.split("_")) {
 				methodNameBuilder.append(part.substring(0, 1).toUpperCase()).append(part.substring(1).toLowerCase());
