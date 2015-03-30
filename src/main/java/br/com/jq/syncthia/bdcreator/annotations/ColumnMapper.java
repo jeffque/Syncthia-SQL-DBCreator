@@ -2,7 +2,6 @@ package br.com.jq.syncthia.bdcreator.annotations;
 
 import java.lang.annotation.*;
 
-
 @Repeatable(ColumnMapperContainer.class)
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
