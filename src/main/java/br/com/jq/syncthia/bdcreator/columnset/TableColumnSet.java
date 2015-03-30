@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.table.Table;
 
-public class TableIndex implements ColumnSet {
+public abstract class TableColumnSet implements ColumnSet {
 	protected List<Column> columnList;
 	protected Table table;
 	protected String name;
@@ -50,7 +50,7 @@ public class TableIndex implements ColumnSet {
 		return null;
 	}
 
-	public TableIndex() {
+	public TableColumnSet() {
 		columnList = new ArrayList<Column>();
 	}
 }

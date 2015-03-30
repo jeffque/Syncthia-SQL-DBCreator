@@ -2,7 +2,7 @@ package br.com.jq.syncthia.bdcreator.columnset;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
 
-public class TableKey extends TableIndex {
+public class TableKey extends TableColumnSet {
 	private KeyType keyType;
 	
 	public TableKey() {
