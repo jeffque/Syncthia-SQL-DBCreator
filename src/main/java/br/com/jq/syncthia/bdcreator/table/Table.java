@@ -10,6 +10,7 @@ import java.util.Map;
 
 import br.com.jq.syncthia.bdcreator.column.Column;
 import br.com.jq.syncthia.bdcreator.column.ColumnAutoIncrement;
+import br.com.jq.syncthia.bdcreator.columnset.ForeignKey;
 import br.com.jq.syncthia.bdcreator.columnset.KeyType;
 import br.com.jq.syncthia.bdcreator.columnset.TableKey;
 import br.com.jq.syncthia.bdcreator.exceptions.DuplicatedPrimaryKeyException;
@@ -22,6 +23,7 @@ public class Table extends MigratableSelectable {
 	private Map<TableKey, PreparedStatement> selectStmtCacheMap;
 	protected List<MigrationStrategy> migrations;
 	protected List<TableKey> keys;
+	protected List<ForeignKey> foreignKeys;
 	protected List<Column> ordinaryColumns;
 	private ColumnAutoIncrement aipkCol;
 	
@@ -49,6 +51,7 @@ public class Table extends MigratableSelectable {
 	public Table() {
 		migrations = new ArrayList<MigrationStrategy>();
 		keys = new ArrayList<TableKey>();
+		foreignKeys = new ArrayList<ForeignKey>();
 		ordinaryColumns = new ArrayList<Column>();
 		
 		updateStmtCacheMap = new HashMap<TableKey, PreparedStatement>();
@@ -144,6 +147,7 @@ public class Table extends MigratableSelectable {
 		StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + getName() + " (\n");
 		listColumnsSql(sql);
 		listKeyMetadata(sql);
+		listForeignKeyMetadata(sql);
 		sql.append(")");
 		
 		System.out.println(sql.toString());
@@ -152,6 +156,24 @@ public class Table extends MigratableSelectable {
 			stmt.execute(sql.toString());
 			stmt.close();
 		}
+	}
+
+	public StringBuilder listForeignKeyMetadata(StringBuilder sql) {
+		if (foreignKeys.size() > 0) {
+			sql.append("\t,\n");
+		}
+		
+		boolean firstTime = true;
+		for (ForeignKey k: foreignKeys) {
+			if (!firstTime) {
+				sql.append(",\n");
+			} else {
+				firstTime = false;
+			}
+			sql.append("\t" + k.keyDescription());
+		}
+		
+		return sql.append("\n");
 	}
 
 	public StringBuilder listKeyMetadata(StringBuilder sql) {
@@ -369,5 +391,8 @@ public class Table extends MigratableSelectable {
 		return insertStmt;
 	}
 	
+	protected void addForeignKey(ForeignKey fk) {
+		foreignKeys.add(fk);
+	}
 	
 }
