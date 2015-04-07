@@ -59,6 +59,10 @@ public class Table extends MigratableSelectable {
 		selectStmtCacheMap = new HashMap<TableKey, PreparedStatement>();
 	}
 	
+	public List<Column> getOrdinaryColumns() {
+		return ordinaryColumns;
+	}
+	
 	public void addColumn(ColumnAutoIncrement aipkCol) {
 		super.addColumn(aipkCol);
 		this.aipkCol = aipkCol;
