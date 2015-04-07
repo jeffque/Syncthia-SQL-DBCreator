@@ -28,7 +28,7 @@ public class MigratableColumn extends Table {
 		colType.setName("COLUMN_TYPE");
 		colType.setType("STRING");
 		colType.setCollation(Collation.NOCASE);
-		colType.setNullable(false);
+		colType.setNullable(true);
 		
 		Column colPrecision1 = new Column();
 		colPrecision1.setName("COLUMN_PRECISION1");
