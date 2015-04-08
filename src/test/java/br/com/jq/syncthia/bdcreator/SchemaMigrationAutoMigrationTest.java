@@ -14,6 +14,7 @@ import br.com.jq.syncthia.bdcreator.schema.SchemaCreator;
 /**
  * Unit test for simple App.
  */
+//TODO this test is broken!
 public class SchemaMigrationAutoMigrationTest extends TestCase {
 	
 	/**

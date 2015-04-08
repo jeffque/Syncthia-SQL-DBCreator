@@ -17,6 +17,7 @@ import br.com.jq.syncthia.bdcreator.table.migration.MigrationStrategy;
 /**
  * Unit test for simple App.
  */
+//TODO this test is broken!
 public class SchemaMigrationWithConnectionTest extends TestCase {
 	SchemaCollection collection;
 	
