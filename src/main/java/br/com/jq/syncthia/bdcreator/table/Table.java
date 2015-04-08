@@ -108,6 +108,7 @@ public class Table extends MigratableSelectable {
 	
 	public void addMigrationStrategy(MigrationStrategy migration) {
 		migrations.add(migration);
+		migration.setVersionable(this);
 	}
 	
 	@Override

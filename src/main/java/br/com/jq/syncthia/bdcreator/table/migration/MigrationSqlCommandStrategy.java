@@ -7,7 +7,9 @@ public class MigrationSqlCommandStrategy extends MigrationStrategy {
 	
 	@Override
 	public void migrateUnit() throws SQLException {
-		getVersionable().getSchema().getConnection().createStatement().execute(sqlMigration);
+		if (getVersionable().getSchema().getConnection() != null) {
+			getVersionable().getSchema().getConnection().createStatement().execute(sqlMigration);
+		}
 	}
 
 	public String getSqlMigration() {
